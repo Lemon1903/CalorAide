@@ -1,0 +1,12 @@
+kivy==2.1.0
+kivymd==1.1.1
+multitasking
+firebase
+firebase-admin
+python-firebase
+python_jwt
+gcloud
+sseclient
+pycryptodome
+requests_toolbelt
+watchdog
