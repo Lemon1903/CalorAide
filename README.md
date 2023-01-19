@@ -3,14 +3,14 @@
 A mobile fitness app created using Kivy. 
 
 Programming Team: 
- - Khent David Roscoe Alba
- - Rachel Ann Tapia
- - Sebastian Audrey Temporal
- - Xein Deniel Virgines
+ - Khent David Roscoe Alba      (@Lemon1903)
+ - Rachell Ann Tapia            (@WaterGhost1)
+ - Sebastian Audrey Temporal    (@pyto-p)
+ - Xein Deniel Virgines         (@xeinden)
 
 Design Team: 
  - Luis Lumbres
- - Paolo Luigi Recio
+ - Paolo Luigi Recio            (@reciopaolo)
 
 Research/Documentation Team: 
  - Claire Rotap
