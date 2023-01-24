@@ -51,6 +51,7 @@ class Fitrex(MDApp):
         self.theme_cls.primary_hue = "400"
         self.theme_cls.accent_palette = "DeepPurple"
         self.theme_cls.accent_hue = "800"
+        self.theme_cls.material_style = "M3"
 
         database = DataBase()
         manager_screens = MDScreenManager()
