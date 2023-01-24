@@ -8,11 +8,7 @@ from .components.loading import LoadingImage
 
 
 class MainScreenView(BaseScreenView):
-    """I just showed an example loading spinner while doing an extensive calculations
-
-    Args:
-        BaseScreenView (_type_): _description_
-    """
+    """I just showed an example loading spinner while doing an extensive calculations"""
 
     def __init__(self, controller, model, **kw):
         super().__init__(controller, model, **kw)
