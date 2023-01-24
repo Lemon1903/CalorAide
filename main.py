@@ -27,6 +27,7 @@ LabelBase.register(name='Poppins-Medium', fn_regular='assets/fonts/Poppins/Poppi
 LabelBase.register(name='Poppins-MediumItalic', fn_regular='assets/fonts/Poppins/Poppins-MediumItalic.ttf')
 LabelBase.register(name='Poppins-Bold', fn_regular='assets/fonts/Poppins/Poppins-Bold.ttf')
 
+
 class Fitrex(MDApp):
     """_summary_
 
@@ -49,6 +50,7 @@ class Fitrex(MDApp):
         self.theme_cls.primary_hue = "400"
         self.theme_cls.accent_palette = "DeepPurple"
         self.theme_cls.accent_hue = "800"
+
         database = DataBase()
         manager_screens = MDScreenManager()
 
