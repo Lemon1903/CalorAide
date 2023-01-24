@@ -1,0 +1,24 @@
+<SignupScreenView>:
+    Image:
+        source: "assets/images/DarkBG 4.png"
+        pos_hint: {"center_x":0.5, "center_y":0.5}
+        allow_stretch: True
+    MDBoxLayout:
+        orientation: "horizontal"
+        MDLabel:
+            text: "Sign Up"
+            theme_text_color: "Custom"
+            text_color: "white"
+            pos_hint: {"center_x":0.5, "center_y":0.5}
+        #Rectangle mode
+        MDTextField:
+            hint_text: "Username"
+            mode: "rectangle"
+        MDTextField:
+            hint_text: "Password"
+            mode: "rectangle"
+    MDFloatLayout:
+        MDFillRoundFlatButton:
+            text: "Confirm"
+            text_color: "white"
+            md_bg_color: "purple"
