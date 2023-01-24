@@ -1,4 +1,4 @@
 """Import necessary classes"""
 
+from .LoginScreen import LoginScreenView
 from .MainScreen import MainScreenView
-from .SignupScreen import SignupScreenView

@@ -1,0 +1,44 @@
+#:import GeneralInformationCard View.ProfileScreen.components
+
+<ProfileScreenView>:
+    # main layout that holds all widgets
+    MDScrollView:
+        size_hint_x: 0.95
+        pos_hint: {'center_x': 0.5}
+
+        # scrollable content
+        MDList:
+            spacing: dp(10)
+
+            # the upper part for image and username
+            MDBoxLayout:
+                orientation: "vertical"
+                spacing: dp(30)
+                padding: dp(20)
+                height: dp(200)
+                size_hint_y: None
+
+                FitImage:
+                    source: "assets/images/sample.png"
+                    radius: 50
+                    size_hint: 0.5, 0.5
+                    pos_hint: {"center_x": 0.5}
+
+                MDLabel:
+                    text: 'Khent David Roscoe A. Alba'
+                    halign: 'center'
+                    height: dp(20)
+                    size_hint_y: None
+
+            # general information card
+            GeneralInformationCard:
+
+            MDCard:
+                height: dp(150)
+                size_hint_y: None
+                md_bg_color: app.theme_cls.primary_color
+
+            MDCard:
+                height: dp(150)
+                size_hint_y: None
+                md_bg_color: app.theme_cls.primary_color

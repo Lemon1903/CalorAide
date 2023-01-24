@@ -37,6 +37,8 @@ class Fitrex(MDApp):
         # In this method, you don't need to change
         # anything other than the application theme.
 
+        self.theme_cls.primary_palette = "Indigo"
+
         database = DataBase()
         manager_screens = MDScreenManager()
 
@@ -46,9 +48,10 @@ class Fitrex(MDApp):
         for name_screen, value in screens.items():
             model = value["model"](database)
             controller = value["controller"](model)
-            view = controller.get_view()
-            view.name = name_screen
-            manager_screens.add_widget(view)
+
+            for view in controller.get_views():
+                view.name = name_screen
+                manager_screens.add_widget(view)
 
         return manager_screens
 

@@ -1,4 +1,4 @@
 """Import necessary classes"""
 
+from .login_screen import LoginScreenModel
 from .main_screen import MainScreenModel
-from .signup_screen import SignupScreenModel
