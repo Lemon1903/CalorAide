@@ -1,0 +1,66 @@
+# rules
+<GeneralInformationCard>:
+    current_layout: inner
+    padding: dp(20), dp(15)
+    height: self.current_layout.height + self.padding[1] * 2
+    size_hint_y: None
+    md_bg_color: app.theme_cls.primary_color
+
+    ProfileInformationLayout:
+        id: inner
+
+
+<ProfileInformationLayout>:
+    orientation: 'vertical'
+    adaptive_height: True
+    spacing: dp(10)
+
+    CustomLabel:
+        text: "General Information"
+
+    CustomLabel:
+        text: "Height: 170cm"
+
+    CustomLabel:
+        text: "Weight: 55kg"
+
+    MDRectangleFlatButton:
+        text: "Edit Details"
+        size_hint_x: 1
+        md_bg_color: "gray"
+        on_release: root.on_edit_profile_info()
+
+
+<EditInformationLayout>:
+    orientation: 'vertical'
+    adaptive_height: True
+    spacing: dp(10)
+
+    CustomLabel:
+        text: "Edit Information"
+
+    CustomTextField:
+        hint_text: "Height"
+
+    CustomTextField:
+        hint_text: "Weight"
+
+    MDRectangleFlatButton:
+        text: "Done Editing"
+        size_hint_x: 1
+        md_bg_color: "gray"
+        on_release: root.submit_new_profile_info()
+
+
+# dynamic classes of kivy
+<CustomLabel@MDLabel>:
+    color: "white"
+    height: dp(20)
+    size_hint_y: None
+
+
+<CustomTextField@MDTextField>:
+    mode: "rectangle"
+    text_color_focus: "black"
+    hint_text_color_focus: "black"
+    line_color_focus: "black"
