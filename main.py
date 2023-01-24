@@ -23,8 +23,9 @@ os.environ["KIVY_GL_BACKEND"] = "angle_sdl2"
 
 LabelBase.register(name='Poppins-Regular', fn_regular='assets/fonts/Poppins/Poppins-Regular.ttf')
 LabelBase.register(name='Poppins-SemiBold', fn_regular='assets/fonts/Poppins/Poppins-SemiBold.ttf')
+LabelBase.register(name='Poppins-Medium', fn_regular='assets/fonts/Poppins/Poppins-Medium.ttf')
+LabelBase.register(name='Poppins-MediumItalic', fn_regular='assets/fonts/Poppins/Poppins-MediumItalic.ttf')
 LabelBase.register(name='Poppins-Bold', fn_regular='assets/fonts/Poppins/Poppins-Bold.ttf')
-LabelBase.register(name='Poppins-Medium', fn_regular='assets/fonts/Poppins/Poppins-Medi.ttf')
 
 class Fitrex(MDApp):
     """_summary_
@@ -33,7 +34,7 @@ class Fitrex(MDApp):
         DEBUG (bool): The switch indicator for hot reloading.
         KV_DIRS (list[str]): The directory path to the kivy files.
     """
-
+    
     DEBUG = True
     KV_DIRS = [os.path.join(os.getcwd(), "View")]
 
@@ -48,7 +49,6 @@ class Fitrex(MDApp):
         self.theme_cls.primary_hue = "400"
         self.theme_cls.accent_palette = "DeepPurple"
         self.theme_cls.accent_hue = "800"
-
         database = DataBase()
         manager_screens = MDScreenManager()
 
