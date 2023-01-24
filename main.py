@@ -14,6 +14,7 @@ from kivy import Config
 from kivy.core.window import Window
 from kivymd.tools.hotreload.app import MDApp
 from kivymd.uix.screenmanager import MDScreenManager
+from kivy.core.text import LabelBase
 
 import View.screens
 from Model.database import DataBase
@@ -21,6 +22,11 @@ from Model.database import DataBase
 Config.set("graphics", "multisamples", 0)
 os.environ["KIVY_GL_BACKEND"] = "angle_sdl2"
 
+LabelBase.register(name='Poppins-Regular', fn_regular='assets/fonts/Poppins/Poppins-Regular.ttf')
+LabelBase.register(name='Poppins-SemiBold', fn_regular='assets/fonts/Poppins/Poppins-SemiBold.ttf')
+LabelBase.register(name='Poppins-Medium', fn_regular='assets/fonts/Poppins/Poppins-Medium.ttf')
+LabelBase.register(name='Poppins-MediumItalic', fn_regular='assets/fonts/Poppins/Poppins-MediumItalic.ttf')
+LabelBase.register(name='Poppins-Bold', fn_regular='assets/fonts/Poppins/Poppins-Bold.ttf')
 
 class Fitrex(MDApp):
     """_summary_
@@ -29,7 +35,7 @@ class Fitrex(MDApp):
         DEBUG (bool): The switch indicator for hot reloading.
         KV_DIRS (list[str]): The directory path to the kivy files.
     """
-
+    
     DEBUG = True
     KV_DIRS = [os.path.join(os.getcwd(), "View")]
 
@@ -37,6 +43,14 @@ class Fitrex(MDApp):
         # In this method, you don't need to change
         # anything other than the application theme.
 
+        self.theme_cls.theme_style_switch_animation = True
+        self.theme_cls.theme_style_switch_animation_duration = 0.8
+        self.theme_cls.theme_style = "Dark"
+        self.theme_cls.primary_palette = "DeepPurple"
+        self.theme_cls.primary_hue = "400"
+        self.theme_cls.accent_palette = "DeepPurple"
+        self.theme_cls.accent_hue = "800"
+        
         database = DataBase()
         manager_screens = MDScreenManager()
 
@@ -52,6 +66,13 @@ class Fitrex(MDApp):
 
         return manager_screens
 
+    def switch_theme_style(self):
+        self.theme_cls.primary_palette = (
+            "Indigo" if self.theme_cls.primary_palette == "Indigo" else "Indigo"
+        )
+        self.theme_cls.theme_style = (
+            "Dark" if self.theme_cls.theme_style == "Light" else "Light"
+        )
 
 if __name__ == "__main__":
     # adjust this base on your screen
