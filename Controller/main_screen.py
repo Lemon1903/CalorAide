@@ -23,19 +23,19 @@ class MainScreenController:
 
     def __init__(self, model):
         self.model = model  # Model.main_screen.MainScreenModel
-        self.view = MainScreenView(self, self.model)
+        self.views = [MainScreenView(self, self.model)]
 
     @multitasking.task
     def do_extensive_calculations(self):
-        self.view.show_loading()
+        self.views[0].show_loading()
         print("doing some extensive calculations...")
         time.sleep(5)
-        self.view.close_loading()
+        self.views[0].close_loading()
 
-    def get_view(self) -> MainScreenView:
+    def get_views(self) -> list[MainScreenView]:
         """Gets the view connected to this controller.
 
         Returns:
             MainScreenView: The view connected to this controller.
         """
-        return self.view
+        return self.views
