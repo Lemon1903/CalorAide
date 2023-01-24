@@ -15,6 +15,7 @@ from kivy.core.window import Window
 from kivymd.tools.hotreload.app import MDApp
 from kivymd.uix.screenmanager import MDScreenManager
 from kivy.core.text import LabelBase
+
 import View.screens
 from Model.database import DataBase
 
