@@ -30,20 +30,26 @@
                     height: dp(20)
                     size_hint_y: None
 
+            # buttons
+            MDBoxLayout:
+                orientation: 'vertical'
+                spacing: dp(10)
+                adaptive_height: True
+
+                ChangeButton:
+                    text: "CHANGE MODE: [b][color=#f3aaa0]GAIN[/color][/b]"
+
+                ChangeButton:
+                    text: "CHANGE ACTIVITY: [b][color=#f3aaa0]LIGHT[/color][/b]"
+
             # general information card
             GeneralInformationCard:
 
-            MDCard:
-                height: dp(150)
-                size_hint_y: None
-                md_bg_color: app.theme_cls.primary_color
 
-            MDCard:
-                height: dp(150)
-                size_hint_y: None
-                md_bg_color: app.theme_cls.primary_color
-
-            MDCard:
-                height: dp(150)
-                size_hint_y: None
-                md_bg_color: app.theme_cls.primary_color
+# dynamic class
+<ChangeButton@MDRectangleFlatButton>:
+    size_hint_x: 0.7
+    pos_hint: {'center_x': 0.5}
+    text_color: "white"
+    md_bg_color: app.theme_cls.primary_dark
+    line_color: app.theme_cls.primary_dark

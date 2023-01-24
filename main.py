@@ -38,6 +38,7 @@ class Fitrex(MDApp):
         # anything other than the application theme.
 
         self.theme_cls.primary_palette = "Indigo"
+        self.theme_cls.material_style = "M3"
 
         database = DataBase()
         manager_screens = MDScreenManager()
