@@ -1,6 +1,7 @@
 """_module summary_"""
 from kivy.clock import mainthread
 from kivymd.uix.floatlayout import MDFloatLayout
+from kivymd.uix.dialog import MDDialog
 
 from View.base_screen import BaseScreenView
 
@@ -17,31 +18,40 @@ class SignupScreenView(BaseScreenView):
         super().__init__(controller, model, **kw)
         pass
 
+    def get_userdata(self): 
+       return ( [self.ids.user.text, self.ids.passw.text, self.ids.conpass.text])
 
-    def disabled_btn(self):
-        pass
+    def error_user(self):
+        self.dialog = MDDialog(text = "Fill Username")
+        self.dialog.open()
+        return(self.dialog)
+    def error_pass(self):
+        self.dialog = MDDialog(text = "Fill Password")
+        self.dialog.open()
 
-    def signup_btn(self):
-        pass
+    def error_conpass(self):
+        self.dialog = MDDialog(text = "Re-type Password")
+        self.dialog.open()
 
-    def clear_txt_field(self):
-        pass
+    def error_notmatch(self):
+        self.dialog = MDDialog(text = "Password Do Not Match")
+        self.dialog.open()
 
-    # @mainthread
-    # def show_loading(self):
-    #     self.ids.btn1.disabled = True
-    #     self.add_widget(self.loading_bg)
-    #     self.add_widget(self.loading_img)
+    def error_user_taken(self):
+        self.dialog = MDDialog(text = "Username Already Taken")
+        self.dialog.open()
+        
 
-    # @mainthread
-    # def close_loading(self):
-    #     print("done!")
-    #     self.ids.btn1.disabled = False
-    #     self.remove_widget(self.loading_bg)
-    #     self.remove_widget(self.loading_img)
 
     def model_is_changed(self) -> None:
         """Called whenever any change has occurred in the data model.
         The view in this method tracks these changes and updates the UI
         according to these changes.
         """
+
+        self.dialog = MDDialog(text = "YEYYEYEYEYEYEYEYEY")
+        self.dialog.open()
+        # return(self.dialog)
+
+        # gui na "sign up success"
+        # goto reg screen
