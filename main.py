@@ -14,12 +14,20 @@ from kivy import Config
 from kivy.core.window import Window
 from kivymd.tools.hotreload.app import MDApp
 from kivymd.uix.screenmanager import MDScreenManager
+from kivy.core.text import LabelBase
 
 import View.screens
 from Model.database import DataBase
 
 Config.set("graphics", "multisamples", 0)
 os.environ["KIVY_GL_BACKEND"] = "angle_sdl2"
+
+LabelBase.register(name='Poppins-Regular', fn_regular='assets/fonts/Poppins/Poppins-Regular.ttf')
+LabelBase.register(name='Poppins-SemiBold', fn_regular='assets/fonts/Poppins/Poppins-SemiBold.ttf')
+LabelBase.register(name='Poppins-Medium', fn_regular='assets/fonts/Poppins/Poppins-Medium.ttf')
+LabelBase.register(name='Poppins-MediumItalic', fn_regular='assets/fonts/Poppins/Poppins-MediumItalic.ttf')
+LabelBase.register(name='Poppins-Bold', fn_regular='assets/fonts/Poppins/Poppins-Bold.ttf')
+
 
 
 class Fitrex(MDApp):

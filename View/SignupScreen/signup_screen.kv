@@ -1,26 +1,39 @@
 <SignupScreenView>:
-    id: sign
+
     Image:
         source: "assets/images/DarkBG 4.png"
         pos_hint: {"center_x":0.5, "center_y":0.5}
         allow_stretch: True
+
     MDBoxLayout:
         orientation: "vertical"
-        pos_hint: {"center_x":0.5, "center_y":0.8}
-        #md_bg_color: "blue"
+        pos_hint: {"center_x":0.5, "center_y":0.84}
         MDLabel:
             text: "SIGN-UP"
-            font_size: 30
+            font_name: "Poppins-Medium"
+            font_size: 40
             theme_text_color: "Custom"
             text_color: "white"
-            pos_hint: {"center_x":0.855, "center_y":0.5}
+            halign: "center"
+            valign: "top"
+    
+    MDFloatLayout:
+    #Confirm Button
+        MDFillRoundFlatButton:
+            id: btn
+            text: "CONFIRM"
+            font_name: "Poppins-SemiBold"
+            text_color: "white"
+            md_bg_color: "#7B56BA"
+            pos_hint: {"center_x": .49, "center_y": .24}
+            on_press: root.controller.check_txt_field()
     
     MDFloatLayout:
         required: False
         Text:
             id: user
             hint_text: "Username"
-            pos_hint: {"center_x": .5, "center_y": .7}
+            pos_hint: {"center_x": .5,"center_y": .7}
             on_focus:
                 if root.ids.user.text == "": root.ids.user.required = True
                 else : root.ids.user.required = False
@@ -45,27 +58,12 @@
                 else : root.ids.conpass.required = False
             helper_text_mode: "on_error"
             helper_text: "Re-type Password"
-  
-    MDFloatLayout:
-        # MDBoxLayout:
-        #     orientation: "vertical"
-        #     adaptive_height: True
-    #Confirm Button
-        MDFillRoundFlatButton:
-            id: btn
-            text: "Confirm"
-            text_color: "white"
-            md_bg_color: "indigo"
-            pos_hint: {"center_x": .5, "center_y": .24}
-            # on_release: root.signup_btn()
-            on_press: root.controller.check_txt_field()
 
 <Text@MDTextField>:
     mode: "rectangle"
+    font_name: "Poppins-Regular"
     size_hint_x: .65
     line_color_normal: "white"
     hint_text_color_normal: "white"
     hint_text_color_focus: "white"
     text_color_normal: "white"
-
-

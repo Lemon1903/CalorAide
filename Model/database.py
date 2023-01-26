@@ -32,5 +32,6 @@ class DataBase:
             "Password": userdata[1]
         }
         self.firebase_.post("https://fitrex-bfc21-default-rtdb.asia-southeast1.firebasedatabase.app/USERDATA", self.data)
-        print("posted")
+        print("Posted!")
+
         return()

@@ -2,7 +2,7 @@
 from kivy.clock import mainthread
 from kivymd.uix.floatlayout import MDFloatLayout
 from kivymd.uix.dialog import MDDialog
-
+from kivymd.uix.snackbar import Snackbar
 from View.base_screen import BaseScreenView
 
 
@@ -22,24 +22,19 @@ class SignupScreenView(BaseScreenView):
        return ( [self.ids.user.text, self.ids.passw.text, self.ids.conpass.text])
 
     def error_user(self):
-        self.dialog = MDDialog(text = "Fill Username")
-        self.dialog.open()
-        return(self.dialog)
+        return(Snackbar(text = "Fill Username", bg_color = "#7B56BA").open())
+
     def error_pass(self):
-        self.dialog = MDDialog(text = "Fill Password")
-        self.dialog.open()
+        return(Snackbar(text = "Fill Password", bg_color = "#7B56BA").open())
 
     def error_conpass(self):
-        self.dialog = MDDialog(text = "Re-type Password")
-        self.dialog.open()
+        return(Snackbar(text = "Re-type Password", bg_color = "#7B56BA").open())
 
     def error_notmatch(self):
-        self.dialog = MDDialog(text = "Password Do Not Match")
-        self.dialog.open()
+        return(Snackbar(text = "Password Do Not Match", bg_color = "#7B56BA").open())
 
     def error_user_taken(self):
-        self.dialog = MDDialog(text = "Username Already Taken")
-        self.dialog.open()
+        return(Snackbar(text = "Username Already Taken", bg_color = "#7B56BA").open())
         
 
 
@@ -49,9 +44,5 @@ class SignupScreenView(BaseScreenView):
         according to these changes.
         """
 
-        self.dialog = MDDialog(text = "YEYYEYEYEYEYEYEYEY")
-        self.dialog.open()
-        # return(self.dialog)
 
-        # gui na "sign up success"
-        # goto reg screen
+

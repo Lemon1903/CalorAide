@@ -24,7 +24,6 @@ class SignupScreenController:
 
     def __init__(self, model):
         self.model = model  # Model.main_screen.MainScreenModel
-
         self.views = [SignupScreenView(self, self.model)]
 
     def clear_txt_field(self):

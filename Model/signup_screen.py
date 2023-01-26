@@ -35,19 +35,6 @@ class SignupScreenModel(BaseScreenModel):
         self.notify_observers("signup screen")
 
     @multitasking.task
-    def check_data(self, userdata): #check if valid yung data from controller
-        """Just an example of the method. Use your own code."""
-        # self.database.create_table()
-        self.username = userdata[0]
-        self.data = self.database.get_data()
-        for key,value in self.data.items():
-            if value['Username']  == self.username:
-                self.is_valid = False
-            else: 
-                self.is_valid = True 
-                self.database.add(userdata)
-            return
-    
     def to_database(self, userdata):
         self.is_valid = True
         self.database.add(userdata)
