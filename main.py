@@ -11,10 +11,10 @@ import importlib
 import os
 
 from kivy import Config
+from kivy.core.text import LabelBase
 from kivy.core.window import Window
 from kivymd.tools.hotreload.app import MDApp
 from kivymd.uix.screenmanager import MDScreenManager
-from kivy.core.text import LabelBase
 
 import View.screens
 from Model.database import DataBase
@@ -73,11 +73,10 @@ class Fitrex(MDApp):
         self.theme_cls.theme_style = (
             "Dark" if self.theme_cls.theme_style == "Light" else "Light"
         )
-
+      
 
 if __name__ == "__main__":
     # adjust this base on your screen
     Window.size = (360, 640)
-    Window.top = 50
     Window.left = 1160
     Fitrex().run()

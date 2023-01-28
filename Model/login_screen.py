@@ -18,7 +18,7 @@ class LoginScreenModel(BaseScreenModel):
         self._data = None
         self.database = database
 
-    @property
+    @property # getter
     def data(self):
         """_data summary_
 
@@ -27,7 +27,7 @@ class LoginScreenModel(BaseScreenModel):
         """
         return self._data
 
-    @data.setter
+    @data.setter 
     def data(self, value):
         # We notify the View -
         # :class:`~View.ProfileScreen.profile_screen.ProfileScreenView` about the
@@ -36,6 +36,17 @@ class LoginScreenModel(BaseScreenModel):
         self.notify_observers("profile screen")
 
     @multitasking.task
-    def check_data(self):
+    def check_data(self, login_info):
         """Just an example of the method. Use your own code."""
         self.data = ["example item"]
+        self.username = login_info[0]
+        self.password = login_info[1]
+        self.db = self.database.get_data()
+
+        for key, value in self.db.items(): 
+            if value["Username"] == self.username: 
+                print("ACCOUNT EXIST")
+            else:
+                print("ACCOUNT DOES NOT EXIST")
+
+

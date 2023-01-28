@@ -11,3 +11,5 @@ class LoginScreenView(BaseScreenView):
         The view in this method tracks these changes and updates the UI
         according to these changes.
         """
+    def store_input(self): 
+        return ([self.ids.textfld_username.text, self.ids.textfld_pw.text])

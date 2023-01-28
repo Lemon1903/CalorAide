@@ -22,6 +22,7 @@ class LoginScreenController:
         self.model = model  # Model.login_screen.LoginScreenModel
         self.views = [LoginScreenView(self, self.model)]
 
+
     def get_views(self) -> list[LoginScreenView]:
         """Gets the view connected to this controller.
 
@@ -29,3 +30,17 @@ class LoginScreenController:
             LoginScreenView: The view connected to this controller.
         """
         return self.views
+
+    def get_then_clear(self): 
+        # print(self.views[0].store_input())
+        self.get_list_view()
+        self.clear_tf()
+
+    def get_list_view(self):
+        self.logindata = self.views[0].store_input()
+        self.model.check_data(self.logindata)
+    
+    def clear_tf(self):
+        self.views[0].ids.textfld_username.text = ""
+        self.views[0].ids.textfld_pw.text = ""
+    
