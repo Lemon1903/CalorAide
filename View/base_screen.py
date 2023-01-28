@@ -1,34 +1,42 @@
 """_module summary_"""
 
 # pylint: disable=no-name-in-module
+from kivy.clock import Clock
+from kivy.properties import ObjectProperty
+from kivy.uix.screenmanager import Screen
 from kivymd.app import MDApp
 from kivymd.theming import ThemableBehavior
-from kivymd.uix.screen import MDScreen
+
+from Utils.observer import Observer
 
 
-class BaseScreenView(ThemableBehavior, MDScreen):
+class BaseScreenView(ThemableBehavior, Screen, Observer):
     """
     A base class that implements a visual representation of the model data.
     The view class must be inherited from this class. Follows the observer parttern.
     """
 
-    def __init__(self, controller, model, **kw):
+    controller = ObjectProperty()
+    """
+    Controller object - :class:`~Controller.login_screen.LoginScreenController`.
+
+    :attr:`controller` is an :class:`~kivy.properties.ObjectProperty`
+    and defaults to `None`.
+    """
+
+    model = ObjectProperty()
+    """
+    Model object - :class:`~Model.login_screen.LoginScreenModel`.
+
+    :attr:`model` is an :class:`~kivy.properties.ObjectProperty`
+    and defaults to `None`.
+    """
+
+    def __init__(self, **kw):
         super().__init__(**kw)
-
-        self.controller = controller
-        """Controller object - :class:`~Controller.controller_screen.ClassScreenControler`."""
-
-        self.model = model
-        """Model object - :class:`~Model.model_screen.ClassScreenModel`."""
 
         # access the application object from the view class.
         self.app = MDApp.get_running_app()
 
-        # adding a view class as observer.
-        self.model.add_observer(self)
-
-    def model_is_changed(self):
-        """The method that will be called on the observer when the model changes."""
-        raise NotImplementedError(
-            "This is an observer, it should be notified about the changes in the model."
-        )
+        # add itself as observer of the model
+        Clock.schedule_once(lambda _: self.model.add_observer(self), 1)

@@ -1,14 +1,28 @@
-#:import GeneralInformationCard View.ProfileScreen.components
+#:import GeneralInformationCard View.HomeScreen.ProfileScreen.components
 
 <ProfileScreenView>:
     # main layout that holds all widgets
     MDScrollView:
         size_hint_x: 0.95
         pos_hint: {'center_x': 0.5}
+        bar_width: dp(0)
 
         # scrollable content
         MDList:
+            padding: dp(0), dp(15)
             spacing: dp(10)
+
+            # TODO: Fix the switching of image for dark and light mode.
+            #       The image only changes in this screen only.
+            # switch to dark/light mode
+            MDFloatLayout:
+                MDSwitch:
+                    active: True
+                    icon_active: "weather-night"
+                    icon_inactive: "weather-sunny"
+                    icon_inactive_color: "black"
+                    pos_hint: {'right': 0.92, 'top': 1}
+                    on_active: app.switch_theme_style(root.ids.background)
 
             # the upper part for image and username
             MDBoxLayout:
@@ -25,6 +39,7 @@
                     pos_hint: {"center_x": 0.5}
 
                 MDLabel:
+                    bold: True
                     text: 'Khent David Roscoe A. Alba'
                     halign: 'center'
                     height: dp(20)
@@ -34,6 +49,7 @@
             MDBoxLayout:
                 orientation: 'vertical'
                 spacing: dp(10)
+                padding: [dp(0), dp(0), dp(0), dp(10)]
                 adaptive_height: True
 
                 ChangeButton:
@@ -42,8 +58,15 @@
                 ChangeButton:
                     text: "CHANGE ACTIVITY: [b][color=#f3aaa0]LIGHT[/color][/b]"
 
-            # general information card
+            # general information of the user
             GeneralInformationCard:
+                controller: root.controller
+
+            # placeholder
+            MDCard:
+                height: dp(150)
+                size_hint_y: None
+                md_bg_color: app.theme_cls.primary_color
 
 
 # dynamic class

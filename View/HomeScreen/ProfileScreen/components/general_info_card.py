@@ -16,15 +16,18 @@ class ProfileInformationLayout(MDBoxLayout):
 
 
 class EditInformationLayout(MDBoxLayout):
+    """The content layout for editing profile information."""
+
     def submit_new_profile_info(self):
         """Callback function when submitting the new profile information."""
-        print("submit")
+        self.parent.controller.submit_for_review()
         self.parent.change_layout(self.parent.profile_layout)
 
 
 class GeneralInformationCard(MDCard):
     """Card for general information of the user."""
 
+    controller = ObjectProperty()
     current_layout = ObjectProperty()
 
     def __init__(self, *args, **kwargs):

@@ -15,27 +15,32 @@ class LoginScreenModel(BaseScreenModel):
 
     def __init__(self, database):
         # Just an example of the data. Use your own values.
-        self._data = None
+        self._is_valid = None
         self.database = database
 
     @property
-    def data(self):
+    def is_valid(self):
         """_data summary_
 
         Returns:
             _type_: _description_
         """
-        return self._data
+        return self._is_valid
 
-    @data.setter
-    def data(self, value):
+    @is_valid.setter
+    def is_valid(self, value):
         # We notify the View -
         # :class:`~View.ProfileScreen.profile_screen.ProfileScreenView` about the
         # changes that have occurred in the data model.
-        self._data = value
-        self.notify_observers("profile screen")
+        self._is_valid = value
+        self.notify_observers("login screen")
 
     @multitasking.task
     def check_data(self):
         """Just an example of the method. Use your own code."""
-        self.data = ["example item"]
+        # data = database
+        # if true:
+        #   is_valid = True
+        #   updatae_database()
+        # else:
+        #   is_valid = False

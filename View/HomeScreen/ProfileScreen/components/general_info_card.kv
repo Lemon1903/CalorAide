@@ -27,15 +27,15 @@
 
     MDRectangleFlatButton:
         text: "Edit Details"
+        text_color: "white"
         size_hint_x: 1
-        md_bg_color: "gray"
+        md_bg_color: app.theme_cls.primary_dark
         on_release: root.on_edit_profile_info()
 
 
 <EditInformationLayout>:
     orientation: 'vertical'
     adaptive_height: True
-    spacing: dp(10)
 
     ProfileLabel:
         text: "Edit Information"
@@ -48,20 +48,20 @@
 
     MDRectangleFlatButton:
         text: "Done Editing"
+        text_color: "white"
         size_hint_x: 1
-        md_bg_color: "gray"
+        md_bg_color: app.theme_cls.primary_dark
         on_release: root.submit_new_profile_info()
 
 
 # dynamic classes
 <ProfileLabel@MDLabel>:
-    color: "white"
     height: dp(20)
     size_hint_y: None
 
 
 <PRofileTextField@MDTextField>:
-    mode: "rectangle"
+    mode: "line"
     text_color_focus: "black"
     hint_text_color_focus: "black"
     line_color_focus: "black"

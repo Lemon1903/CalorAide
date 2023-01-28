@@ -7,10 +7,10 @@ from Model.base_model import BaseScreenModel
 multitasking.set_max_threads(10)
 
 
-class ProfileScreenModel(BaseScreenModel):
+class HomeScreenModel(BaseScreenModel):
     """
     Implements the logic of the
-    :class:`~View.ProfileScreen.profile_screen.ProfileScreenView` class.
+    :class:`~View.HomeScreen.profile_screen.HomeScreenView` class.
     """
 
     def __init__(self, database):
@@ -30,7 +30,7 @@ class ProfileScreenModel(BaseScreenModel):
     @data.setter
     def data(self, value):
         # We notify the View -
-        # :class:`~View.ProfileScreen.profile_screen.ProfileScreenView` about the
+        # :class:`~View.HomeScreen.profile_screen.HomeScreenView` about the
         # changes that have occurred in the data model.
         self._data = value
         self.notify_observers("profile screen")
