@@ -34,13 +34,13 @@ class LoginScreenController:
     def get_then_clear(self): 
         # print(self.views[0].store_input())
         self.get_list_view()
-        self.clear_tf()
+        self.clear_textfield()
 
     def get_list_view(self):
-        self.logindata = self.views[0].store_input()
-        self.model.check_data(self.logindata)
+        login_data = self.views[0].store_input()
+        self.model.check_data(login_data)
     
-    def clear_tf(self):
-        self.views[0].ids.textfld_username.text = ""
-        self.views[0].ids.textfld_pw.text = ""
+    def clear_textfield(self):
+        self.views[0].ids.textfield_username.text = ""
+        self.views[0].ids.textfield_pw.text = ""
     
