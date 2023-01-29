@@ -11,10 +11,10 @@ import importlib
 import os
 
 from kivy import Config
+from kivy.core.text import LabelBase
 from kivy.core.window import Window
 from kivymd.tools.hotreload.app import MDApp
 from kivymd.uix.screenmanager import MDScreenManager
-from kivy.core.text import LabelBase
 
 import View.screens
 from Model.database import DataBase
@@ -22,11 +22,22 @@ from Model.database import DataBase
 Config.set("graphics", "multisamples", 0)
 os.environ["KIVY_GL_BACKEND"] = "angle_sdl2"
 
-LabelBase.register(name='Poppins-Regular', fn_regular='assets/fonts/Poppins/Poppins-Regular.ttf')
-LabelBase.register(name='Poppins-SemiBold', fn_regular='assets/fonts/Poppins/Poppins-SemiBold.ttf')
-LabelBase.register(name='Poppins-Medium', fn_regular='assets/fonts/Poppins/Poppins-Medium.ttf')
-LabelBase.register(name='Poppins-MediumItalic', fn_regular='assets/fonts/Poppins/Poppins-MediumItalic.ttf')
-LabelBase.register(name='Poppins-Bold', fn_regular='assets/fonts/Poppins/Poppins-Bold.ttf')
+LabelBase.register(
+    name="Poppins-Regular", fn_regular="assets/fonts/Poppins/Poppins-Regular.ttf"
+)
+LabelBase.register(
+    name="Poppins-SemiBold", fn_regular="assets/fonts/Poppins/Poppins-SemiBold.ttf"
+)
+LabelBase.register(
+    name="Poppins-Medium", fn_regular="assets/fonts/Poppins/Poppins-Medium.ttf"
+)
+LabelBase.register(
+    name="Poppins-MediumItalic",
+    fn_regular="assets/fonts/Poppins/Poppins-MediumItalic.ttf",
+)
+LabelBase.register(
+    name="Poppins-Bold", fn_regular="assets/fonts/Poppins/Poppins-Bold.ttf"
+)
 
 
 class Fitrex(MDApp):
@@ -36,7 +47,7 @@ class Fitrex(MDApp):
         DEBUG (bool): The switch indicator for hot reloading.
         KV_DIRS (list[str]): The directory path to the kivy files.
     """
-    
+
     DEBUG = True
     KV_DIRS = [os.path.join(os.getcwd(), "View")]
 
@@ -77,7 +88,7 @@ class Fitrex(MDApp):
 
 if __name__ == "__main__":
     # adjust this base on your screen
-    Window.size = (360, 636)
-    Window.top = 30
-    Window.left = 900
+    Window.size = (360, 640)
+    Window.top = 50
+    Window.left = 1160
     Fitrex().run()
