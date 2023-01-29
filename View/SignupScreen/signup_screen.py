@@ -1,10 +1,8 @@
 """_module summary_"""
-from kivy.clock import mainthread
-from kivymd.uix.floatlayout import MDFloatLayout
-from kivymd.uix.dialog import MDDialog
-from kivymd.uix.snackbar import Snackbar
-from View.base_screen import BaseScreenView
 
+from kivymd.uix.snackbar import Snackbar
+
+from View.base_screen import BaseScreenView
 
 
 class SignupScreenView(BaseScreenView):
@@ -14,35 +12,26 @@ class SignupScreenView(BaseScreenView):
         BaseScreenView (_type_): _description_
     """
 
-    def __init__(self, controller, model, **kw):
-        super().__init__(controller, model, **kw)
-        pass
+    def get_userdata(self):
+        return [
+            self.ids.username.text,
+            self.ids.password.text,
+            self.ids.confirm_password.text,
+        ]
 
-    def get_userdata(self): 
-       return ( [self.ids.user.text, self.ids.passw.text, self.ids.conpass.text])
+    def clear_text_fields(self):
+        for text_field in self.get_userdata():
+            text_field.text = ""
 
-    def error_user(self):
-        return(Snackbar(text = "Fill Username", bg_color = "#7B56BA").open())
+    def disable_confirm_button(self):
+        if not self.ids.btn.disabled:
+            self.ids.btn.disabled = True
 
-    def error_pass(self):
-        return(Snackbar(text = "Fill Password", bg_color = "#7B56BA").open())
-
-    def error_conpass(self):
-        return(Snackbar(text = "Re-type Password", bg_color = "#7B56BA").open())
-
-    def error_notmatch(self):
-        return(Snackbar(text = "Password Do Not Match", bg_color = "#7B56BA").open())
-
-    def error_user_taken(self):
-        return(Snackbar(text = "Username Already Taken", bg_color = "#7B56BA").open())
-        
-
+    def show_error_snackbar(self, error_text: str, color="#7B56BA"):
+        Snackbar(text=error_text, bg_color=color).open()
 
     def model_is_changed(self) -> None:
         """Called whenever any change has occurred in the data model.
         The view in this method tracks these changes and updates the UI
         according to these changes.
         """
-
-
-

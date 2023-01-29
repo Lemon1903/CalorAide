@@ -1,12 +1,8 @@
 """_module summary_"""
 import importlib
-import time
-
-import multitasking
 
 import View.SignupScreen.signup_screen
 from View import SignupScreenView
-
 
 # We have to manually reload the view module in order to apply the
 # changes made to the code on a subsequent hot reload.
@@ -16,64 +12,41 @@ importlib.reload(View.SignupScreen.signup_screen)
 
 class SignupScreenController:
     """
-    The `MainScreenController` class represents a controller implementation.
+    The `SignupScreenController` class represents a controller implementation.
     Coordinates work of the view with the model.
     The controller implements the strategy pattern. The controller connects to
     the view to control its actions.
     """
 
     def __init__(self, model):
-        self.model = model  # Model.main_screen.MainScreenModel
+        self.model = model  # Model.signup_screen.SignupScreenModel
         self.views = [SignupScreenView(self, self.model)]
 
-    def clear_txt_field(self):
-        self.views[0].ids.user.text = ""
-        self.views[0].ids.passw.text = ""
-        self.views[0].ids.conpass.text = ""
+    def check_text_field(self):  # bind sa kv file
+        user_data = self.views[0].get_userdata()
 
-    def disabled_btn(self):
-        if self.views[0].ids.btn.disabled == False:
-            self.views[0].ids.btn.disabled =True
-    
-    def pass_data(self):
-        self.userdata = self.views[0].get_userdata()
-        self.model.to_database(self.userdata)
+        if user_data[0] == "":
+            self.views[0].show_error_snackbar("Fill Username")
 
-    def check_clr_disable(self):
-        self.pass_data()
-        self.disabled_btn()
-        self.clear_txt_field()
+        elif self.model.is_username_taken(user_data[0]):
+            self.views[0].show_error_snackbar("Username Already Taken")
 
-    def check_txt_field(self):  #bind sa kv file
-        self.usern = self.username_check()
+        elif user_data[1] == "":
+            self.views[0].show_error_snackbar("Fill Password")
 
-        if self.views[0].ids.user.text == "":
-            print("Fill Username")
-            self.views[0].error_user()
+        elif user_data[2] == "":
+            self.views[0].show_error_snackbar("Re-type Password")
 
-        elif self.views[0].ids.user.text == self.usern:
-            print("username taken")
-            self.views[0].error_user_taken()
-
-        elif self.views[0].ids.passw.text == "":
-            print("Fill Password")
-            self.views[0].error_pass()
-
-        elif self.views[0].ids.conpass.text == "":
-            print("Re-type Password")
-            self.views[0].error_conpass()
-
-        elif self.views[0].ids.passw.text != self.views[0].ids.conpass.text:
-            print("Password Do not Match")
-            self.views[0].error_notmatch()
+        elif user_data[1] != user_data[2]:
+            self.views[0].show_error_snackbar("Password Do Not Match")
 
         else:
-            self.check_clr_disable()
-    
-    def username_check(self):
-        self.userdata = self.views[0].get_userdata()
-        self.name = self.model.check_username(self.userdata)
-        return(self.name)
+            self._pass_data(user_data)
+
+    def _pass_data(self, user_data: list[str]):
+        self.model.to_database(user_data)
+        self.views[0].disable_confirm_button()
+        self.views[0].clear_text_fields()
 
     def get_views(self) -> list[SignupScreenView]:
         """Gets the view connected to this controller.
@@ -82,6 +55,3 @@ class SignupScreenController:
             SignupScreenView: The view connected to this controller.
         """
         return self.views
-
-
-

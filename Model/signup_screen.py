@@ -18,7 +18,7 @@ class SignupScreenModel(BaseScreenModel):
         self.database = database
 
     @property
-    def is_valid(self): #get
+    def is_valid(self):  # get
         """_data summary_
 
         Returns:
@@ -27,7 +27,7 @@ class SignupScreenModel(BaseScreenModel):
         return self._is_valid
 
     @is_valid.setter
-    def is_valid(self, value): #set
+    def is_valid(self, value):  # set
         # We notify the View -
         # :class:`~View.MainScreen.main_screen.MainScreenView` about the
         # changes that have occurred in the data model.
@@ -35,25 +35,14 @@ class SignupScreenModel(BaseScreenModel):
         self.notify_observers("signup screen")
 
     @multitasking.task
-    def to_database(self, userdata):
+    def to_database(self, user_data):
         self.is_valid = True
-        self.database.add(userdata)
+        self.database.add(user_data)
 
-    def check_username(self, userdata):
-        self.username = userdata[0]
-        self.data = self.database.get_data()
-        for key,value in self.data.items():
-            if value["Username"]  == self.username:
-                return(value["Username"])
-
-        
-
-
-    
-        
-
-        
-              
-              
-    
-
+    @multitasking.task
+    def is_username_taken(self, username_input: str):
+        data = self.database.get_data()
+        for value in data.values():
+            if value["Username"] == username_input:
+                return True
+        return False
