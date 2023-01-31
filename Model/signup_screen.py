@@ -37,12 +37,12 @@ class SignupScreenModel(BaseScreenModel):
     @multitasking.task
     def to_database(self, user_data):
         self.is_valid = True
-        self.database.add(user_data)
+        self.database.add_user_data(user_data)
 
     @multitasking.task
     def is_username_taken(self, username_input: str):
-        data = self.database.get_data()
-        for value in data.values():
-            if value["Username"] == username_input:
+        data = self.database.get_data_table()
+        for key in data.values():
+            if key == username_input:
                 return True
         return False
