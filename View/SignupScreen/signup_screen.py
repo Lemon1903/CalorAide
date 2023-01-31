@@ -12,7 +12,7 @@ class SignupScreenView(BaseScreenView):
         BaseScreenView (_type_): _description_
     """
 
-    def get_userdata(self):
+    def get_user_input(self):
         return [
             self.ids.username.text,
             self.ids.password.text,
@@ -20,7 +20,7 @@ class SignupScreenView(BaseScreenView):
         ]
 
     def clear_text_fields(self):
-        for text_field in self.get_userdata():
+        for text_field in self.get_user_input():
             text_field.text = ""
 
     def disable_confirm_button(self):
