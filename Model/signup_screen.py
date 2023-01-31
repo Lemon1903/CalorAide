@@ -35,9 +35,9 @@ class SignupScreenModel(BaseScreenModel):
         self.notify_observers("signup screen")
 
     @multitasking.task
-    def to_database(self, user_data):
+    def to_database(self, user_input: list[str]):
         self.is_valid = True
-        self.database.add_user_data(user_data)
+        self.database.add_user_data(user_input)
 
     @multitasking.task
     def is_username_taken(self, username_input: str):
