@@ -23,28 +23,28 @@ class SignupScreenController:
         self.views = [SignupScreenView(self, self.model)]
 
     def check_text_field(self):  # bind sa kv file
-        user_data = self.views[0].get_userdata()
+        user_input = self.views[0].get_user_input()
 
-        if user_data[0] == "":
+        if user_input[0] == "":
             self.views[0].show_error_snackbar("Fill Username")
 
-        elif self.model.is_username_taken(user_data[0]):
+        elif self.model.is_username_taken(user_input[0]):
             self.views[0].show_error_snackbar("Username Already Taken")
 
-        elif user_data[1] == "":
+        elif user_input[1] == "":
             self.views[0].show_error_snackbar("Fill Password")
 
-        elif user_data[2] == "":
+        elif user_input[2] == "":
             self.views[0].show_error_snackbar("Re-type Password")
 
-        elif user_data[1] != user_data[2]:
+        elif user_input[1] != user_input[2]:
             self.views[0].show_error_snackbar("Password Do Not Match")
 
         else:
-            self._pass_data(user_data)
+            self._pass_data(user_input)
 
-    def _pass_data(self, user_data: list[str]):
-        self.model.to_database(user_data)
+    def _pass_data(self, user_input: list[str]):
+        self.model.to_database(user_input)
         self.views[0].disable_confirm_button()
         self.views[0].clear_text_fields()
 
