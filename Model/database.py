@@ -18,7 +18,6 @@ class DataBase:
         except requests.exceptions.ConnectionError:
             return None
 
-    def add_user_data(self, user_data):
-        self.data = {"Password": user_data[1]}
-        self.firebase_.put("USERDATA", user_data[0], self.data)
-        print("Posted!")
+    def add_user_data(self, user_input):
+        self.data = {"Password": user_input[1]}
+        self.firebase_.put("USERDATA", user_input[0], self.data)
