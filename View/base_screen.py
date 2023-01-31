@@ -2,7 +2,8 @@
 
 # pylint: disable=no-name-in-module
 from kivy.clock import Clock
-from kivy.properties import ObjectProperty
+from kivy.properties import BooleanProperty, ObjectProperty
+from kivy.uix.modalview import ModalView
 from kivy.uix.screenmanager import Screen
 from kivymd.app import MDApp
 from kivymd.theming import ThemableBehavior
@@ -38,5 +39,22 @@ class BaseScreenView(ThemableBehavior, Screen, Observer):
         # access the application object from the view class.
         self.app = MDApp.get_running_app()
 
+        # loading spinner for all screens
+        self.loading_view = LoadingView()
+
         # add itself as observer of the model
         Clock.schedule_once(lambda _: self.model.add_observer(self), 1)
+
+
+class LoadingView(ModalView):
+    active = BooleanProperty(False)
+
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        self.bind(
+            on_open=lambda *_: self.change_spinner_state(True),
+            on_dismiss=lambda *_: self.change_spinner_state(False),
+        )
+
+    def change_spinner_state(self, state):
+        self.active = state

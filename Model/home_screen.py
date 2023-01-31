@@ -15,27 +15,39 @@ class HomeScreenModel(BaseScreenModel):
 
     def __init__(self, database):
         # Just an example of the data. Use your own values.
-        self._data = None
+        self._user_data = None
         self.database = database
 
     @property
-    def data(self):
-        """_data summary_
+    def user_data(self):
+        """The current data of the user."""
+        return self._user_data
 
-        Returns:
-            _type_: _description_
-        """
-        return self._data
-
-    @data.setter
-    def data(self, value):
+    @user_data.setter
+    def user_data(self, value):
         # We notify the View -
         # :class:`~View.HomeScreen.profile_screen.HomeScreenView` about the
         # changes that have occurred in the data model.
-        self._data = value
+        self._user_data = value
         self.notify_observers("profile screen")
 
+    def reset_user_data(self):
+        """Resets user data to None."""
+        self._user_data = None
+        self.notify_observers("home screen")
+
     @multitasking.task
-    def check_data(self):
-        """Just an example of the method. Use your own code."""
-        self.data = ["example item"]
+    def load_user_data(self):
+        """Query user data in database"""
+        self.user_data = self.database.get_user_data()
+
+    @multitasking.task
+    def update_user_data(self, user_data: dict):
+        """Updates the user data in database.
+
+        Args:
+            user_data (dict): the JSON format data to be sent to the database.
+        """
+        self.database.update_user_data(user_data)
+        self.load_user_data()
+        self.notify_observers("home screen")

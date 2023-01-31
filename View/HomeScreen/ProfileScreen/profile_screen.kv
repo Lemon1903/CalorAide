@@ -3,13 +3,13 @@
 <ProfileScreenView>:
     # main layout that holds all widgets
     MDScrollView:
+        bar_width: dp(0)
         size_hint_x: 0.95
         pos_hint: {'center_x': 0.5}
-        bar_width: dp(0)
 
         # scrollable content
         MDList:
-            padding: dp(0), dp(15)
+            padding: dp(0), dp(5)
             spacing: dp(10)
 
             # TODO: Fix the switching of image for dark and light mode.
@@ -21,58 +21,55 @@
                     icon_active: "weather-night"
                     icon_inactive: "weather-sunny"
                     icon_inactive_color: "black"
-                    pos_hint: {'right': 0.92, 'top': 1}
+                    pos_hint: {'right': 0.92, 'top': 1.0}
                     on_active: app.switch_theme_style(root.ids.background)
 
             # the upper part for image and username
             MDBoxLayout:
                 orientation: "vertical"
-                spacing: dp(30)
-                padding: dp(20)
-                height: dp(200)
-                size_hint_y: None
+                spacing: dp(10)
+                adaptive_height: True
 
                 FitImage:
                     source: "assets/images/sample.png"
                     radius: 50
-                    size_hint: 0.5, 0.5
+                    size: dp(120), dp(120)
+                    size_hint: None, None
                     pos_hint: {"center_x": 0.5}
 
-                MDLabel:
-                    bold: True
-                    text: 'Khent David Roscoe A. Alba'
+                ProfileLabel:
+                    text:
+                        (
+                        general_information.profile_layout.name_info
+                        if general_information.profile_layout.name_info
+                        else "--"
+                        )
+                    font_name: "Poppins-Bold"
                     halign: 'center'
-                    height: dp(20)
-                    size_hint_y: None
 
             # buttons
             MDBoxLayout:
                 orientation: 'vertical'
                 spacing: dp(10)
-                padding: [dp(0), dp(0), dp(0), dp(10)]
                 adaptive_height: True
 
                 ChangeButton:
-                    text: "CHANGE MODE: [b][color=#f3aaa0]GAIN[/color][/b]"
+                    text: "CHANGE MODE: [color=#f3aaa0]GAIN[/color]"
 
                 ChangeButton:
-                    text: "CHANGE ACTIVITY: [b][color=#f3aaa0]LIGHT[/color][/b]"
+                    text: "CHANGE ACTIVITY: [color=#f3aaa0]LIGHT[/color]"
 
             # general information of the user
             GeneralInformationCard:
+                id: general_information
                 controller: root.controller
-
-            # placeholder
-            MDCard:
-                height: dp(150)
-                size_hint_y: None
-                md_bg_color: app.theme_cls.primary_color
 
 
 # dynamic class
 <ChangeButton@MDRectangleFlatButton>:
+    font_name: "Poppins-SemiBold"
+    text_color: "white"
     size_hint_x: 0.7
     pos_hint: {'center_x': 0.5}
-    text_color: "white"
     md_bg_color: app.theme_cls.primary_dark
     line_color: app.theme_cls.primary_dark

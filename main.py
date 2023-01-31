@@ -83,7 +83,6 @@ class Fitrex(MDApp):
                 view.name = name_screen
                 manager_screens.add_widget(view)
 
-        manager_screens.current = "home screen"
         return manager_screens
 
     def switch_theme_style(self, background):

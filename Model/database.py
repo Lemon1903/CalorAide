@@ -1,46 +1,39 @@
 """_module summary_"""
 from __future__ import annotations
 
-import socket
-
 import requests
 from firebase import firebase
-
-
-def get_connect(func, host="8.8.8.8", port=53, timeout=3):
-    """Checks for an active Internet connection."""
-
-    def wrapped(*args):
-        try:
-            socket.setdefaulttimeout(timeout)
-            socket.socket(socket.AF_INET, socket.SOCK_STREAM).connect((host, port))
-            return func(*args)
-        except Exception:
-            return False
-
-    return wrapped
 
 
 class DataBase:
     """Your methods for working with the database should be implemented in this class."""
 
-    name = "Firebase"
-
     # Address for users collections.
-    DATABASE_URL = "https://fir-db73a-default-rtdb.firebaseio.com/"
-
-    # RealTime Database attribute.
-    USER_DATA = "Userdata"
+    DATABASE_URL = (
+        "https://sample-d0d72-default-rtdb.asia-southeast1.firebasedatabase.app/"
+    )
 
     def __init__(self):
         self.real_time_firebase = firebase.FirebaseApplication(self.DATABASE_URL, None)
 
-    @get_connect
-    def get_data_from_collection(self, name_collection: str) -> dict | bool | None:
+    def get_user_data(self, key: str = "Lemon") -> dict | bool | None:
         """Returns data of the selected collection from the database."""
-
         try:
-            data = self.real_time_firebase.get(self.DATABASE_URL, name_collection, 100)
+            data = self.real_time_firebase.get("USERDATA", key, connection=None)
             return data
+        except requests.exceptions.ConnectionError:
+            return None
+
+    def update_user_data(self, user_input: dict, key: str = "Lemon"):
+        """Updates user data in database.
+
+        Args:
+            user_input (dict): the new user data to be stored.
+        """
+        try:
+            self.real_time_firebase.patch(
+                url=f"USERDATA/{key}", data=user_input, connection=None
+            )
+            return True
         except requests.exceptions.ConnectionError:
             return False
