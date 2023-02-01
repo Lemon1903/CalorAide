@@ -45,7 +45,7 @@ class LoginScreenModel(BaseScreenModel):
         self.db = self.database.get_data()
 
         for key, value in self.db.items(): 
-            if value["Username"] == self.username: 
+            if value["Username"] == self.username and value["Password"] == self.password:  
                 return True
            
         return False
