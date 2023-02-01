@@ -36,10 +36,15 @@ class SignupScreenModel(BaseScreenModel):
 
     @multitasking.task
     def to_database(self, user_input: list[str]):
+        """
+        If the user input is valid this function is called to add the data into the database 
+        """
         self.is_valid = True
         self.database.add_user_data(user_input)
 
-    @multitasking.task
+    """
+    Checks if the username input is already taken
+    """
     def is_username_taken(self, username_input: str):
         data = self.database.get_data_table()
         for key in data.values():
