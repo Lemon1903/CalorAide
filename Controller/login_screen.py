@@ -31,18 +31,18 @@ class LoginScreenController:
         """
         return self.views
 
-    def check_username_reset_clear(self):
-        if not self.check_username_reset():
+    def check_account_reset_clear(self):
+        """A method that do three things: [1] check the username"""
+        if not self.check_account_reset():
             self.views[0].show_errors_snackbar()
         self.views[0].clear_text_fields()
 
-    def check_username_reset(self):
-        logindata = self.views[0].store_input()
-        if self.model.is_username_taken(logindata):
+    def check_account_reset(self):
+        """A method that replicates the is_account_taken from the Model but it has a condition that if an account exists it should reset the status of the text field"""
+        logindata = self.views[0].store_user_input()
+        if self.model.is_account_taken(logindata):
             self.views[0].reset_status()
-            print("Account Exist!")
-            return self.model.is_username_taken(logindata)
+            return self.model.is_account_taken(logindata)
         else:
-            print("Account does not exist!")
-            return self.model.is_username_taken(logindata)
+            return self.model.is_account_taken(logindata)
     

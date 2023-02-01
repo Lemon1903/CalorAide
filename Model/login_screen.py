@@ -17,7 +17,6 @@ class LoginScreenModel(BaseScreenModel):
         # Just an example of the data. Use your own values.
         self._data = None
         self.database = database
-        self.result = ""
 
     @property # getter
     def data(self):
@@ -36,15 +35,13 @@ class LoginScreenModel(BaseScreenModel):
         self._data = value
         self.notify_observers("profile screen")
 
-    # @multitasking.task
-    def is_username_taken(self, login_info):
-        """Just an example of the method. Use your own code."""
-        # self.database.create_table()
+    def is_account_taken(self, login_info):
+        """A method that checks if certain username and password exist in database"""
         self.username = login_info[0]
         self.password = login_info[1]
         self.db = self.database.get_data()
 
-        for key, value in self.db.items(): 
+        for value in self.db.values(): 
             if value["Username"] == self.username and value["Password"] == self.password:  
                 return True
            
