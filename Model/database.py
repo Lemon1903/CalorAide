@@ -12,6 +12,9 @@ class DataBase:
 
     #USERDATA is the Table
     def get_data_table(self):
+        """
+        Returns data from database.
+        """
         try:
             data = self.firebase_.get("USERDATA", '')
             return data
@@ -19,5 +22,8 @@ class DataBase:
             return None
 
     def add_user_data(self, user_input):
+        """
+        Adds userdata to database
+        """
         self.data = {"Password": user_input[1]}
         self.firebase_.put("USERDATA", user_input[0], self.data)
