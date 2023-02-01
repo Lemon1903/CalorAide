@@ -23,6 +23,9 @@ class SignupScreenController:
         self.views = [SignupScreenView(self, self.model)]
 
     def check_text_field(self):  # bind sa kv file
+        """
+        Checks the input of the user.
+        """
         user_input = self.views[0].get_user_input()
 
         if user_input[0] == "":
@@ -44,6 +47,10 @@ class SignupScreenController:
             self._pass_data(user_input)
 
     def _pass_data(self, user_input: list[str]):
+        """
+        Pass the user input to a function in model called `to_database`.
+        Calls the functions `disable_confirm_button` and `clear_text_field` from SignupScreenView.
+        """
         self.model.to_database(user_input)
         self.views[0].disable_confirm_button()
         self.views[0].clear_text_fields()
