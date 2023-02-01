@@ -13,6 +13,9 @@ class SignupScreenView(BaseScreenView):
     """
 
     def get_user_input(self):
+        """
+        Stores users input.
+        """
         return [
             self.ids.username.text,
             self.ids.password.text,
@@ -20,14 +23,23 @@ class SignupScreenView(BaseScreenView):
         ]
 
     def clear_text_fields(self):
+        """
+        CLear the text fields.
+        """
         for text_field in self.get_user_input():
             text_field.text = ""
 
     def disable_confirm_button(self):
+        """
+        Disable the confirm button.
+        """
         if not self.ids.btn.disabled:
             self.ids.btn.disabled = True
 
     def show_error_snackbar(self, error_text: str, color="#7B56BA"):
+        """
+        This function is called everytime an error has occured.
+        """
         Snackbar(text=error_text, bg_color=color).open()
 
     def model_is_changed(self) -> None:
