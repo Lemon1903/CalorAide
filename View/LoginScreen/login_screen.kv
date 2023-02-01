@@ -32,7 +32,6 @@
             helper_text: "This is a required text field"
             on_focus: 
                 if root.ids.textfield_username.text == '': root.ids.textfield_username.required = True
-                if root.ids.textfield_password.text == '': root.ids.textfield_password.required = True
             mode: "rectangle"
 
         MDRelativeLayout:
@@ -44,6 +43,8 @@
                 required: False
                 hint_text: "Password"
                 helper_text: "This is a required text field"
+                on_focus: 
+                    if root.ids.textfield_password.text == '': root.ids.textfield_password.required = True
                 mode: "rectangle"
             
             MDIconButton:
