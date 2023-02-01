@@ -1,4 +1,82 @@
 <LoginScreenView>:
-    Button:
-        text: "Click Me Bruh!"
-        on_release: root.manager.current = "profile screen"
+    MDFloatLayout:  
+        # md_bg_color: 0, 1, 1, .5
+        size_hint: 1, 0.4
+        pos_hint: {"center_x": .5, "center_y": 0.78}
+        Image: 
+            source: "assets/images/FITNITIE.png"
+            size_hint: 1, 1
+            pos_hint: {"center_x": .5, "center_y": 0.8}
+
+        Image: 
+            source: "assets/images/ICON.png"
+            size_hint: 1, 1
+            pos_hint: {"center_x": .5, "center_y": 0.3}
+    
+    MDFloatLayout:
+        size_hint: 1, 1.055
+        pos_hint: {"center_x": 0.9, "center_y": 0.8}
+        MDLabel:
+            text: "LOG-IN"
+            halign: "center"
+            font_name: "Poppins-Medium"
+            font_size: 40
+
+    MDBoxLayout:  
+        orientation: 'vertical'
+        size_hint: 0.65, 0.4
+        pos_hint: {"center_x": .5, "center_y": .26}
+        # md_bg_color: 0, 1, 1, .5
+        # line_color: 0, 0, 1, 1
+        MDTextField:
+            id: textfield_username
+            font_name: "Poppins-Medium"
+            pos_hint: {"center_x": .5, "center_y": .5}
+            required: False
+            hint_text: "Username"
+            helper_text: "This is a required text field"
+            on_focus: 
+                if root.ids.textfield_username.text == '': root.ids.textfield_username.required = True
+                if root.ids.textfield_password.text == '': root.ids.textfield_password.required = True
+            mode: "rectangle"
+
+        MDRelativeLayout:
+            MDTextField:
+                id: textfield_password
+                font_name: "Poppins-Medium"
+                pos_hint: {"center_x": .5, "center_y": .5}
+                password: True
+                required: False
+                hint_text: "Password"
+                helper_text: "This is a required text field"
+                mode: "rectangle"
+            
+            MDIconButton:
+                icon: "eye-off"
+                pos_hint: {"center_y": 0.5}
+                pos: textfield_password.width - self.width + dp(0), 0
+                # md_bg_color: 0, 1, 1, .5
+                theme_text_color: "Hint"
+                on_release:
+                    self.icon = "eye" if self.icon == "eye-off" else "eye-off"
+                    textfield_password.password = False if textfield_password.password is True else True
+                    
+        MDFloatLayout:
+            size_hint: 1, 0.9
+            pos_hint: {"center_x": .5, "center_y": .7} 
+            # md_bg_color: 0, 1, 1, .5
+            MDFillRoundFlatButton: 
+                pos_hint: {"center_x": .24, "center_y": .5} 
+                text: "LOG-IN"
+                font_name: "Poppins-SemiBold"
+                custom_color: self.theme_text_color
+                on_release: 
+                    root.controller.check_username_reset_clear()
+                    # root.manager.current = "profile screen"
+            
+            MDFillRoundFlatButton: 
+                pos_hint: {"center_x": .75, "center_y": .5} 
+                text: "SIGN-UP"
+                font_name: "Poppins-SemiBold"
+                custom_color: self.theme_text_color
+                # on_release: root.manager.current = "signup screen"

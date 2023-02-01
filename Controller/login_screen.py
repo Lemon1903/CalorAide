@@ -22,6 +22,7 @@ class LoginScreenController:
         self.model = model  # Model.login_screen.LoginScreenModel
         self.views = [LoginScreenView(self, self.model)]
 
+
     def get_views(self) -> list[LoginScreenView]:
         """Gets the view connected to this controller.
 
@@ -29,3 +30,19 @@ class LoginScreenController:
             LoginScreenView: The view connected to this controller.
         """
         return self.views
+
+    def check_username_reset_clear(self):
+        if not self.check_username_reset():
+            self.views[0].show_errors_snackbar()
+        self.views[0].clear_text_fields()
+
+    def check_username_reset(self):
+        logindata = self.views[0].store_input()
+        if self.model.is_username_taken(logindata):
+            self.views[0].reset_status()
+            print("Account Exist!")
+            return self.model.is_username_taken(logindata)
+        else:
+            print("Account does not exist!")
+            return self.model.is_username_taken(logindata)
+    
