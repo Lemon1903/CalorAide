@@ -24,14 +24,19 @@ class GeneralInformationCard(MDCard):
         self.profile_layout = ProfileInformationLayout()
         self.edit_layout = EditInformationLayout()
         self.current_layout = self.profile_layout
-        Clock.schedule_once(lambda _: self.add_widget(self.current_layout))
+        Clock.schedule_once(lambda _: self.add_widget(self.profile_layout))
 
-    def change_layout(self, new_layout: MDBoxLayout):
+    def change_layout(self):
         """Changing the content inside the card.
 
         Args:
             new_layout (MDBoxLayout): the new layout to be shown.
         """
+        new_layout = (
+            self.profile_layout
+            if self.current_layout == self.edit_layout
+            else self.edit_layout
+        )
         self._animate_height(new_layout)
 
     def _animate_height(self, new_layout: MDBoxLayout):
@@ -94,7 +99,7 @@ class ProfileInformationLayout(MDBoxLayout):
     def on_edit_profile_info(self):
         """Callback function when editing the profile information."""
         self.parent.edit_layout.current_profile_info = self._profile_info
-        self.parent.change_layout(self.parent.edit_layout)
+        self.parent.change_layout()
 
 
 class EditInformationLayout(MDBoxLayout):
@@ -106,17 +111,16 @@ class EditInformationLayout(MDBoxLayout):
         """Callback function when submitting the new profile information."""
         textfields = self._get_textfields()
         if self._is_same_info(textfields):
-            self.parent.change_layout(self.parent.profile_layout)
+            self.parent.change_layout()
         elif self._has_no_error(textfields):
             self.parent.controller.update_user_data(textfields)
-            self.parent.change_layout(self.parent.profile_layout)
 
     def _get_textfields(self):
         return [child for child in self.children if isinstance(child, MDTextField)]
 
-    def _is_same_info(self, textfields):
+    def _is_same_info(self, textfields: list[MDTextField]):
         profile_info = self.parent.profile_layout.profile_info
-        return all(tf.text == profile_info[tf.hint_text] for tf in textfields)
+        return all(tf.text == str(profile_info[tf.hint_text]) for tf in textfields)
 
     def _has_no_error(self, textfields):
         return all(not tf.error for tf in textfields)

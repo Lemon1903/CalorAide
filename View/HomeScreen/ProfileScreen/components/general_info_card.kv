@@ -80,16 +80,20 @@
         hint_text: "Name"
         text: root.current_profile_info["Name"]
         max_length: 30
+        validator_type: "name"
+        error_message: "Enter a valid name"
 
     ProfileTextField:
         hint_text: "Height"
         text: str(root.current_profile_info["Height"])
         validator_type: "numeric"
+        error_message: "Enter a valid value for height"
 
     ProfileTextField:
         hint_text: "Weight"
         text: str(root.current_profile_info["Weight"])
         validator_type: "numeric"
+        error_message: "Enter a valid value for weight"
 
     Widget:
         height: dp(10)

@@ -2,6 +2,7 @@
 import importlib
 
 import View.HomeScreen.home_screen
+from Utils import helpers
 from View import HomeScreenView
 
 # We have to manually reload the view module in order to apply the
@@ -28,7 +29,6 @@ class HomeScreenController:
         if not self.has_loaded_profile:
             self.views[0].loading_view.open()
             self.model.load_user_data()
-            self.has_loaded_profile = True
 
     def reset_user_data(self):
         """Resets the user data to None."""
@@ -40,10 +40,15 @@ class HomeScreenController:
         Args:
             textfields (list): the list of textfields to get the new data.
         """
+        height = float(textfields[1].text)
+        weight = float(textfields[0].text)
+        new_bmi_classification = helpers.get_bmi_classification(height, weight)
+
         user_input = {
             "Name": textfields[2].text,
-            "Height": textfields[1].text,
-            "Weight": textfields[0].text,
+            "Height": height,
+            "Weight": weight,
+            "BMI": new_bmi_classification,
         }
         self.model.update_user_data(user_input)
 
