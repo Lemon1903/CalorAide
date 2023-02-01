@@ -29,20 +29,20 @@
         # md_bg_color: 0, 1, 1, .5
         # line_color: 0, 0, 1, 1
         MDTextField:
-            id: textfld_username
+            id: textfield_username
             font_name: "Poppins-Medium"
             pos_hint: {"center_x": .5, "center_y": .5}
             required: False
             hint_text: "Username"
             helper_text: "This is a required text field"
             on_focus: 
-                if root.ids.textfld_username.text == '': root.ids.textfld_username.required = True
-                if root.ids.textfld_pw.text == '': root.ids.textfld_pw.required = True
+                if root.ids.textfield_username.text == '': root.ids.textfield_username.required = True
+                if root.ids.textfield_password.text == '': root.ids.textfield_password.required = True
             mode: "rectangle"
 
         MDRelativeLayout:
             MDTextField:
-                id: textfld_pw
+                id: textfield_password
                 font_name: "Poppins-Medium"
                 pos_hint: {"center_x": .5, "center_y": .5}
                 password: True
@@ -54,12 +54,12 @@
             MDIconButton:
                 icon: "eye-off"
                 pos_hint: {"center_y": 0.5}
-                pos: textfld_pw.width - self.width + dp(0), 0
+                pos: textfield_password.width - self.width + dp(0), 0
                 # md_bg_color: 0, 1, 1, .5
                 theme_text_color: "Hint"
                 on_release:
                     self.icon = "eye" if self.icon == "eye-off" else "eye-off"
-                    textfld_pw.password = False if textfld_pw.password is True else True
+                    textfield_password.password = False if textfield_password.password is True else True
                     
         MDFloatLayout:
             size_hint: 1, 0.9
@@ -70,11 +70,13 @@
                 text: "LOG-IN"
                 font_name: "Poppins-SemiBold"
                 custom_color: self.theme_text_color
-                on_release: root.controller.get_then_clear()
+                on_release: 
+                    root.controller.check_username_reset_clear()
+                    root.manager.current = "profile screen"
             
             MDFillRoundFlatButton: 
                 pos_hint: {"center_x": .75, "center_y": .5} 
                 text: "SIGN-UP"
                 font_name: "Poppins-SemiBold"
                 custom_color: self.theme_text_color
-                on_release: root.manager.current = "profile screen"
+                on_release: root.manager.current = "signup screen"

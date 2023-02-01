@@ -37,7 +37,7 @@ class DataBase:
 
     def __init__(self):
         # self.real_time_firebase = firebase.FirebaseApplication(self.DATABASE_URL, None)
-        self.firebase_ = firebase.FirebaseApplication("https://fitrydb-default-rtdb.asia-southeast1.firebasedatabase.app/")
+        self.firebase_ = firebase.FirebaseApplication("https://fitrex-bfc21-default-rtdb.asia-southeast1.firebasedatabase.app/")
 
     # @get_connect
     # def get_data_from_collection(self, name_collection: str) -> dict | bool | None:
@@ -52,15 +52,7 @@ class DataBase:
     def get_data(self):
         
         try:
-            data = self.firebase_.get("UsersInfo", '')
+            data = self.firebase_.get("USERDATA", '')
         except requests.exceptions.ConnectionError:
             return None
         return data 
-
-    # def create_table(self):
-        # self.data = {
-        #     "Username" : "baste",
-        #     "Password" : "try"
-        # }
-        # self.firebase_.post("https://fitrydb-default-rtdb.asia-southeast1.firebasedatabase.app/UsersInfo", self.data)
-    
