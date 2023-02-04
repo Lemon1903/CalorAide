@@ -8,7 +8,7 @@ from View.base_screen import BaseScreenView
 class HomeScreenView(BaseScreenView):
     """The view that handles UI for profile screen."""
 
-    def on_pre_enter(self, *_):
+    def on_enter(self, *_):
         self.controller.load_profile_data()
 
     @mainthread
@@ -17,7 +17,7 @@ class HomeScreenView(BaseScreenView):
         The view in this method tracks these changes and updates the UI
         according to these changes.
         """
-        if self.loading_view.parent:
-            self.loading_view.dismiss()
-        else:
-            self.loading_view.open()
+        # if not self.loading_view.parent:
+        #     self.loading_view.open()
+        # else:
+        #     self.loading_view.dismiss()

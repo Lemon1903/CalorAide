@@ -41,6 +41,7 @@ class HomeScreenModel(BaseScreenModel):
     @multitasking.task
     def load_user_data(self):
         """Query user data in database"""
+        self.notify_observers("home screen")
         self.user_data = self.database.get_user_data()
 
     @multitasking.task
@@ -51,9 +52,4 @@ class HomeScreenModel(BaseScreenModel):
             user_data (dict): the JSON format data to be sent to the database.
         """
         self.database.update_user_data(user_data)
-
-        # updates the profile information
         self.load_user_data()
-
-        # show spinner loading
-        self.notify_observers("home screen")

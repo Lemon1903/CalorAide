@@ -49,7 +49,7 @@ class Fitrex(MDApp):
         KV_DIRS (list[str]): The directory path to the kivy files.
     """
 
-    DEBUG = True
+    DEBUG = False
     KV_DIRS = [os.path.join(os.getcwd(), "View")]
 
     def build_app(self, *_) -> MDScreenManager:

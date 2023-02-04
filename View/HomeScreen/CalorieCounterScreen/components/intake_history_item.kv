@@ -1,0 +1,29 @@
+<IntakeHistoryItem>:
+    adaptive_height: True
+
+    canvas.after:
+        Color:
+            rgba: [1, 1, 1, 0.5]
+        Line:
+            points: (self.x, self.y, self.x + self.width, self.y)
+
+    MDCheckbox:
+        id: checkbox
+        ripple_scale: 0.3
+        size_hint_x: 0.15
+        on_active: root.view.on_check(*args)
+
+    MDLabel:
+        shorten: True
+        shorten_from: "right"
+        text: root.food_name
+        font_name: "Poppins-Regular"
+        height: dp(45)
+        size_hint: 0.35, None
+
+    MDLabel:
+        text: f"{root.calorie_amount} kcal"
+        font_name: "Poppins-Regular"
+        halign: "center"
+        height: dp(45)
+        size_hint: 0.5, None

@@ -24,11 +24,20 @@ class HomeScreenController:
         self.views = [HomeScreenView(controller=self, model=self.model)]
         self.has_loaded_profile = False
 
-    def load_profile_data(self):
+    def get_views(self) -> list[HomeScreenView]:
+        """Gets the view connected to this controller.
+
+        Returns:
+            HomeScreenView: The view connected to this controller.
+        """
+        return self.views
+
+    def load_profile_data(self, do_reload=False):
         """Loads all user profile information."""
-        if not self.has_loaded_profile:
-            self.views[0].loading_view.open()
+        if not self.has_loaded_profile or do_reload:
             self.model.load_user_data()
+            if do_reload:
+                self.has_loaded_profile = False
 
     def reset_user_data(self):
         """Resets the user data to None."""
@@ -42,20 +51,12 @@ class HomeScreenController:
         """
         height = float(textfields[1].text)
         weight = float(textfields[0].text)
-        new_bmi_classification = helpers.get_bmi_classification(height, weight)
+        bmi_classification = helpers.get_bmi_classification(height, weight)
 
         user_input = {
             "Name": textfields[2].text,
             "Height": height,
             "Weight": weight,
-            "BMI": new_bmi_classification,
+            "BMI": bmi_classification,
         }
         self.model.update_user_data(user_input)
-
-    def get_views(self) -> list[HomeScreenView]:
-        """Gets the view connected to this controller.
-
-        Returns:
-            HomeScreenView: The view connected to this controller.
-        """
-        return self.views

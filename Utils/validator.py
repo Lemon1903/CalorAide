@@ -33,10 +33,15 @@ class Validator:
     def _get_has_error(validator_type: str, text: str):
         if validator_type:
             return not {
+                "alpha": Validator._is_valid_alpha,
                 "name": Validator._is_valid_name,
                 "numeric": Validator._is_valid_numeric,
             }[validator_type](text)
         return not text
+
+    @staticmethod
+    def _is_valid_alpha(text: str):
+        return text.replace(" ", "").isalpha()
 
     @staticmethod
     def _is_valid_name(text: str):
