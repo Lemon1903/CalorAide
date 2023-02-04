@@ -23,7 +23,7 @@ class DataBase:
     def add_user_data(self, user_input):
         try:
             self.data = {"Password": user_input[1]}
-            self.firebase_.put("USERDATA", user_input[0], self.data)
+            self.firebase_.put("USERDATA/UserInfo", user_input[2], self.data)
             return True
         except requests.exceptions.ConnectionError:
             return False
