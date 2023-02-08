@@ -1,5 +1,7 @@
 """helper functions"""
 
+from datetime import date
+
 
 def get_bmi_classification(height: float, weight: float):
     """Function to get the bmi classification
@@ -24,3 +26,9 @@ def get_bmi_classification(height: float, weight: float):
         if bmi <= bmi_value:
             return bmi_classification
     return "Morbidly Obese"
+
+
+def get_date_today():
+    """Get the date today in custom format."""
+    today = date.today()
+    return today.strftime("%d-%m-%Y")

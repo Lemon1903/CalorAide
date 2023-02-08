@@ -10,7 +10,8 @@ class IntakeHistoryItem(MDBoxLayout):
 
     food_name = StringProperty()
     calorie_amount = NumericProperty()
+    identifier = NumericProperty()
 
-    def __init__(self, view, *args, **kwargs):
+    def __init__(self, callback, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.view = view
+        self.on_check_callback = callback

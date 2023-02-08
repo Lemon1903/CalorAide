@@ -98,8 +98,9 @@ class ProfileInformationLayout(MDBoxLayout):
 
     def on_edit_profile_info(self):
         """Callback function when editing the profile information."""
-        self.parent.edit_layout.current_profile_info = self._profile_info
-        self.parent.change_layout()
+        if self._profile_info:
+            self.parent.edit_layout.current_profile_info = self._profile_info
+            self.parent.change_layout()
 
 
 class EditInformationLayout(MDBoxLayout):
@@ -113,7 +114,7 @@ class EditInformationLayout(MDBoxLayout):
         if self._is_same_info(textfields):
             self.parent.change_layout()
         elif self._has_no_error(textfields):
-            self.parent.controller.update_user_data(textfields)
+            self.parent.controller.update_user_profile_data(textfields)
 
     def _get_textfields(self):
         return [child for child in self.children if isinstance(child, MDTextField)]

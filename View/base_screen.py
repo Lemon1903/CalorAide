@@ -47,14 +47,16 @@ class BaseScreenView(ThemableBehavior, Screen, Observer):
 
 
 class LoadingView(ModalView):
+    """The ModalView with the Spinner which represents loading state."""
+
     active = BooleanProperty(False)
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         self.bind(
-            on_open=lambda *_: self.change_spinner_state(True),
-            on_dismiss=lambda *_: self.change_spinner_state(False),
+            on_open=lambda *_: self._change_spinner_state(True),
+            on_dismiss=lambda *_: self._change_spinner_state(False),
         )
 
-    def change_spinner_state(self, state):
+    def _change_spinner_state(self, state):
         self.active = state
