@@ -20,7 +20,7 @@ class ProfileScreenController:
 
     def __init__(self, model):
         self.model = model  # Model.profile_screen.ProfileScreenModel
-        self.views = [ProfileScreenView(self, self.model)]
+        self.views = [ProfileScreenView(controller=self, model=self.model)]
 
     def get_views(self) -> list[ProfileScreenView]:
         """Gets the view connected to this controller.

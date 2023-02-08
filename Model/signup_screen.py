@@ -13,41 +13,31 @@ class SignupScreenModel(BaseScreenModel):
     """
 
     def __init__(self, database):
-        # Just an example of the data. Use your own values.
-        self._is_valid = False
+        self._is_done_adding = None
         self.database = database
 
     @property
-    def is_valid(self):  # get
-        """_data summary_
+    def is_done_adding(self):  # get
+        """Indicates if the data is already been added to the database."""
+        return self._is_done_adding
 
-        Returns:
-            _type_: _description_
-        """
-        return self._is_valid
-
-    @is_valid.setter
-    def is_valid(self, value):  # set
+    @is_done_adding.setter
+    def is_done_adding(self, value):  # set
         # We notify the View -
         # :class:`~View.MainScreen.main_screen.MainScreenView` about the
         # changes that have occurred in the data model.
-        self._is_valid = value
+        self._is_done_adding = value
         self.notify_observers("signup screen")
 
-    @multitasking.task
-    def to_database(self, user_input: list[str]):
-        """
-        If the user input is valid this function is called to add the data into the database 
-        """
-        self.is_valid = True
-        self.database.add_user_data(user_input)
-
-    """
-    Checks if the username input is already taken
-    """
     def is_username_taken(self, username_input: str):
+        """Checks if the username input is already taken."""
         data = self.database.get_data_table()
         for key in data.values():
             if key == username_input:
                 return True
         return False
+
+    @multitasking.task
+    def to_database(self, user_input: list[str]):
+        """If the user input is valid this function is called to add the data into the database."""
+        self.is_done_adding = self.database.add_user_data(user_input)
