@@ -10,8 +10,8 @@ from .components.loading import LoadingImage
 class MainScreenView(BaseScreenView):
     """I just showed an example loading spinner while doing an extensive calculations"""
 
-    def __init__(self, controller, model, **kw):
-        super().__init__(controller, model, **kw)
+    def __init__(self, **kw):
+        super().__init__(**kw)
         self.loading_bg = MDFloatLayout(md_bg_color="black", opacity=0.5)
         self.loading_img = LoadingImage()
 
