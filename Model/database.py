@@ -14,7 +14,7 @@ class DataBase:
         self._username = "Lemon"
         self.max_id = 0
 
-    def get_user_data(self, table_name: str) -> dict | bool | None:
+    def get_user_data(self, table_name: str) -> dict | None:
         """Returns data of the selected collection from the database.
 
         Args:
@@ -25,7 +25,7 @@ class DataBase:
             data = self._firebase.get(
                 f"USERDATA/{self._username}", table_name, connection=None
             )
-            return data
+            return data if data else {}
         except requests.exceptions.ConnectionError:
             return None
 

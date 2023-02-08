@@ -15,7 +15,7 @@ class HomeScreenModel(BaseScreenModel):
     """
 
     def __init__(self, database):
-        self._new_calorie_goal = 0.0
+        self._new_calorie_goal = None
         self.user_profile_data = None
         self.user_intake_data = None
         self.updated_profile_part = None
@@ -41,7 +41,7 @@ class HomeScreenModel(BaseScreenModel):
     def reset_calorie_counter_data(self):
         """Resets calorie counter data to None and removes Spinner."""
         self.user_intake_data = None
-        self._new_calorie_goal = 0.0
+        self._new_calorie_goal = None
         self.notify_observers("home screen")
 
     @multitasking.task
@@ -62,7 +62,7 @@ class HomeScreenModel(BaseScreenModel):
         else:
             self.database.max_id = 0
             # TODO: papalitan pa ng default value na nasa UserInfo
-            self.new_calorie_goal = 0.0
+            self.new_calorie_goal = 1900.0
         self.updated_calorie_part = "intake history"
         self.notify_observers("calorie counter screen")
 

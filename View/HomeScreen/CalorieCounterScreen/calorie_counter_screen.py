@@ -52,7 +52,7 @@ class CalorieCounterScreenView(BaseScreenView):
         The view in this method tracks these changes and updates the UI
         according to these changes.
         """
-        if not self.model.user_intake_data:
+        if self.model.user_intake_data is None:
             self.controller.show_connection_error()
         else:
             {
