@@ -13,17 +13,12 @@ class SignupScreenModel(BaseScreenModel):
     """
 
     def __init__(self, database):
-        # Just an example of the data. Use your own values.
         self._is_done_adding = None
         self.database = database
 
     @property
     def is_done_adding(self):  # get
-        """_data summary_
-
-        Returns:
-            _type_: _description_
-        """
+        """Indicates if the data is already been added to the database."""
         return self._is_done_adding
 
     @is_done_adding.setter
@@ -35,6 +30,7 @@ class SignupScreenModel(BaseScreenModel):
         self.notify_observers("signup screen")
 
     def is_username_taken(self, username_input: str):
+        """Checks if the username input is already taken."""
         data = self.database.get_data_table()
         for key in data.values():
             if key == username_input:
@@ -43,4 +39,5 @@ class SignupScreenModel(BaseScreenModel):
 
     @multitasking.task
     def to_database(self, user_input: list[str]):
+        """If the user input is valid this function is called to add the data into the database."""
         self.is_done_adding = self.database.add_user_data(user_input)

@@ -7,11 +7,7 @@ from View.base_screen import BaseScreenView
 
 
 class SignupScreenView(BaseScreenView):
-    """I just showed an example loading spinner while doing an extensive calculations
-
-    Args:
-        BaseScreenView (_type_): _description_
-    """
+    """_class summary_"""
 
     @mainthread
     def model_is_changed(self) -> None:
@@ -42,6 +38,7 @@ class SignupScreenView(BaseScreenView):
             self.controller.pass_data(user_input)
 
     def _show_error_snackbar(self, error_text: str, color="#7B56BA"):
+        """This function is called everytime an error has occured."""
         Snackbar(
             text=error_text,
             bg_color=color,
@@ -52,9 +49,11 @@ class SignupScreenView(BaseScreenView):
         ).open()
 
     def _get_user_input(self):
+        """Stores users input."""
         return [textfield.text for textfield in self.ids.form_layout.children]
 
     def _clear_text_fields(self):
+        """Clear the textfields state."""
         for textfield in self.ids.form_layout.children:
             textfield.text = ""
             textfield.required = False
