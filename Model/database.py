@@ -14,22 +14,20 @@ class DataBase:
 
     # USERDATA is the Table
     def get_data_table(self):
-        """
-        Returns data from database.
-        """
+        """Returns data from database."""
         try:
-            data = self.firebase_.get("USERDATA", "")
+            data = self.firebase_.get("USERDATA", "", connection=None)
             return data
         except requests.exceptions.ConnectionError:
             return None
 
     def add_user_data(self, user_input):
-        """
-        Adds userdata to database
-        """
+        """Adds userdata to database."""
         try:
-            self.data = {"Password": user_input[1]}
-            self.firebase_.put("USERDATA/UserInfo", user_input[2], self.data)
+            data = {"Password": user_input[1]}
+            self.firebase_.put(
+                f"USERDATA/{user_input[2]}", "UserInfo", data, connection=None
+            )
             return True
         except requests.exceptions.ConnectionError:
             return False

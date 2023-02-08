@@ -15,16 +15,16 @@ class SignupScreenView(BaseScreenView):
         The view in this method tracks these changes and updates the UI
         according to these changes.
         """
-        if self.model.is_done_adding:
-            self.change_screen("left", "login screen")
-            self.loading_view.dismiss()
+        self.change_screen("left", "login screen")
+        self.loading_view.dismiss()
 
     def check_text_field(self):
+        """Checks the input of the user."""
         user_input = self._get_user_input()
 
         if user_input[2] == "":
             self._show_error_snackbar("Fill Username")
-        elif self.model.is_username_taken(user_input[0]):
+        elif self.model.is_username_taken(user_input[2]):
             self._show_error_snackbar("Username Already Taken")
         elif user_input[1] == "":
             self._show_error_snackbar("Fill Password")
