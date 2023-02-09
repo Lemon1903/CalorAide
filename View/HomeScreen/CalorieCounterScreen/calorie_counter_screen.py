@@ -81,11 +81,6 @@ class CalorieCounterScreenView(BaseScreenView):
             if intake_item.ids.checkbox.active
         ]
 
-    def _load_intake_history(self, intake_history: dict | None):
-        if intake_history:
-            for intake_data in list(intake_history.items())[:-1]:
-                self._add_intake_to_history(intake_data)
-
     def _validate_intake_input(self, *_):
         if self.add_intake_dialog:
             if self.add_intake_dialog.content_cls.has_empty_field():
@@ -98,6 +93,11 @@ class CalorieCounterScreenView(BaseScreenView):
         if self.add_intake_dialog.parent:
             self.add_intake_dialog.dismiss()
             self.add_intake_dialog.content_cls.clear_textfields()
+
+    def _load_intake_history(self, intake_history: dict | None):
+        if intake_history:
+            for intake_data in list(intake_history.items())[:-1]:
+                self._add_intake_to_history(intake_data)
 
     def _add_intake_to_history(self, added_intake: tuple):
         intake_uuid, intake_item = added_intake

@@ -1,5 +1,8 @@
 <IntakeHistoryItem>:
+    _is_shorten: True
+    padding: dp(0), dp(5)
     adaptive_height: True
+    on_release: self._is_shorten = not self._is_shorten
 
     canvas.after:
         Color:
@@ -10,20 +13,23 @@
     MDCheckbox:
         id: checkbox
         ripple_scale: 0.3
-        size_hint_x: 0.15
+        height: dp(35)
+        size_hint: 0.15, None
+        pos_hint: {'center_y': 0.5}
         on_active: root.on_check_callback(*args)
 
     MDLabel:
-        shorten: True
-        shorten_from: "right"
         text: root.food_name
         font_name: "Poppins-Regular"
-        height: dp(45)
+        shorten: root._is_shorten
+        shorten_from: "right"
+        size: self.texture_size
         size_hint: 0.35, None
+        pos_hint: {'center_y': 0.5}
 
     MDLabel:
         text: f"{root.calorie_amount} kcal"
         font_name: "Poppins-Regular"
         halign: "center"
-        height: dp(45)
-        size_hint: 0.5, None
+        size_hint_x: 0.5
+        pos_hint: {'center_y': 0.5}

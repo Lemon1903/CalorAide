@@ -15,23 +15,16 @@ class HomeScreenModel(BaseScreenModel):
     """
 
     def __init__(self, database):
-        self._new_calorie_goal = None
+        self._database = database
+
+        # the data that the views monitors
         self.user_profile_data = None
         self.user_intake_data = None
+        self.new_calorie_goal = None
+
+        # indicates which part of the UI needs to change
         self.updated_profile_part = None
         self.updated_calorie_part = None
-        self.database = database
-
-    @property
-    def new_calorie_goal(self):
-        """Returns the current calorie goal."""
-        return self._new_calorie_goal
-
-    # TODO: tentative pa if 0 na kapag less than 0 or ipakita pa negative pero nakared.
-    @new_calorie_goal.setter
-    def new_calorie_goal(self, value):
-        """Sets the new value to the calorie goal."""
-        self._new_calorie_goal = value if value >= 0 else 0
 
     def reset_user_profile_data(self):
         """Resets user data to None and removes Spinner."""
@@ -41,13 +34,13 @@ class HomeScreenModel(BaseScreenModel):
     def reset_calorie_counter_data(self):
         """Resets calorie counter data to None and removes Spinner."""
         self.user_intake_data = None
-        self._new_calorie_goal = None
+        self.new_calorie_goal = None
         self.notify_observers("home screen")
 
     @multitasking.task
     def load_user_profile_data(self):
         """Load user profile data in database"""
-        self.user_profile_data = self.database.get_user_data("UserInfo")
+        self.user_profile_data = self._database.get_user_data("UserInfo")
         self.updated_profile_part = "general information"
         self.notify_observers("profile screen")
 
@@ -55,12 +48,12 @@ class HomeScreenModel(BaseScreenModel):
     def load_user_intake_history(self):
         """Load user intake history in database"""
         date_today = helpers.get_date_today()
-        self.user_intake_data = self.database.get_user_data(f"History/{date_today}")
+        self.user_intake_data = self._database.get_user_data(f"History/{date_today}")
         if self.user_intake_data:
-            self.database.max_id = len(self.user_intake_data) - 1
+            self._database.max_id = len(self.user_intake_data) - 1
             self.new_calorie_goal = self.user_intake_data["Calorie Goal"]
         else:
-            self.database.max_id = 0
+            self._database.max_id = 0
             # TODO: papalitan pa ng default value na nasa UserInfo
             self.new_calorie_goal = 1900.0
         self.updated_calorie_part = "intake history"
@@ -82,7 +75,7 @@ class HomeScreenModel(BaseScreenModel):
             "Weight": user_input[2],
             "BMI": bmi_classification,
         }
-        self.database.update_user_data(data, "UserInfo")
+        self._database.update_user_data(data, "UserInfo")
         self.load_user_profile_data()
 
     @multitasking.task
@@ -93,21 +86,21 @@ class HomeScreenModel(BaseScreenModel):
             user_data (list): the list of intake input to be inserted to the users history.
             new_calorie_goal (float): the updated calorie goal.
         """
-        self.database.max_id += 1
+        self._database.max_id += 1
         date_today = helpers.get_date_today()
         intake_data = {
-            self.database.max_id: {
+            self._database.max_id: {
                 "Food": user_input[1],
                 "Calorie Amount": user_input[0],
             },
             "Calorie Goal": new_calorie_goal,
         }
 
-        if self.database.update_user_data(intake_data, f"History/{date_today}"):
+        if self._database.update_user_data(intake_data, f"History/{date_today}"):
             self.new_calorie_goal = new_calorie_goal
             self.user_intake_data = (
-                self.database.max_id,
-                intake_data[self.database.max_id],
+                self._database.max_id,
+                intake_data[self._database.max_id],
             )
         else:
             self.new_calorie_goal = 0.0
@@ -127,9 +120,9 @@ class HomeScreenModel(BaseScreenModel):
         date_today = helpers.get_date_today()
         new_data = {"Calorie Goal": new_calorie_goal}
 
-        if self.database.delete_user_data_collection(
+        if self._database.delete_user_data_collection(
             delete_list, f"History/{date_today}"
-        ) and self.database.update_user_data(new_data, f"History/{date_today}"):
+        ) and self._database.update_user_data(new_data, f"History/{date_today}"):
             self.new_calorie_goal = new_calorie_goal
             self.user_intake_data = delete_list
         else:
