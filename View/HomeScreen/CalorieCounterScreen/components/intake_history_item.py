@@ -17,7 +17,6 @@ class IntakeHistoryItem(RectangularRippleBehavior, ButtonBehavior, MDBoxLayout):
     def __init__(self, callback, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.on_check_callback = callback
-        self.ripple_scale = 10
         self.ripple_alpha = 0.2
         self.ripple_duration_out = 0.15
         self.ripple_duration_in_fast = 0.15
