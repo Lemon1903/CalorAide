@@ -4,14 +4,19 @@ of the screens of the application.
 """
 
 from Controller import (LoginScreenController, MainScreenController,
-                        ProfileScreenController, RegisterScreenController)
+                        ProfileScreenController, RegisterScreenController,
+                        SignupScreenController)
 from Model import (LoginScreenModel, MainScreenModel, ProfileScreenModel,
-                   RegisterScreenModel)
+                   RegisterScreenModel, SignupScreenModel)
 
 screens = {
     "register screen,mode screen,goal screen": {
         "model": RegisterScreenModel,
         "controller": RegisterScreenController,
+    },
+    "signup screen": {
+        "model": SignupScreenModel,
+        "controller": SignupScreenController,
     },
     "profile screen": {
         "model": ProfileScreenModel,

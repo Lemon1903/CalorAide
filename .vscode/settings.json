@@ -2,5 +2,5 @@
     "githubPullRequests.ignoredPullRequestBranches": [
         "master"
     ],
-    "python.linting.enabled": false
+    "materialkv.pythonFile": "main.py"
 }
