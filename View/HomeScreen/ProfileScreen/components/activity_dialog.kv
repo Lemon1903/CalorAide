@@ -1,0 +1,112 @@
+<ActivityDialog>:
+    height: container.height
+
+    MDCard:
+        id: container
+        orientation: "vertical"
+        padding: dp(20)
+        spacing: dp(10)
+        radius: dp(10)
+        height: self.minimum_height
+        size_hint_y: None
+        md_bg_color: root.theme_cls.bg_dark
+
+        MDLabel:
+            text: "Set New Activity"
+            font_style: "H6"
+            bold: True
+            markup: True
+            valign: "top"
+            height: self.texture_size[1]
+            size_hint_y: None
+
+        MDBoxLayout:
+            id: activity_items
+            orientation: "vertical"
+            padding: 0, dp(8)
+            spacing: dp(15)
+            adaptive_height: True
+
+            MDSeparator:
+
+            ActivityItem:
+                activity_type: "Sedentary"
+                description: "Little to no exercise"
+                parent: root
+
+            ActivityItem:
+                activity_type: "Light"
+                description: "Exercise 1-3 times/week"
+                parent: root
+
+            ActivityItem:
+                activity_type: "Moderate"
+                description: "Exercise 4-5 times/week"
+                parent: root
+
+            ActivityItem:
+                activity_type: "Active"
+                description: "Daily exercise or intense exercise 3-4 times/week"
+                parent: root
+
+            ActivityItem:
+                activity_type: "Very Active"
+                description: "Intense exercise 6-7 times/week"
+                parent: root
+
+            ActivityItem:
+                activity_type: "Extra Active"
+                description: "Very intense exercise daily, or physical job"
+                parent: root
+
+            MDSeparator:
+
+        MDAnchorLayout:
+            anchor_x: "right"
+            height: dp(28)
+            size_hint_y: None
+
+            MDBoxLayout:
+                adaptive_size: True
+                spacing: dp(8)
+
+                MDFlatButton:
+                    text: "Confirm"
+                    on_release: root.confirm_callback()
+
+                MDFlatButton:
+                    text: "Cancel"
+                    on_release: root.cancel_callback()
+
+
+<ActivityItem>:
+    adaptive_height: True
+
+    MDCheckbox:
+        id: checkbox
+        group: "check"
+        ripple_scale: 0.0
+        size_hint_x: 0.15
+        disabled_color: app.theme_cls.primary_light
+        color_active: app.theme_cls.primary_light
+        color_inactive: "white"
+        on_active: root._on_active(*args)
+
+    MDBoxLayout:
+        orientation: "vertical"
+        adaptive_height: True
+        size_hint_x: 0.85
+
+        MDLabel:
+            text: root.activity_type
+            height: self.texture_size[1]
+            size_hint_y: None
+
+        MDLabel:
+            id: description
+            text: root.description
+            theme_text_color: "Hint"
+            font_size: sp(13)
+            height: 0
+            opacity: 0.0
+            size_hint_y: None

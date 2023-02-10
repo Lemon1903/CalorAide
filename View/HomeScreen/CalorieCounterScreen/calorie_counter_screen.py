@@ -116,8 +116,8 @@ class CalorieCounterScreenView(BaseScreenView):
         self._change_buttons([self.add_button, self.history_button])
 
     def _change_buttons(self, new_buttons: list[MDFillRoundFlatButton]):
-        self.ids.buttons.clear_widgets()
+        self.ids.button_box.clear_widgets()
         for button in new_buttons:
             button.size_hint_x = 1.0
-            self.ids.buttons.add_widget(button)
-        self.ids.buttons.size_hint_x = 0.3 * len(new_buttons)
+            self.ids.button_box.add_widget(button)
+        self.ids.button_box.size_hint_x = 0.3 * len(new_buttons)

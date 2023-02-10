@@ -12,26 +12,25 @@
             radius: dp(10)
             spacing: dp(10)
             padding: dp(20)
-            height: calorie_goal.height + mode.height + self.spacing + self.padding[0] * 2
+            height: self.minimum_height
             size_hint_y: None
             md_bg_color: app.theme_cls.primary_color
 
             MDLabel:
-                id: calorie_goal
+                _cg_color: "#F3AAA0" if root.calorie_goal < 0 else "#ffffff"
                 markup: True
-                text: f"[size=62]{root.calorie_goal}[size=34]k/cal[/size]"
+                text: f"[size=62][color={self._cg_color}]{root.calorie_goal}[/color][size=34]k/cal[/size]"
                 font_name: "Poppins-SemiBold"
                 halign: "center"
                 height: dp(55)
                 size_hint_y: None
 
             MDLabel:
-                id: mode
                 markup: True
                 text: "[size=16]WEIGHT GAIN[/size]"
                 font_name: "Poppins-Regular"
                 halign: "center"
-                height: dp(20)
+                height: self.texture_size[1]
                 size_hint_y: None
 
         MDLabel:
@@ -39,7 +38,7 @@
             text: "[size=16]INTAKE HISTORY[/size]"
             font_name: "Poppins-SemiBold"
             halign: "center"
-            height: dp(30)
+            height: self.texture_size[1]
             size_hint_y: None
 
         # intake history table
@@ -57,7 +56,7 @@
                     text: "[size=18][color=#21005d]Item[/color][/size]"
                     font_name: "Poppins-Bold"
                     halign: "center"
-                    height: dp(25)
+                    height: self.texture_size[1]
                     size_hint_y: None
 
                 MDLabel:
@@ -65,7 +64,7 @@
                     text: "[size=18][color=#21005d]k/cal[/color][/size]"
                     font_name: "Poppins-Bold"
                     halign: "center"
-                    height: dp(25)
+                    height: self.texture_size[1]
                     size_hint_y: None
 
             MDScrollView:
@@ -83,7 +82,7 @@
 
         # buttons
         MDBoxLayout:
-            id: buttons
+            id: button_box
             spacing: dp(25)
             size_hint_x: 0.6
             adaptive_height: True
