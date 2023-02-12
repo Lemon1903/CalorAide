@@ -24,6 +24,7 @@ class HistoryScreenView(BaseScreenView):
                 pos_hint={"center_y": 0.1},
                 size_hint_x= 0.5,
                 font_name = "Poppins-Regular",
+                font_size = 18,
                 opacity = 0.5))
 
             for inner_key, inner_value in value.items():
