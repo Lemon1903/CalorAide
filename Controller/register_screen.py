@@ -82,12 +82,10 @@ class RegisterScreenController:
         This returns the value of the Basal Metabolic Rate of a person.
         That is the amount of calories they naturally burn with bodily functions.
         """
-        bmr = 0
         if gender == "Male":
-            bmr = float((10*weight)+(6.25*height)-(5*age)+5)
-        elif gender == "Female":
-            bmr = float((10*weight)+(6.25*height)-(5*age)-161)
-        return bmr
+            return float((10*weight)+(6.25*height)-(5*age)+5)
+        if gender == "Female":
+            return float((10*weight)+(6.25*height)-(5*age)-161)
 
     def get_bmi_amount(self, height_cm, weight_kg):
         """BMI formula that estimates a person's fat based on their height and weight.
