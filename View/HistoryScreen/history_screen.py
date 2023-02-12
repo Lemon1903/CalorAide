@@ -4,6 +4,7 @@ from kivymd.uix.label import MDLabel
 from kivymd.uix.list import OneLineListItem
 from .components import IntakeHistoryItem
 from Utils import helpers
+from datetime import date
 
 from View.base_screen import BaseScreenView
 
@@ -54,13 +55,13 @@ class HistoryScreenView(BaseScreenView):
 
         date_today = helpers.get_date_today()
         yesterday = helpers.get_date_yesterday()
-        another_days = helpers.get_date_in_text()
+
         if date == date_today:
             date= "Today"
         elif date == yesterday:
             date = "Yesterday"
         else: 
-            date = another_days
+            date = date
         return date
 
 

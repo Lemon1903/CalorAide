@@ -37,8 +37,3 @@ def get_date_yesterday():
     """ Get the date yesterday """
     yesterday = date.today() - timedelta(days = 1)
     return yesterday.strftime("%d-%m-%Y")
-
-def get_date_in_text():
-    """ Change date format into text """
-    another_day = date.today() - timedelta(days = 2)
-    return another_day.strftime("%b %d")
