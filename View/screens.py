@@ -7,22 +7,28 @@ from Controller import (
     LoginScreenController,
     MainScreenController,
     ProfileScreenController,
+    SignupScreenController,
+    HistoryScreenController,
 )
-from Model import LoginScreenModel, MainScreenModel, ProfileScreenModel
+from Model import LoginScreenModel, MainScreenModel, ProfileScreenModel, SignupScreenModel, HistoryScreenModel
 
 screens = {
+    "history screen": {
+        "model": HistoryScreenModel,
+        "controller": HistoryScreenController,
+    },
     "login screen": {
         "model": LoginScreenModel,
         "controller": LoginScreenController,
+    },
+    "signup screen": {
+        "model": SignupScreenModel,
+        "controller": SignupScreenController,
     },
 
     "profile screen": {
         "model": ProfileScreenModel,
         "controller": ProfileScreenController,
-    },
-    "login screen": {
-        "model": LoginScreenModel,
-        "controller": LoginScreenController,
     },
     "main screen": {
         "model": MainScreenModel,

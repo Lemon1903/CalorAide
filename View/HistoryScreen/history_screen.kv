@@ -1,0 +1,51 @@
+<HistoryScreenView>:
+
+    MDIconButton:
+        icon: "chevron-left-circle"
+        theme_icon_color: "Custom"
+        icon_color: "#6750A4"
+        icon_size: 40
+        pos_hint: {"center_x": 0.1, "center_y": 0.95}
+        on_press: root.back_btn()
+
+    MDLabel:
+        text: "HISTORY"
+        font_name: 'Poppins-Medium'
+        font_size: 32
+        pos_hint: {"center_x": 0.83, "center_y": 0.92}
+
+    MDCard:
+        radius: 10
+        pos_hint: {"center_x": 0.5, "center_y": 0.45}
+        size_hint: None, None
+        size: "325dp", "520dp"
+        md_bg_color: "#6750A4"
+        
+        MDRelativeLayout:
+
+            MDLabel:
+                text: "Item"
+                font_name: "Poppins-SemiBold"
+                font_size: 20
+                theme_text_color: "Custom"
+                text_color: "#21005D"
+                pos_hint:{"center_x": 0.57, "center_y": 0.95}
+
+            MDLabel:
+                text: "k/cal"
+                font_name: "Poppins-SemiBold"
+                font_size: 20
+                theme_text_color: "Custom"
+                text_color: "#21005D"
+                pos_hint:{"center_x": 1.1, "center_y": 0.95}
+
+            MDScrollView:
+                do_scroll_y: True
+                do_scroll_x: False
+                height: 449
+                size_hint_y: None
+                pos_hint: {"center_x": 0.57, "center_y": 0.45}
+            
+                MDList:
+                    id: lists
+                    size_hint_x: 0.89

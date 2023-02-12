@@ -32,3 +32,7 @@ class BaseScreenView(ThemableBehavior, MDScreen):
         raise NotImplementedError(
             "This is an observer, it should be notified about the changes in the model."
         )
+    
+    def change_screen(self, direction, next_screen):
+        self.manager.transition.direction = direction
+        self.manager.current = next_screen
