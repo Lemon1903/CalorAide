@@ -10,15 +10,17 @@ class DataBase:
     """Your methods for working with the database should be implemented in this class."""
 
     def __init__(self):
-        self.firebase_ = firebase.FirebaseApplication(
+        self._firebase = firebase.FirebaseApplication(
             "https://fitrex-bfc21-default-rtdb.asia-southeast1.firebasedatabase.app/"
         )
+        self.bmi = ""
+        self._username = "Daniel"
 
     # USERDATA is the Table
     def get_data_table(self):
         """Returns data from database."""
         try:
-            data = self.firebase_.get("USERDATA", '')
+            data = self._firebase.get("USERDATA", '')
         except requests.exceptions.ConnectionError:
             return None
         return data
@@ -33,53 +35,39 @@ class DataBase:
             "Activity": 1,
 
         }
-        self.firebase_.post("https://fitrex-bfc21-default-rtdb.asia-southeast1.firebasedatabase.app/USERDATA", self.data)
+        self._firebase.post("https://fitrex-bfc21-default-rtdb.asia-southeast1.firebasedatabase.app/USERDATA", self.data)
 
     def add(self, userdata):
         self.data = {
             "Username": userdata[0],
             "Password": userdata[1],
         }
-        self.firebase_.post("https://fitrex-bfc21-default-rtdb.asia-southeast1.firebasedatabase.app/USERDATA", self.data)
+        self._firebase.post("https://fitrex-bfc21-default-rtdb.asia-southeast1.firebasedatabase.app/USERDATA", self.data)
         print("Posted!")
 
         return()
-
-    def add_info(self, userinfo):
-        # self.firebase_.put("USERDATA/Taylor/UserInfo",
-        #                      {"Name": userinfo[0]},
-        #                      {"Age": userinfo[1]},
-        #                      {"Height": userinfo[2]},
-        #                      {"Gender": userinfo[3]},
-        #                      {"Weight": userinfo[4]},
-        #                      {"BMI": userinfo[5]},
-        #                      {"BMR": userinfo[6]},
-        #                      {"Category": userinfo[7]},
-        #                      {"Mode": userinfo[8]},
-        #                      {"Goal": userinfo[9]},
-        #                      )
-        self.info = {
-            "Name": userinfo[0],
-            "Age": userinfo[1],
-            "Height": userinfo[2],
-            "Weight": userinfo[3],
-            "Gender": userinfo[4],
-            "BMI": userinfo[5],
-            "BMR": userinfo[6],
-            "Category": userinfo[7],
-            "Mode": userinfo[8],
-            "Activity": userinfo[9],
-
-        }
-        self.firebase_.put("USERDATA/Sabrina", "UserInfo", self.info)
-        print("haha")
 
     def add_user_data(self, user_input):
         """Adds userdata to database."""
         try:
             data = {"Password": user_input[1]}
-            self.firebase_.put(
+            self._firebase.put(
                 f"USERDATA/{user_input[2]}", "UserInfo", data, connection=None
+            )
+            return True
+        except requests.exceptions.ConnectionError:
+            return False
+
+    def update_user_data(self, new_data: dict, table_name: str):
+        """Updates user data of the selected collection in database.
+        Args:
+            user_input (dict): the new user data to be stored.
+            key (str): the user table to be accessed.
+            table_name (str): the table under user table to be accessed.
+        """
+        try:
+            self._firebase.patch(
+                f"USERDATA/{self._username}/{table_name}", new_data, connection=None
             )
             return True
         except requests.exceptions.ConnectionError:

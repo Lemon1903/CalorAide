@@ -1,0 +1,106 @@
+#:import Validator Utils.Validator
+<RegisterScreenView>:
+    MDBoxLayout:
+        pos_hint: {"center_x":0.5, "center_y":0.85}
+        size_hint_y: None
+
+        MDLabel:
+            text: "REGISTRATION"
+            font_name: "Poppins-Medium"
+            font_size: 40
+            theme_text_color: "Custom"
+            text_color: "white"
+            halign: "center"
+            valign: "top"
+
+    MDScrollView:
+        do_scroll_y: True
+        do_scroll_x: False
+        size_hint: None, None
+        size: 400, 343
+        pos_hint: {"center_x": 0.5, "center_y": 0.53}
+        always_overscroll: True
+
+        MDBoxLayout:
+            required: False
+            id: basic_info
+            spacing: "30dp"
+            size_hint_y: .5
+            adaptive_height: True
+            orientation: "vertical"
+
+            Text:
+                id: name
+                hint_text: "Name"
+                helper_text: "Enter your name properly"
+                validator_type: "name"
+                pos_hint: {"center_x": .5,"center_y": .80}
+                error_message: "Enter your name properly"
+                on_text: Validator.check_text(*args)
+
+            Text:
+                id: height
+                hint_text: "Height (in cm.)"
+                helper_text: "Enter your height in centimeters"
+                validator_type: "numeric"
+                pos_hint: {"center_x": .5,"center_y": .66}
+                error_message: "Enter your height properly"
+                on_text: Validator.check_text(*args)
+
+            Text:
+                id: weight
+                hint_text: "Weight (in kgs.)"
+                helper_text: "Enter your weight in kilograms"
+                validator_type: "numeric"
+                pos_hint: {"center_x": .5,"center_y": .52}
+                error_message: "Enter your weight properly"
+                on_text: Validator.check_text(*args)
+
+            Text:
+                id: gender
+                readonly: True
+                hint_text: "Gender"
+                helper_text: "Choose your gender."
+                helper_text_mode: "on_error"
+                pos_hint: {"center_x": .5,"center_y": .38}
+                on_focus: if self.focus: root.select_gender()
+
+            Text:
+                id: birthdate
+                readonly: True
+                hint_text: "Birthdate"
+                helper_text: "Select your real birthday."
+                helper_text_mode: "on_error"
+                pos_hint: {"center_x": .5,"center_y": .24}
+                on_focus: if self.focus: root.show_date_picker()
+
+            Text:
+                id: activity
+                readonly: True
+                hint_text: "Activity"
+                helper_text: "Choose at least one."
+                helper_text_mode: "on_error"
+                pos_hint: {"center_x": .5,"center_y": .38}
+                on_focus: if self.focus: root.select_activity()
+
+            MDFillRoundFlatButton:
+                id: btn
+                text: "NEXT"
+                text_color: "white"
+                font_name: "Poppins-SemiBold"
+                md_bg_color: "#7B56BA"
+                pos_hint: {"center_x": .50, "center_y": .50}
+                on_press: root.get_user_details()
+
+<Text@MDTextField>:
+    mode: "rectangle"
+    font_name: "Poppins-Regular"
+    size_hint_x: .66
+    line_color_normal: "white"
+    hint_text_color_normal: "white"
+    hint_text_color_focus: "white"
+    text_color_normal: "white"
+    helper_text_mode: "on_error"
+    on_focus:
+        self.required = not self.text
+    padding: (20,20)
