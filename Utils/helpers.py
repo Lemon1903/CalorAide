@@ -1,6 +1,6 @@
 """helper functions"""
 
-from datetime import date
+from datetime import date, timedelta
 from decimal import Decimal
 
 
@@ -33,6 +33,12 @@ def get_date_today():
     """Get the date today in custom format."""
     today = date.today()
     return today.strftime("%d-%m-%Y")
+
+
+def get_date_yesterday():
+    """Get the date yesterday."""
+    yesterday = date.today() - timedelta(days=1)
+    return yesterday.strftime("%d-%m-%Y")
 
 
 def get_user_bmr(gender, weight, height, age):

@@ -45,6 +45,10 @@ class BaseScreenView(ThemableBehavior, Screen, Observer):
         # add itself as observer of the model
         Clock.schedule_once(lambda _: self.model.add_observer(self), 1)
 
+    def change_screen(self, direction: str, next_screen: str):
+        self.manager.transition.direction = direction
+        self.manager.current = next_screen
+
 
 class LoadingView(ModalView):
     """The ModalView with the Spinner which represents loading state."""
@@ -57,6 +61,6 @@ class LoadingView(ModalView):
             on_open=lambda *_: self._change_spinner_state(True),
             on_dismiss=lambda *_: self._change_spinner_state(False),
         )
-
+    
     def _change_spinner_state(self, state):
         self.active = state
