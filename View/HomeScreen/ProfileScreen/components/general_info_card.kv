@@ -1,0 +1,126 @@
+#:import Validator Utils.Validator
+
+# rules
+<GeneralInformationCard>:
+    radius: 10
+    padding: dp(20), dp(15)
+    height: self.current_layout.height + self.padding[1] * 2
+    size_hint_y: None
+    md_bg_color: app.theme_cls.primary_color
+
+
+<ProfileInformationLayout>:
+    orientation: 'vertical'
+    adaptive_height: True
+    spacing: dp(10)
+
+    ProfileLabel:
+        text: "General Information"
+        font_name: "Poppins-Bold"
+
+    MDStackLayout:
+        adaptive_height: True
+        spacing: dp(5)
+
+        ProfileLabel:
+            text: "Age:"
+            size_hint_x: 0.3
+
+        ProfileLabel:
+            text: str(root.age_info) if root.age_info else "--"
+            size_hint_x: 0.7
+
+        ProfileLabel:
+            text: "Gender:"
+            size_hint_x: 0.3
+
+        ProfileLabel:
+            text: root.gender_info if root.gender_info else "--"
+            size_hint_x: 0.7
+
+        ProfileLabel:
+            text: "Height:"
+            size_hint_x: 0.3
+
+        ProfileLabel:
+            text: str(root.height_info) if root.height_info else "--"
+            size_hint_x: 0.7
+
+        ProfileLabel:
+            text: "Weight:"
+            size_hint_x: 0.3
+
+        ProfileLabel:
+            text: str(root.weight_info) if root.weight_info else "--"
+            size_hint_x: 0.7
+
+        ProfileLabel:
+            text: "BMI:"
+            size_hint_x: 0.3
+
+        ProfileLabel:
+            text: root.bmi_info if root.bmi_info else "--"
+            size_hint_x: 0.7
+
+    RectangleButton:
+        text: "Edit Details"
+        size_hint_x: 1
+        on_release: root.on_edit_profile_info()
+
+
+<EditInformationLayout>:
+    orientation: 'vertical'
+    adaptive_height: True
+
+    ProfileLabel:
+        text: "Edit Information"
+        font_name: "Poppins-Bold"
+
+    ProfileTextField:
+        hint_text: "Name"
+        text: root.current_profile_info["Name"]
+        max_length: 30
+        validator_type: "name"
+        error_message: "Enter a valid name"
+
+    ProfileTextField:
+        hint_text: "Height"
+        text: str(root.current_profile_info["Height"])
+        validator_type: "numeric"
+        error_message: "Enter a valid value for height"
+
+    ProfileTextField:
+        hint_text: "Weight"
+        text: str(root.current_profile_info["Weight"])
+        validator_type: "numeric"
+        error_message: "Enter a valid value for weight"
+
+    Widget:
+        height: dp(10)
+        size_hint_y: None
+
+    RectangleButton:
+        text: "Done Editing"
+        size_hint_x: 1
+        on_release: root.submit_new_profile_info()
+
+
+# dynamic classes
+<ProfileLabel@MDLabel>:
+    font_name: "Poppins-Regular"
+    height: dp(20)
+    size_hint_y: None
+
+
+<ProfileTextField@MDTextField>:
+    mode: "line"
+    text_color_focus: "white"
+    hint_text_color_focus: "white"
+    line_color_focus: "white"
+    helper_text_mode: "on_error"
+    on_text: Validator.check_text(*args)
+
+<RectangleButton@MDRectangleFlatButton>:
+    text_color: "white"
+    font_name: "Poppins-SemiBold"
+    md_bg_color: app.theme_cls.primary_dark

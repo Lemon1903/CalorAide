@@ -4,19 +4,21 @@ of the screens of the application.
 """
 
 from Controller import (
+    HistoryScreenController,
+    HomeScreenController,
     LoginScreenController,
     MainScreenController,
-    ProfileScreenController,
     SignupScreenController,
-    HistoryScreenController,
 )
-from Model import LoginScreenModel, MainScreenModel, ProfileScreenModel, SignupScreenModel, HistoryScreenModel
+from Model import (
+    HistoryScreenModel,
+    HomeScreenModel,
+    LoginScreenModel,
+    MainScreenModel,
+    SignupScreenModel
+)
 
 screens = {
-    "history screen": {
-        "model": HistoryScreenModel,
-        "controller": HistoryScreenController,
-    },
     "login screen": {
         "model": LoginScreenModel,
         "controller": LoginScreenController,
@@ -25,10 +27,13 @@ screens = {
         "model": SignupScreenModel,
         "controller": SignupScreenController,
     },
-
-    "profile screen": {
-        "model": ProfileScreenModel,
-        "controller": ProfileScreenController,
+    "home screen": {
+        "model": HomeScreenModel,
+        "controller": HomeScreenController,
+    },
+    "history screen": {
+        "model": HistoryScreenModel,
+        "controller": HistoryScreenController,
     },
     "main screen": {
         "model": MainScreenModel,
