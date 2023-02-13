@@ -42,28 +42,24 @@ class CalorieCounterScreenView(BaseScreenView):
             text="Delete",
             font_name="Poppins-SemiBold",
             on_release=lambda _: self.controller.delete_intake_to_database(
-                self, self.calorie_goal
+                self._get_checked_items(), self.calorie_goal
             ),
         )
 
     @mainthread
     def model_is_changed(self) -> None:
-        """Called whenever any change has occurred in the data model.
-        The view in this method tracks these changes and updates the UI
-        according to these changes.
+        """Called whenever any change has occurred in the users intake history
+        in the model. The view in this method tracks these changes and updates
+        the intake history and calorie goal according to these changes.
         """
-        if self.model.user_intake_data is None:
-            self.controller.show_connection_error()
-        else:
-            {
-                "intake history": self._load_intake_history,
-                "intake history add": self._add_intake_to_history,
-                "intake history delete": self._delete_intake_in_history,
-            }[self.model.updated_calorie_part](self.model.user_intake_data)
-
+        if self.model.updated_calorie_part == "intake history":
+            self._load_intake_history(self.model.user_intake_history_data)
+        elif self.model.updated_calorie_part == "intake history add":
+            self._add_intake_to_history(self.model.user_added_intake_data)
+        elif self.model.updated_calorie_part == "intake history delete":
+            self._delete_intake_in_history(self.model.user_deleted_intake_data)
         self.calorie_goal = self.model.new_calorie_goal
-        self.controller.has_loaded_calorie_counter = True
-        self.controller.reset_calorie_counter_data()
+        self.model.has_loaded_intake_history = True
 
     def on_check(self, *_):
         """Called when an intake history item is checked."""
@@ -73,7 +69,7 @@ class CalorieCounterScreenView(BaseScreenView):
                 return
         self._change_buttons([self.add_button, self.history_button])
 
-    def get_checked_items(self):
+    def _get_checked_items(self) -> list[IntakeHistoryItem]:
         """Gets all the items with checkbox active."""
         return [
             intake_item
@@ -98,22 +94,33 @@ class CalorieCounterScreenView(BaseScreenView):
         if intake_history:
             for intake_data in list(intake_history.items())[:-1]:
                 self._add_intake_to_history(intake_data)
+            self.controller.hide_connection_error()
+        else:
+            self.controller.show_connection_error()
 
     def _add_intake_to_history(self, added_intake: tuple):
-        intake_uuid, intake_item = added_intake
-        item = IntakeHistoryItem(
-            callback=self.on_check,
-            identifier=intake_uuid,
-            food_name=intake_item["Food"],
-            calorie_amount=intake_item["Calorie Amount"],
-        )
-        self.ids.intake_history.add_widget(item, len(self.ids.intake_history.children))
-        self._close_add_intake_dialog()
+        if added_intake:
+            intake_uuid, intake_item = added_intake
+            item = IntakeHistoryItem(
+                callback=self.on_check,
+                identifier=intake_uuid,
+                food_name=intake_item["Food"],
+                calorie_amount=intake_item["Calorie Amount"],
+            )
+            self.ids.intake_history.add_widget(item, len(self.ids.intake_history.children))
+            self._close_add_intake_dialog()
+            self.controller.hide_connection_error()
+        else:
+            self.controller.show_connection_error()
 
     def _delete_intake_in_history(self, delete_list: list):
-        for delete_item in delete_list:
-            self.ids.intake_history.remove_widget(delete_item)
-        self._change_buttons([self.add_button, self.history_button])
+        if delete_list:
+            for delete_item in delete_list:
+                self.ids.intake_history.remove_widget(delete_item)
+            self._change_buttons([self.add_button, self.history_button])
+            self.controller.hide_connection_error()
+        else:
+            self.controller.show_connection_error()
 
     def _change_buttons(self, new_buttons: list[MDFillRoundFlatButton]):
         self.ids.button_box.clear_widgets()

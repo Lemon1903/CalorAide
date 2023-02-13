@@ -1,6 +1,7 @@
 """helper functions"""
 
 from datetime import date
+from decimal import Decimal
 
 
 def get_bmi_classification(height: float, weight: float):
@@ -32,3 +33,42 @@ def get_date_today():
     """Get the date today in custom format."""
     today = date.today()
     return today.strftime("%d-%m-%Y")
+
+
+def get_user_bmr(gender, weight, height, age):
+    value = 5 if gender == "Male" else -161
+    return (10 * weight) + (6.25 * height) - (5 * age) + value
+
+
+def calculate_calorie_goal(base_bmr, activity, mode, goal):
+    """Function to calculate the calorie goal intake based on user's preferences.
+
+    Args:
+        base_bmr (float): the initial bmr based on Mifflin St Jeor computation
+        activity (str): the user's activity based on their lifestyle in String form
+        mode (str): the user's mode of choice in String choice
+        goal (str): the user's activities' intensity
+
+    Returns:
+        float: the value of the calorie goal itself.
+    """
+    activity_multipliers = {
+        "Sedentary": Decimal("1.2"),
+        "Light": Decimal("1.375"),
+        "Moderate": Decimal("1.55"),
+        "Active": Decimal("1.725"),
+        "Very Active": Decimal("1.9")
+    }
+    goals_list = {
+        "Sedentary": 0,
+        "Mild": Decimal("275.577828"),
+        "Standard": Decimal("551.155655"),
+        "Extreme": Decimal("1102.311311"),
+    }
+
+    calorie_goal = round(Decimal(str(base_bmr)) * activity_multipliers[activity], 1)
+    if mode == "lose":
+        return calorie_goal - goals_list[goal]
+    if mode == "gain":
+        return calorie_goal + goals_list[goal]
+    return calorie_goal

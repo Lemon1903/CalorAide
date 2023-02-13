@@ -72,11 +72,11 @@
 
                 MDFlatButton:
                     text: "Confirm"
-                    on_release: root.confirm_callback()
+                    on_release: root._on_confirm_selection()
 
                 MDFlatButton:
                     text: "Cancel"
-                    on_release: root.cancel_callback()
+                    on_release: root.dismiss()
 
 
 <ActivityItem>:

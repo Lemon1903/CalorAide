@@ -12,13 +12,13 @@ class DataBase:
             "https://fitrex-bfc21-default-rtdb.asia-southeast1.firebasedatabase.app/"
         )
         self._username = "Lemon"
+        self.bmi = ""
         self.max_id = 0
 
     def get_user_data(self, table_name: str) -> dict | None:
         """Returns data of the selected collection from the database.
 
         Args:
-            key (str): the user table to be accessed.
             table_name (str): the table under user table to be accessed.
         """
         try:
@@ -33,8 +33,7 @@ class DataBase:
         """Updates user data of the selected collection in database.
 
         Args:
-            user_input (dict): the new user data to be stored.
-            key (str): the user table to be accessed.
+            new_data (dict): the new user data to be stored.
             table_name (str): the table under user table to be accessed.
         """
         try:
@@ -50,7 +49,6 @@ class DataBase:
 
         Args:
             delete_list (list): the list of items to be deleted.
-            key (str): the user table to be accessed.
             table_name (str): the table under user table to be accessed.
         """
         try:

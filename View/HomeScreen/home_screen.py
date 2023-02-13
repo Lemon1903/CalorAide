@@ -38,10 +38,7 @@ class HomeScreenView(BaseScreenView):
         The view in this method tracks these changes and updates the UI
         according to these changes.
         """
-        if (
-            self.controller.has_loaded_profile
-            and self.controller.has_loaded_calorie_counter
-        ):
+        if self.model.has_loaded_screens():
             self.close_loading_view()
 
     def open_loading_view(self):

@@ -12,16 +12,14 @@ from kivymd.uix.dialog import BaseDialog
 class ActivityDialog(BaseDialog):
     """Custom Dialog for picking a new activity."""
 
-    current_activity = StringProperty("Extra Active")
+    current_activity = StringProperty("Sedentary")
 
-    def __init__(self, confirm_callback, cancel_callback, **kwargs):
+    def __init__(self, view, **kwargs):
         super().__init__(**kwargs)
+        self.view = view
+        self.selected_activity = self.current_activity
         self.radius = [dp(10), dp(10), dp(10), dp(10)]
         self.size_hint = (None, None)
-
-        # dialog buttons callbacks
-        self.confirm_callback = confirm_callback
-        self.cancel_callback = cancel_callback
 
         # adjust the width according to the device
         if DEVICE_TYPE in ("desktop", "tablet"):
@@ -38,6 +36,11 @@ class ActivityDialog(BaseDialog):
             ):
                 activity_item.ids.checkbox.active = True
 
+    def _on_confirm_selection(self):
+        self.dismiss()
+        self.current_activity = self.selected_activity
+        self.view.controller.update_all_calorie_goal(self.current_activity)
+
 
 class ActivityItem(MDBoxLayout):
     """Activity Dialog checkbox items."""
@@ -50,7 +53,7 @@ class ActivityItem(MDBoxLayout):
         if value:
             self.ids.description.opacity = 1.0
             self.ids.description.height = self.ids.description.texture_size[1]
-            self.parent.current_activity = self.activity_type
+            self.parent.selected_activity = self.activity_type
         else:
             self.ids.description.opacity = 0.0
             self.ids.description.height = 0
