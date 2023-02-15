@@ -20,7 +20,7 @@ class LoginScreenController:
 
     def __init__(self, model):
         self.model = model  # Model.login_screen.LoginScreenModel
-        self.views = [LoginScreenView(self, self.model)]
+        self.views = [LoginScreenView(controller=self, model=self.model)]
 
 
     def get_views(self) -> list[LoginScreenView]:

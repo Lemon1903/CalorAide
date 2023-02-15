@@ -22,11 +22,22 @@ from Model.database import DataBase
 Config.set("graphics", "multisamples", 0)
 os.environ["KIVY_GL_BACKEND"] = "angle_sdl2"
 
-LabelBase.register(name='Poppins-Regular', fn_regular='assets/fonts/Poppins/Poppins-Regular.ttf')
-LabelBase.register(name='Poppins-SemiBold', fn_regular='assets/fonts/Poppins/Poppins-SemiBold.ttf')
-LabelBase.register(name='Poppins-Medium', fn_regular='assets/fonts/Poppins/Poppins-Medium.ttf')
-LabelBase.register(name='Poppins-MediumItalic', fn_regular='assets/fonts/Poppins/Poppins-MediumItalic.ttf')
-LabelBase.register(name='Poppins-Bold', fn_regular='assets/fonts/Poppins/Poppins-Bold.ttf')
+LabelBase.register(
+    name="Poppins-Regular", fn_regular="assets/fonts/Poppins/Poppins-Regular.ttf"
+)
+LabelBase.register(
+    name="Poppins-SemiBold", fn_regular="assets/fonts/Poppins/Poppins-SemiBold.ttf"
+)
+LabelBase.register(
+    name="Poppins-Medium", fn_regular="assets/fonts/Poppins/Poppins-Medium.ttf"
+)
+LabelBase.register(
+    name="Poppins-MediumItalic",
+    fn_regular="assets/fonts/Poppins/Poppins-MediumItalic.ttf",
+)
+LabelBase.register(
+    name="Poppins-Bold", fn_regular="assets/fonts/Poppins/Poppins-Bold.ttf"
+)
 
 
 class Fitrex(MDApp):
@@ -36,8 +47,8 @@ class Fitrex(MDApp):
         DEBUG (bool): The switch indicator for hot reloading.
         KV_DIRS (list[str]): The directory path to the kivy files.
     """
-    
-    DEBUG = True
+
+    DEBUG = False
     KV_DIRS = [os.path.join(os.getcwd(), "View")]
 
     def build_app(self, *_) -> MDScreenManager:
