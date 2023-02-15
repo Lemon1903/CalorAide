@@ -18,7 +18,7 @@ class LoginScreenView(BaseScreenView):
         return [self.ids.textfield_username.text, self.ids.textfield_password.text]
 
     def reset_status(self):
-        """A method that reset the status of text field from the required attribute of the text field."""
+        """A method that resets the error and required status of text field."""
         self.ids.textfield_username.required = False
         self.ids.textfield_password.required = False
 
@@ -26,7 +26,7 @@ class LoginScreenView(BaseScreenView):
         """A method that simply clear the text fields (username and password)."""
         self.ids.textfield_username.text = ""
         self.ids.textfield_password.text = ""
-    
+
     def show_error_snackbar(self, error_text: str, color="#7B56BA"):
         """A method that show snackbar with a message that comes from its parameter."""
         Snackbar(
@@ -55,4 +55,3 @@ class LoginScreenView(BaseScreenView):
                 self.show_error_snackbar("Account does not exist!")
 
         self.clear_text_fields()
-        

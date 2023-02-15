@@ -1,16 +1,16 @@
 <LoginScreenView>:
-    MDFloatLayout:  
+    MDFloatLayout:
         size_hint: 1, 0.4
         pos_hint: {"center_x": 0.5, "center_y": 0.78}
 
-        Image: 
+        Image:
             source: "assets/images/FITNITIE.png"
             pos_hint: {"center_x": 0.5, "center_y": 0.8}
 
-        Image: 
+        Image:
             source: "assets/images/ICON.png"
             pos_hint: {"center_x": 0.5, "center_y": 0.3}
-    
+
     MDFloatLayout:
         size_hint: 1, 1.055
         pos_hint: {"center_x": 0.9, "center_y": 0.8}
@@ -21,7 +21,7 @@
             font_name: "Poppins-Medium"
             font_size: sp(40)
 
-    MDBoxLayout:  
+    MDBoxLayout:
         orientation: 'vertical'
         size_hint: 0.65, 0.4
         pos_hint: {"center_x": 0.5, "center_y": 0.26}
@@ -44,7 +44,7 @@
                 hint_text: "Password"
                 helper_text: "This is a required text field"
                 pos_hint: {"center_x": 0.5, "center_y": 0.5}
-                on_focus: if root.ids.textfield_password.text == '': root.ids.textfield_password.required = True
+                on_focus: if self.text == '': self.required = True
 
             MDIconButton:
                 icon: "eye-off"
@@ -59,18 +59,18 @@
             size_hint: 1, 0.9
             pos_hint: {"center_x": 0.5, "center_y": 0.7}
 
-            MDFillRoundFlatButton: 
+            MDFillRoundFlatButton:
                 text: "LOG-IN"
                 font_name: "Poppins-SemiBold"
                 custom_color: self.theme_text_color
                 pos_hint: {"center_x": 0.24, "center_y": 0.5}
-                on_release: 
+                on_release:
                     root.validate_user_input()
                     # root.manager.current = "profile screen"
 
-            MDFillRoundFlatButton: 
+            MDFillRoundFlatButton:
                 text: "SIGN-UP"
                 font_name: "Poppins-SemiBold"
                 custom_color: self.theme_text_color
-                pos_hint: {"center_x": 0.75, "center_y": 0.5} 
+                pos_hint: {"center_x": 0.75, "center_y": 0.5}
                 # on_release: root.manager.current = "signup screen"
