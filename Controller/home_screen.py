@@ -5,7 +5,12 @@ from decimal import Decimal
 
 import View.HomeScreen.home_screen
 from Utils import helpers
+from datetime import datetime
+
+import View.HomeScreen.home_screen
+import View.HomeScreen.ProfileScreen.profile_screen
 from View import HomeScreenView
+from View.HomeScreen.ProfileScreen import ProfileScreenView
 
 # We have to manually reload the view module in order to apply the
 # changes made to the code on a subsequent hot reload.
@@ -101,6 +106,7 @@ class HomeScreenController:
             calorie_goal (float): the calorie goal to be updated.
         """
         self.views[0].open_loading_view()
+<<<<<<< HEAD
         date_today = helpers.get_date_today()
         calorie_goal += sum(item.calorie_amount for item in checked_items)
         self.model.update_calorie_goal(round(calorie_goal, 1), f"History/{date_today}")
@@ -132,3 +138,63 @@ class HomeScreenController:
                 calorie_goal -= Decimal(str(item["Calorie Amount"]))
         self.model.update_calorie_goal(float(calorie_goal), f"History/{date_today}")
         
+=======
+        checked_items = calorie_screen.get_checked_items()
+        for item in checked_items:
+            calorie_goal += item.calorie_amount
+        self.model.delete_intake_to_database(checked_items, calorie_goal)
+
+    def get_dates(self):
+        data = self.model.get_user_data_from_db()
+        date_format = '%d-%m-%Y'
+        dates = []
+        for date in data:
+            date_object = datetime.strptime(date, date_format)
+
+            readable_date = date_object.strftime('%b %d')
+
+            dates.append(readable_date)
+
+        return dates
+
+
+    def get_calories(self):
+        data = self.model.get_user_data_from_db()
+        calories = []
+        total_calories = []
+        calorie_sum = 0
+        calorie_goal = []
+
+        for key, values in data.items():
+            for inner_key, inner_value in values.items():
+                if inner_key != "Calorie Goal": 
+                    calorie_sum += inner_value['Calorie Amount']
+                else:
+                    calorie_goal.append(inner_value)
+            total_calories.append(calorie_sum)
+            calorie_sum = 0
+        return total_calories, sum(calorie_goal)/len(calorie_goal)
+
+
+    def get_food(self):
+        data = self.model.get_user_data_from_db()
+        
+        food = []
+        calorie = []
+        foods = []
+        calories = []
+
+        for key, values in data.items():
+            for inner_key, inner_values in values.items():
+                if inner_key != "Calorie Goal":
+                    food.append(inner_values['Food'])
+                    calorie.append(inner_values['Calorie Amount'])
+                else: 
+                    foods.append(food)
+                    calories.append(calorie)
+                    food = []
+                    calorie = []
+                
+        return foods, calories
+                    
+>>>>>>> 7646ceb (Added bar graph and pie chart.)

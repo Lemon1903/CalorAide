@@ -174,3 +174,6 @@ class HomeScreenModel(BaseScreenModel):
 
         self.updated_calorie_part = "intake history delete"
         self.notify_observers("calorie counter screen")
+
+    def get_user_data_from_db(self):
+        return self._database.get_user_data("History")
