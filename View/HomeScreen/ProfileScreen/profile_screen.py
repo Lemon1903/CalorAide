@@ -100,7 +100,7 @@ class ProfileScreenView(BaseScreenView):
         if self.pie_days == 'Today':
             self.pie_days = 'Yesterday'
             calories = calories[-1]
-            foods = foods[-1]                                                                                                                                           
+            foods = foods[-1]                                                  
             ax.set_xlabel("Today")
         elif self.pie_days == 'Yesterday':
             self.pie_days = 'Today'

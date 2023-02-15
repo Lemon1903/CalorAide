@@ -10,7 +10,6 @@ from datetime import datetime
 import View.HomeScreen.home_screen
 import View.HomeScreen.ProfileScreen.profile_screen
 from View import HomeScreenView
-from View.HomeScreen.ProfileScreen import ProfileScreenView
 
 # We have to manually reload the view module in order to apply the
 # changes made to the code on a subsequent hot reload.
