@@ -9,7 +9,7 @@ from View.base_screen import BaseScreenView
 
 
 class HomeScreenView(BaseScreenView):
-    """The view that handles UI for profile screen."""
+    """ The view that handles UI for profile screen. """
 
     def __init__(self, **kw):
         super().__init__(**kw)
@@ -34,7 +34,7 @@ class HomeScreenView(BaseScreenView):
 
     @mainthread
     def model_is_changed(self) -> None:
-        """Called whenever any change has occurred in the data model.
+        """ Called whenever any change has occurred in the data model.
         The view in this method tracks these changes and updates the UI
         according to these changes.
         """
@@ -42,9 +42,9 @@ class HomeScreenView(BaseScreenView):
             self.close_loading_view()
 
     def open_loading_view(self):
-        """Opens the loading view."""
+        """ Opens the loading view. """
         self.loading_view.open()
 
     def close_loading_view(self):
-        """Closes the loading view."""
+        """ Closes the loading view. """
         self.loading_view.dismiss()

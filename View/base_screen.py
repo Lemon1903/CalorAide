@@ -46,6 +46,12 @@ class BaseScreenView(ThemableBehavior, Screen, Observer):
         Clock.schedule_once(lambda _: self.model.add_observer(self), 1)
 
     def change_screen(self, direction: str, next_screen: str):
+        """Go to the next screen.
+
+        Args:
+            direction (str): the transition direction
+            next_screen (str): the next screen to go to.
+        """
         self.manager.transition.direction = direction
         self.manager.current = next_screen
 
@@ -61,6 +67,6 @@ class LoadingView(ModalView):
             on_open=lambda *_: self._change_spinner_state(True),
             on_dismiss=lambda *_: self._change_spinner_state(False),
         )
-    
+
     def _change_spinner_state(self, state):
         self.active = state

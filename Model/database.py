@@ -61,8 +61,3 @@ class DataBase:
             return True
         except requests.exceptions.ConnectionError:
             return False
-    
-    def get_history(self, table_name):
-        """ Function to acces history table """
-        history = self.firebase_.get(f"USERDATA/Lemon/", table_name)
-        return history

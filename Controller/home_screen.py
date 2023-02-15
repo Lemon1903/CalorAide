@@ -33,6 +33,15 @@ class HomeScreenController:
         """
         return self.views
 
+    def change_screen(self, direction: str, next_screen: str):
+        """Go to the next screen.
+
+        Args:
+            direction (str): the transition direction
+            next_screen (str): the next screen to go to.
+        """
+        self.views[0].change_screen(direction, next_screen)
+
     def load_user_data(self, do_reload=False):
         """Loads all user information."""
         if do_reload:

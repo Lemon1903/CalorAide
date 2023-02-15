@@ -36,7 +36,7 @@ class CalorieCounterScreenView(BaseScreenView):
         self.history_button = MDFillRoundFlatButton(
             text="History",
             font_name="Poppins-SemiBold",
-            on_release=lambda *_: print("History"),
+            on_release=lambda *_: self.controller.change_screen("up", "history screen"),
         )
         self.delete_button = MDFillRoundFlatButton(
             text="Delete",

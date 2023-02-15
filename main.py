@@ -104,6 +104,6 @@ class Fitrex(MDApp):
 if __name__ == "__main__":
     # adjust this base on your screen
     Window.size = (360, 636)
-    Window.top = 30
-    Window.left = 900
+    Window.top = 50
+    Window.left = 1160
     Fitrex().run()

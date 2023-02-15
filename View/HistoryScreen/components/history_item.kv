@@ -1,14 +1,14 @@
-<IntakeHistoryItem>:
+<HistoryItem>:
     _is_shorten: True
-    padding: dp(0), dp(5)
+    padding: 0, dp(5) # dp(8), dp(5), dp(0), dp(5)
     adaptive_height: True
     on_release: self._is_shorten = not self._is_shorten
 
-    canvas.after:
-        Color:
-            rgba: [1, 1, 1, 0.5]
-        Line:
-            points: (self.x, self.y, self.x + self.width, self.y)
+    # canvas.after:
+    #     Color:
+    #         rgba: [1, 1, 1, 0.5]
+    #     Line:
+    #         points: (self.x, self.y, self.x + self.width, self.y)
 
     MDLabel:
         text: root.food_name
@@ -17,15 +17,10 @@
         shorten: root._is_shorten
         shorten_from: "right"
         size: self.texture_size
-        size_hint: 0.35, None
-        pos_hint: {'center_y': 0.35}
+        size_hint_y: None
 
     MDLabel:
         text: f"{root.calorie_amount} k/cal"
         font_name: "Poppins-Regular"
         font_size: 18
         halign: "center"
-        size_hint_x: 0.5
-        pos_hint: {'center_y': 0.35}
-    
-

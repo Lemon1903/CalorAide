@@ -1,8 +1,5 @@
 """_module summary_"""
 import importlib
-import time
-
-import multitasking
 
 import View.HistoryScreen.history_screen
 from View import HistoryScreenView
@@ -23,16 +20,14 @@ class HistoryScreenController:
 
     def __init__(self, model):
         self.model = model  # Model.main_screen.MainScreenModel
-        self.views = [HistoryScreenView(self, self.model)]
+        self.views = [HistoryScreenView(controller=self, model=self.model)]
 
-    def get_data_from_model(self):
-        """ Get data from history table thru model """
-        self.history_data = self.model.getting_history_data()
-        return(self.history_data)
-
+    def load_all_intake_history(self):
+        """ Get data from history table through model. """
+        self.model.load_all_intake_history()
 
     def get_views(self) -> list[HistoryScreenView]:
-        """Gets the view connected to this controller.
+        """ Gets the view connected to this controller.
 
         Returns:
             HistoryScreenView: The view connected to this controller.

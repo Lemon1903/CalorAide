@@ -7,7 +7,7 @@ from kivymd.uix.behaviors import RectangularRippleBehavior
 from kivymd.uix.boxlayout import MDBoxLayout
 
 
-class IntakeHistoryItem(RectangularRippleBehavior, ButtonBehavior, MDBoxLayout):
+class HistoryItem(RectangularRippleBehavior, ButtonBehavior, MDBoxLayout):
     """Represents the items in the intake history."""
 
     food_name = StringProperty()

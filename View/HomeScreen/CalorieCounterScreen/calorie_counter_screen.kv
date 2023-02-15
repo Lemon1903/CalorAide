@@ -61,7 +61,7 @@
 
                 MDLabel:
                     markup: True
-                    text: "[size=18][color=#21005d]k/cal[/color][/size]"
+                    text: "[size=18][color=#21005D]k/cal[/color][/size]"
                     font_name: "Poppins-Bold"
                     halign: "center"
                     height: self.texture_size[1]
@@ -98,3 +98,4 @@
                 text: "History"
                 font_name: "Poppins-SemiBold"
                 size_hint_x: 1
+                on_release: root.controller.change_screen("up", "history screen")

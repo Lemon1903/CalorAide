@@ -1,3 +1,3 @@
 """Import necessary classes."""
 
-from .intake_history_item import IntakeHistoryItem
+from .history_item import HistoryItem
