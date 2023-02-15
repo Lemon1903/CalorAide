@@ -7,10 +7,15 @@ from firebase import firebase
 class DataBase:
     """Your methods for working with the database should be implemented in this class."""
 
+    def __init__(self):
+        self._firebase = firebase.FirebaseApplication(
+            "https://fitrex-bfc21-default-rtdb.asia-southeast1.firebasedatabase.app/"
+        )
+
     def get_data_table(self):
         """Returns the USERDATA table from database."""
         try:
-            data = self.firebase_.get("USERDATA", "", connection=None)
+            data = self._firebase.get("USERDATA", "", connection=None)
             return data
         except requests.exceptions.ConnectionError:
             return None
@@ -19,7 +24,7 @@ class DataBase:
         """Adds userdata to database."""
         try:
             data = {"Password": user_input[1]}
-            self.firebase_.put(
+            self._firebase.put(
                 f"USERDATA/{user_input[2]}", "UserInfo", data, connection=None
             )
             return True

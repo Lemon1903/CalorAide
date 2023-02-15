@@ -19,7 +19,7 @@ class LoginScreenModel(BaseScreenModel):
 
     def is_account_taken(self, username: str, password: str):
         """ A method that checks if certain username and password exist in database. """
-        data = self.database.get_data()
+        data = self.database.get_data_table()
         for key, value in data.items():
             if key == username and value["Password"] == password:
                 return True

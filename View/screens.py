@@ -7,12 +7,12 @@ from Controller import LoginScreenController, SignupScreenController
 from Model import LoginScreenModel, SignupScreenModel
 
 screens = {
-    "signup screen": {
-        "model": SignupScreenModel,
-        "controller": SignupScreenController,
-    },
     "login screen": {
         "model": LoginScreenModel,
         "controller": LoginScreenController,
+    },
+    "signup screen": {
+        "model": SignupScreenModel,
+        "controller": SignupScreenController,
     },
 }

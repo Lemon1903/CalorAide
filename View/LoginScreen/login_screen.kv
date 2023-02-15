@@ -33,7 +33,7 @@
             hint_text: "Username"
             helper_text: "This is a required text field"
             pos_hint: {"center_x": 0.5, "center_y": 0.5}
-            on_focus: if root.ids.textfield_username.text == '': root.ids.textfield_username.required = True
+            on_focus: self.required = not self.text
 
         MDRelativeLayout:
             MDTextField:
@@ -44,7 +44,7 @@
                 hint_text: "Password"
                 helper_text: "This is a required text field"
                 pos_hint: {"center_x": 0.5, "center_y": 0.5}
-                on_focus: if self.text == '': self.required = True
+                on_focus: self.required = not self.text
 
             MDIconButton:
                 icon: "eye-off"
@@ -53,7 +53,7 @@
                 pos_hint: {"center_y": 0.5}
                 on_release:
                     self.icon = "eye" if self.icon == "eye-off" else "eye-off"
-                    textfield_password.password = False if textfield_password.password else True
+                    textfield_password.password = not textfield_password.password
 
         MDFloatLayout:
             size_hint: 1, 0.9
@@ -64,13 +64,11 @@
                 font_name: "Poppins-SemiBold"
                 custom_color: self.theme_text_color
                 pos_hint: {"center_x": 0.24, "center_y": 0.5}
-                on_release:
-                    root.validate_user_input()
-                    # root.manager.current = "profile screen"
+                on_release: root.validate_user_input()
 
             MDFillRoundFlatButton:
                 text: "SIGN-UP"
                 font_name: "Poppins-SemiBold"
                 custom_color: self.theme_text_color
                 pos_hint: {"center_x": 0.75, "center_y": 0.5}
-                # on_release: root.manager.current = "signup screen"
+                on_release: root.change_screen("left", "signup screen")
