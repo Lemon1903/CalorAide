@@ -85,12 +85,11 @@ class Fitrex(MDApp):
         self.theme_cls.theme_style = (
             "Dark" if self.theme_cls.theme_style == "Light" else "Light"
         )
-
+      
 
 if __name__ == "__main__":
     # adjust this base on your screen
     Window.size = (360, 640)
-    Window.top = 30
-    Window.left = 1560
-
+    Window.top = 50
+    Window.left = 1160
     Fitrex().run()

@@ -1,7 +1,5 @@
 """_module summary_"""
 
-from typing import Union
-
 import requests
 from firebase import firebase
 
@@ -16,37 +14,16 @@ class DataBase:
         self.bmi = ""
         self._username = "Daniel"
 
-    # USERDATA is the Table
+    # TODO: can be removed
     def get_data_table(self):
-        """Returns data from database."""
+        """Returns the USERDATA table from database."""
         try:
-            data = self._firebase.get("USERDATA", '')
+            data = self._firebase.get("USERDATA", "", connection=None)
+            return data
         except requests.exceptions.ConnectionError:
             return None
-        return data
 
-    def create_table(self):
-        self.data ={
-            "Username" : "rae",
-            "Password" : "try",
-            "Name": "Asd Fgh",
-            "Height": 175,
-            "Weight": 60,
-            "Activity": 1,
-
-        }
-        self._firebase.post("https://fitrex-bfc21-default-rtdb.asia-southeast1.firebasedatabase.app/USERDATA", self.data)
-
-    def add(self, userdata):
-        self.data = {
-            "Username": userdata[0],
-            "Password": userdata[1],
-        }
-        self._firebase.post("https://fitrex-bfc21-default-rtdb.asia-southeast1.firebasedatabase.app/USERDATA", self.data)
-        print("Posted!")
-
-        return()
-
+    # TODO: can be removed or stay
     def add_user_data(self, user_input):
         """Adds userdata to database."""
         try:
@@ -60,9 +37,9 @@ class DataBase:
 
     def update_user_data(self, new_data: dict, table_name: str):
         """Updates user data of the selected collection in database.
+
         Args:
-            user_input (dict): the new user data to be stored.
-            key (str): the user table to be accessed.
+            new_data (dict): the new user data to be stored.
             table_name (str): the table under user table to be accessed.
         """
         try:

@@ -23,10 +23,7 @@ class SignupScreenController:
         self.views = [SignupScreenView(controller=self, model=self.model)]
 
     def pass_data(self, user_input: list[str]):
-        """
-        Pass the user input to a function in model called `to_database`.
-        Calls the functions `disable_confirm_button` and `clear_text_field` from SignupScreenView.
-        """
+        """Pass the user input to a function in model called `to_database`."""
         self.model.to_database(user_input)
 
     def get_views(self) -> list[SignupScreenView]:

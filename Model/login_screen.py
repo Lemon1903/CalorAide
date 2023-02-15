@@ -14,28 +14,14 @@ class LoginScreenModel(BaseScreenModel):
     """
 
     def __init__(self, database):
-        # Just an example of the data. Use your own values.
-        self._data = None
-        self.database = database
+        # TODO: add a data to be monitored by the view
+        self._database = database
 
-    @property
-    def data(self):
-        """_data summary_
-
-        Returns:
-            _type_: _description_
-        """
-        return self._data
-
-    @data.setter
-    def data(self, value):
-        # We notify the View -
-        # :class:`~View.ProfileScreen.profile_screen.ProfileScreenView` about the
-        # changes that have occurred in the data model.
-        self._data = value
-        self.notify_observers("profile screen")
-
-    @multitasking.task
-    def check_data(self):
-        """Just an example of the method. Use your own code."""
-        self.data = ["example item"]
+    # TODO: make this a multitasking task and follows Observer pattern
+    def is_account_taken(self, username: str, password: str):
+        """ A method that checks if certain username and password exist in database. """
+        data = self._database.get_data_table()
+        for key, value in data.items():
+            if key == username and value["UserInfo"]["Password"] == password:
+                return True
+        return False
