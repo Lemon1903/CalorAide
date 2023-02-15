@@ -1,0 +1,55 @@
+<GoalScreenView>:
+
+    MDBoxLayout:
+        orientation: "vertical"
+        pos_hint: {"center_x":0.5, "center_y":0.90}
+
+        MDLabel:
+            text: "GOAL"
+            font_name: "Poppins-Medium"
+            font_size: 40
+            theme_text_color: "Custom"
+            text_color: "white"
+            halign: "center"
+            valign: "top"
+
+    MDBoxLayout:
+        orientation: "vertical"
+        pos_hint: {"center_x":0.5, "center_y":0.82}
+
+        DisplayLabel:
+            id: goal_label
+
+    MDFloatLayout:
+        orientation: "vertical"
+
+        Modes:
+            id: mild
+            text: "MILD\n[size=14][color=#d0d0d0]0.25kg./ week[/color][/size]"
+            pos_hint: {"center_x":0.5, "center_y":0.66}
+            on_press: self.parent.parent.chosen_button = "mild"
+            on_release: self.parent.parent.modify_goal_buttons(self.parent.parent.chosen_button)
+
+        Modes:
+            id: standard
+            text: "STANDARD\n[size=14][color=#d0d0d0]0.5kg./ week[/color][/size]"
+            pos_hint: {"center_x":0.5, "center_y":0.50}
+            on_press: self.parent.parent.chosen_button = "standard"
+            on_release: self.parent.parent.modify_goal_buttons(self.parent.parent.chosen_button)
+
+        Modes:
+            id: extreme
+            text: "EXTREME\n[size=14][color=#d0d0d0]1kg./ week[/color][/size]"
+            pos_hint: {"center_x":0.5, "center_y":0.34}
+            on_press: self.parent.parent.chosen_button = "extreme"
+            on_release: self.parent.parent.modify_goal_buttons(self.parent.parent.chosen_button)
+
+    MDFloatLayout:
+        MDFillRoundFlatButton:
+            id: finalize
+            text: "FINALIZE"
+            text_color: "white"
+            font_name: "Poppins-SemiBold"
+            md_bg_color: "#7B56BA"
+            pos_hint: {"center_x": .50, "center_y": .20}
+            on_release: self.parent.parent.show_finalize_dialog()
