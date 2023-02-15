@@ -22,6 +22,7 @@ class LoginScreenController:
         self.model = model  # Model.login_screen.LoginScreenModel
         self.views = [LoginScreenView(self, self.model)]
 
+
     def get_views(self) -> list[LoginScreenView]:
         """Gets the view connected to this controller.
 
@@ -29,3 +30,21 @@ class LoginScreenController:
             LoginScreenView: The view connected to this controller.
         """
         return self.views
+
+    # def check_account_reset_clear(self):
+    #     """ A method that checks if account exists and resets the status of the text fields. """
+    #     username, password = self.views[0].store_user_input()
+    #     if self.model.is_account_taken(username, password):
+    #         self.views[0].reset_status()
+    #     else:
+    #         self.views[0].show_errors_snackbar()
+    #     self.views[0].clear_text_fields()
+
+    # def check_account_reset(self):
+    #     """A method that replicates the is_account_taken from the Model but it has a condition that if an account exists it should reset the status of the text field"""
+    #     username, password = self.views[0].store_user_input()
+    #     if self.model.is_account_taken(username, password):
+    #         self.views[0].reset_status()
+    #         return True
+    #     return False
+    

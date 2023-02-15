@@ -1,6 +1,7 @@
 # rules
 <GeneralInformationCard>:
     current_layout: inner
+    radius: 10
     padding: dp(20), dp(15)
     height: self.current_layout.height + self.padding[1] * 2
     size_hint_y: None
@@ -15,13 +16,13 @@
     adaptive_height: True
     spacing: dp(10)
 
-    CustomLabel:
+    ProfileLabel:
         text: "General Information"
 
-    CustomLabel:
+    ProfileLabel:
         text: "Height: 170cm"
 
-    CustomLabel:
+    ProfileLabel:
         text: "Weight: 55kg"
 
     MDRectangleFlatButton:
@@ -36,13 +37,13 @@
     adaptive_height: True
     spacing: dp(10)
 
-    CustomLabel:
+    ProfileLabel:
         text: "Edit Information"
 
-    CustomTextField:
+    PRofileTextField:
         hint_text: "Height"
 
-    CustomTextField:
+    PRofileTextField:
         hint_text: "Weight"
 
     MDRectangleFlatButton:
@@ -52,14 +53,14 @@
         on_release: root.submit_new_profile_info()
 
 
-# dynamic classes of kivy
-<CustomLabel@MDLabel>:
+# dynamic classes
+<ProfileLabel@MDLabel>:
     color: "white"
     height: dp(20)
     size_hint_y: None
 
 
-<CustomTextField@MDTextField>:
+<PRofileTextField@MDTextField>:
     mode: "rectangle"
     text_color_focus: "black"
     hint_text_color_focus: "black"

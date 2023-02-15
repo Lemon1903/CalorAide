@@ -12,12 +12,10 @@ screens = {
         "model": LoginScreenModel,
         "controller": LoginScreenController,
     },
-
     "profile screen": {
         "model": ProfileScreenModel,
         "controller": ProfileScreenController,
     },
-
     "main screen": {
         "model": MainScreenModel,
         "controller": MainScreenController,
