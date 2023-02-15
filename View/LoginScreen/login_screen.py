@@ -29,7 +29,14 @@ class LoginScreenView(BaseScreenView):
     
     def show_error_snackbar(self, error_text: str, color="#7B56BA"):
         """A method that show snackbar with a message that comes from its parameter."""
-        Snackbar(text=error_text, bg_color=color).open()
+        Snackbar(
+            text=error_text,
+            bg_color=color,
+            snackbar_x=30,
+            snackbar_y=20,
+            size_hint_x=0.95,
+            pos_hint={"center_x": 0.5},
+        ).open()
 
     def validate_user_input(self):
         """A method that show snackbar with different messages in different scenarios."""
