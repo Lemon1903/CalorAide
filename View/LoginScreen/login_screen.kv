@@ -1,76 +1,76 @@
 <LoginScreenView>:
     MDFloatLayout:  
         size_hint: 1, 0.4
-        pos_hint: {"center_x": .5, "center_y": 0.78}
+        pos_hint: {"center_x": 0.5, "center_y": 0.78}
+
         Image: 
             source: "assets/images/FITNITIE.png"
-            pos_hint: {"center_x": .5, "center_y": 0.8}
+            pos_hint: {"center_x": 0.5, "center_y": 0.8}
 
         Image: 
             source: "assets/images/ICON.png"
-            pos_hint: {"center_x": .5, "center_y": 0.3}
+            pos_hint: {"center_x": 0.5, "center_y": 0.3}
     
     MDFloatLayout:
         size_hint: 1, 1.055
         pos_hint: {"center_x": 0.9, "center_y": 0.8}
+
         MDLabel:
             text: "LOG-IN"
             halign: "center"
             font_name: "Poppins-Medium"
-            font_size: 40
+            font_size: sp(40)
 
     MDBoxLayout:  
         orientation: 'vertical'
         size_hint: 0.65, 0.4
-        pos_hint: {"center_x": .5, "center_y": .26}
+        pos_hint: {"center_x": 0.5, "center_y": 0.26}
+
         MDTextField:
             id: textfield_username
+            mode: "rectangle"
             font_name: "Poppins-Medium"
-            pos_hint: {"center_x": .5, "center_y": .5}
-            required: False
             hint_text: "Username"
             helper_text: "This is a required text field"
-            on_focus: 
-                if root.ids.textfield_username.text == '': root.ids.textfield_username.required = True
-            mode: "rectangle"
+            pos_hint: {"center_x": 0.5, "center_y": 0.5}
+            on_focus: if root.ids.textfield_username.text == '': root.ids.textfield_username.required = True
 
         MDRelativeLayout:
             MDTextField:
                 id: textfield_password
-                font_name: "Poppins-Medium"
-                pos_hint: {"center_x": .5, "center_y": .5}
+                mode: "rectangle"
                 password: True
-                required: False
+                font_name: "Poppins-Medium"
                 hint_text: "Password"
                 helper_text: "This is a required text field"
-                on_focus: 
-                    if root.ids.textfield_password.text == '': root.ids.textfield_password.required = True
-                mode: "rectangle"
-            
+                pos_hint: {"center_x": 0.5, "center_y": 0.5}
+                on_focus: if root.ids.textfield_password.text == '': root.ids.textfield_password.required = True
+
             MDIconButton:
                 icon: "eye-off"
-                pos_hint: {"center_y": 0.5}
-                pos: textfield_password.width - self.width + dp(0), 0
                 theme_text_color: "Hint"
+                pos: textfield_password.width - self.width + dp(0), 0
+                pos_hint: {"center_y": 0.5}
                 on_release:
                     self.icon = "eye" if self.icon == "eye-off" else "eye-off"
-                    textfield_password.password = False if textfield_password.password is True else True
-                    
+                    textfield_password.password = False if textfield_password.password else True
+
         MDFloatLayout:
             size_hint: 1, 0.9
-            pos_hint: {"center_x": .5, "center_y": .7} 
+            pos_hint: {"center_x": 0.5, "center_y": 0.7}
+
             MDFillRoundFlatButton: 
-                pos_hint: {"center_x": .24, "center_y": .5} 
                 text: "LOG-IN"
                 font_name: "Poppins-SemiBold"
                 custom_color: self.theme_text_color
+                pos_hint: {"center_x": 0.24, "center_y": 0.5}
                 on_release: 
-                    root.controller.check_account_reset_clear()
+                    root.validate_user_input()
                     # root.manager.current = "profile screen"
-            
+
             MDFillRoundFlatButton: 
-                pos_hint: {"center_x": .75, "center_y": .5} 
                 text: "SIGN-UP"
                 font_name: "Poppins-SemiBold"
                 custom_color: self.theme_text_color
+                pos_hint: {"center_x": 0.75, "center_y": 0.5} 
                 # on_release: root.manager.current = "signup screen"
