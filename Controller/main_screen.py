@@ -23,7 +23,7 @@ class MainScreenController:
 
     def __init__(self, model):
         self.model = model  # Model.main_screen.MainScreenModel
-        self.views = [MainScreenView(self, self.model)]
+        self.views = [MainScreenView(controller=self, model=self.model)]
 
     @multitasking.task
     def do_extensive_calculations(self):

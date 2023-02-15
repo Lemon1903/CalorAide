@@ -3,3 +3,6 @@
         "master"
     ]
 }
+{
+    "materialkv.pythonFile": "main.py"
+}
