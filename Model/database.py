@@ -12,6 +12,7 @@ class DataBase:
             "https://fitrex-bfc21-default-rtdb.asia-southeast1.firebasedatabase.app/"
         )
 
+    # TODO: can be removed
     def get_data_table(self):
         """Returns the USERDATA table from database."""
         try:
@@ -20,6 +21,7 @@ class DataBase:
         except requests.exceptions.ConnectionError:
             return None
 
+    # TODO: can be removed or stay
     def add_user_data(self, user_input):
         """Adds userdata to database."""
         try:

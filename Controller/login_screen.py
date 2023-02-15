@@ -22,7 +22,6 @@ class LoginScreenController:
         self.model = model  # Model.login_screen.LoginScreenModel
         self.views = [LoginScreenView(controller=self, model=self.model)]
 
-
     def get_views(self) -> list[LoginScreenView]:
         """Gets the view connected to this controller.
 

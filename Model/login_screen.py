@@ -14,13 +14,14 @@ class LoginScreenModel(BaseScreenModel):
     """
 
     def __init__(self, database):
-        # Just an example of the data. Use your own values.
-        self.database = database
+        # TODO: add a data to be monitored by the view
+        self._database = database
 
+    # TODO: make this a multitasking task and follows Observer pattern
     def is_account_taken(self, username: str, password: str):
         """ A method that checks if certain username and password exist in database. """
-        data = self.database.get_data_table()
+        data = self._database.get_data_table()
         for key, value in data.items():
-            if key == username and value["Password"] == password:
+            if key == username and value["UserInfo"]["Password"] == password:
                 return True
         return False
