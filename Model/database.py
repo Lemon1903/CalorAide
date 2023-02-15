@@ -7,14 +7,8 @@ from firebase import firebase
 class DataBase:
     """Your methods for working with the database should be implemented in this class."""
 
-    def __init__(self):
-        self.firebase_ = firebase.FirebaseApplication(
-            "https://fitrex-bfc21-default-rtdb.asia-southeast1.firebasedatabase.app/"
-        )
-
-    # USERDATA is the Table
     def get_data_table(self):
-        """Returns data from database."""
+        """Returns the USERDATA table from database."""
         try:
             data = self.firebase_.get("USERDATA", "", connection=None)
             return data
