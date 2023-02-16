@@ -2,7 +2,7 @@
 
     MDBoxLayout:
         orientation: "vertical"
-        pos_hint: {"center_x":0.5, "center_y":0.90}
+        pos_hint: {"center_x": 0.5, "center_y": 0.9}
 
         MDLabel:
             text: "GOAL"
@@ -15,41 +15,36 @@
 
     MDBoxLayout:
         orientation: "vertical"
-        pos_hint: {"center_x":0.5, "center_y":0.82}
+        pos_hint: {"center_x": 0.5, "center_y": 0.82}
 
         DisplayLabel:
             id: goal_label
+            text: f"Your mode is to\n[color=#F3AAA0]{root.user_mode} WEIGHT[/color]"
+            font_size: 19
 
     MDFloatLayout:
-        orientation: "vertical"
+        id: modes_list
 
         Modes:
-            id: mild
             text: "MILD\n[size=14][color=#d0d0d0]0.25kg./ week[/color][/size]"
-            pos_hint: {"center_x":0.5, "center_y":0.66}
-            on_press: self.parent.parent.chosen_button = "mild"
-            on_release: self.parent.parent.modify_goal_buttons(self.parent.parent.chosen_button)
+            pos_hint: {"center_x": 0.5, "center_y": 0.66}
+            on_release: root.modify_goal_buttons(self, "Mild")
 
         Modes:
-            id: standard
             text: "STANDARD\n[size=14][color=#d0d0d0]0.5kg./ week[/color][/size]"
-            pos_hint: {"center_x":0.5, "center_y":0.50}
-            on_press: self.parent.parent.chosen_button = "standard"
-            on_release: self.parent.parent.modify_goal_buttons(self.parent.parent.chosen_button)
+            pos_hint: {"center_x": 0.5, "center_y": 0.5}
+            on_release: root.modify_goal_buttons(self, "Standard")
 
         Modes:
-            id: extreme
             text: "EXTREME\n[size=14][color=#d0d0d0]1kg./ week[/color][/size]"
-            pos_hint: {"center_x":0.5, "center_y":0.34}
-            on_press: self.parent.parent.chosen_button = "extreme"
-            on_release: self.parent.parent.modify_goal_buttons(self.parent.parent.chosen_button)
+            pos_hint: {"center_x": 0.5, "center_y": 0.34}
+            on_release: root.modify_goal_buttons(self, "Extreme")
 
     MDFloatLayout:
         MDFillRoundFlatButton:
-            id: finalize
             text: "FINALIZE"
             text_color: "white"
             font_name: "Poppins-SemiBold"
             md_bg_color: "#7B56BA"
-            pos_hint: {"center_x": .50, "center_y": .20}
-            on_release: self.parent.parent.show_finalize_dialog()
+            pos_hint: {"center_x": 0.5, "center_y": 0.2}
+            on_release: root.show_finalize_dialog()

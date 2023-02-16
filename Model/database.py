@@ -12,6 +12,7 @@ class DataBase:
             "https://fitrex-bfc21-default-rtdb.asia-southeast1.firebasedatabase.app/"
         )
         self.bmi = ""
+        self.bmi_value = 0.0
         self._username = "Daniel"
 
     # TODO: can be removed

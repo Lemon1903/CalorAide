@@ -46,7 +46,7 @@ class BaseScreenView(ThemableBehavior, MDScreen, Observer):
         Clock.schedule_once(lambda _: self.model.add_observer(self), 1)
 
     def change_screen(self, direction: str, next_screen: str):
-        """Change to the next screen.
+        """Function that changes the view to the next desired screen.
 
         Args:
             direction (str): the transition direction.
