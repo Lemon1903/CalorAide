@@ -4,12 +4,19 @@ from datetime import date, timedelta
 from decimal import Decimal
 
 
-def get_bmi_classification(height: float, weight: float):
+def get_bmi_value(height_cm: float, weight_kg: float):
+    """BMI formula that estimates a person's fat based on their height and weight.
+    This function will return user's BMI value.
+    """
+    height_m = height_cm / 100
+    return weight_kg/ (height_m**2)
+
+
+def get_bmi_classification(value: float):
     """Function to get the bmi classification
 
     Args:
-        height (float): the height in meters.
-        weight (weight): the weight in kilograms.
+        value (float): the bmi value to be classified.
 
     Returns:
         str: the bmi classification base on the bmi computed.
@@ -22,9 +29,8 @@ def get_bmi_classification(height: float, weight: float):
         "Obese": 34.9,
         "Severely Obese": 39.9,
     }
-    bmi = weight / (height / 100) ** 2
     for bmi_classification, bmi_value in bmi_classifications.items():
-        if bmi <= bmi_value:
+        if value <= bmi_value:
             return bmi_classification
     return "Morbidly Obese"
 
@@ -42,6 +48,10 @@ def get_date_yesterday():
 
 
 def get_user_bmr(gender, weight, height, age):
+    """This formula is based on Mifflin-St. Jeor Equation.
+    This returns the value of the Basal Metabolic Rate of a person.
+    That is the amount of calories they naturally burn with bodily functions.
+    """
     value = 5 if gender == "Male" else -161
     return (10 * weight) + (6.25 * height) - (5 * age) + value
 

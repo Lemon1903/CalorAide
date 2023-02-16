@@ -11,9 +11,30 @@ class DataBase:
         self._firebase = firebase.FirebaseApplication(
             "https://fitrex-bfc21-default-rtdb.asia-southeast1.firebasedatabase.app/"
         )
-        self._username = "Lemon"
         self.bmi = ""
-        self.max_id = 0
+        self.bmi_value = 0.0
+        self.username = ""
+
+    # TODO: can be removed or stay
+    def add_user_data(self, user_input):
+        """Adds userdata to database."""
+        try:
+            data = {"Password": user_input[1]}
+            self._firebase.put(
+                f"USERDATA/{user_input[2]}", "UserInfo", data, connection=None
+            )
+            return True
+        except requests.exceptions.ConnectionError:
+            return False
+
+    # TODO: can be removed
+    def get_data_table(self):
+        """Returns the USERDATA table from database."""
+        try:
+            data = self._firebase.get("USERDATA", "", connection=None)
+            return data
+        except requests.exceptions.ConnectionError:
+            return None
 
     def get_user_data(self, table_name: str) -> dict | None:
         """Returns data of the selected collection from the database.
@@ -23,7 +44,7 @@ class DataBase:
         """
         try:
             data = self._firebase.get(
-                f"USERDATA/{self._username}", table_name, connection=None
+                f"USERDATA/{self.username}", table_name, connection=None
             )
             return data if data else {}
         except requests.exceptions.ConnectionError:
@@ -38,7 +59,7 @@ class DataBase:
         """
         try:
             self._firebase.patch(
-                f"USERDATA/{self._username}/{table_name}", new_data, connection=None
+                f"USERDATA/{self.username}/{table_name}", new_data, connection=None
             )
             return True
         except requests.exceptions.ConnectionError:
@@ -54,7 +75,7 @@ class DataBase:
         try:
             for delete_item in delete_list:
                 self._firebase.delete(
-                    f"USERDATA/{self._username}/{table_name}",
+                    f"USERDATA/{self.username}/{table_name}",
                     int(delete_item.identifier),
                     connection=None,
                 )

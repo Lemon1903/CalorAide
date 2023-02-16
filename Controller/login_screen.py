@@ -29,3 +29,11 @@ class LoginScreenController:
             LoginScreenView: The view connected to this controller.
         """
         return self.views
+
+    def check_account_exist(self, username: str, password: str):
+        """Check if the account exist in the database."""
+        self.model.is_account_taken(username, password)
+
+    def reset_is_account_exist(self):
+        """Resets the `is_account_exist` after checking."""
+        self.model.reset_is_account_exist()

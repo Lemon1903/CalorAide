@@ -70,12 +70,14 @@ class HomeScreenController:
         self.views[0].open_loading_view()
         height = float(textfields[1].text)
         weight = float(textfields[0].text)
-        bmi_classification = helpers.get_bmi_classification(height, weight)
+        bmi_value = helpers.get_bmi_value(height, weight)
+        bmi_classification = helpers.get_bmi_classification(bmi_value)
         user_input = {
             "Name": textfields[2].text,
             "Height": height,
             "Weight": weight,
             "BMI": bmi_classification,
+            "BMI Value": bmi_value,
         }
         self.model.update_user_profile_data(user_input)
 

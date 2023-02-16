@@ -105,6 +105,7 @@ class HomeScreenModel(BaseScreenModel):
             self.load_user_profile_data("activity")
         else:
             self._database.bmi = user_input["BMI"]
+            self._database.bmi_value = user_input["BMI Value"]
             self.load_user_profile_data()
 
     @multitasking.task
