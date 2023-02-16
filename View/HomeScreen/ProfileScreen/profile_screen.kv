@@ -52,6 +52,55 @@
             GeneralInformationCard:
                 id: general_info
                 controller: root.controller
+            
+            MDCard:
+                radius: 10
+                padding: dp(20), dp(15)
+                # height: self.current_layout.height + self.padding[1] * 2
+                size_hint_y: None
+                height: dp(450)
+                md_bg_color: app.theme_cls.primary_color
+                orientation: 'vertical'
+
+                FitImage:
+                    source:"assets/images/bar.png"
+
+                # MDSegmentedControl:
+                #     pos_hint: {"center_x": .5, "center_y": .5}
+                #     size_hint_x: 0.5
+
+                #     MDSegmentedControlItem:
+                #         text: "Male"
+
+                #     MDSegmentedControlItem:
+                #         text: "Female"
+
+                #     MDSegmentedControlItem:
+                #         text: "All"
+
+            MDFillRoundFlatButton:
+            # for last 7 days
+                text: "Last 7 Days"
+                on_release: 
+                    root.show_bar_graph_data(args[0])
+
+            MDFillRoundFlatButton:
+            # for last 14 days
+                text: "Last 14 Days"
+                on_release:
+                    root.show_bar_graph_data(args[0])
+
+            MDFillRoundFlatButton:
+            # for last 14 days
+                text: "Today"
+                on_release:
+                    root.show_pie_chart_data(args[0])
+
+            MDFillRoundFlatButton:
+            # for last 14 days
+                text: "Yesterday"
+                on_release:
+                    root.show_pie_chart_data(args[0])
 
 
 # dynamic class
