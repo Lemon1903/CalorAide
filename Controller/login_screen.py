@@ -30,20 +30,10 @@ class LoginScreenController:
         """
         return self.views
 
-    # def check_account_reset_clear(self):
-    #     """ A method that checks if account exists and resets the status of the text fields. """
-    #     username, password = self.views[0].store_user_input()
-    #     if self.model.is_account_taken(username, password):
-    #         self.views[0].reset_status()
-    #     else:
-    #         self.views[0].show_errors_snackbar()
-    #     self.views[0].clear_text_fields()
+    def check_account_exist(self, username: str, password: str):
+        """Check if the account exist in the database."""
+        self.model.is_account_taken(username, password)
 
-    # def check_account_reset(self):
-    #     """A method that replicates the is_account_taken from the Model but it has a condition that if an account exists it should reset the status of the text field"""
-    #     username, password = self.views[0].store_user_input()
-    #     if self.model.is_account_taken(username, password):
-    #         self.views[0].reset_status()
-    #         return True
-    #     return False
-    
+    def reset_is_account_exist(self):
+        """Resets the `is_account_exist` after checking."""
+        self.model.reset_is_account_exist()

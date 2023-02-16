@@ -74,8 +74,9 @@ class Fitrex(MDApp):
             model = value["model"](database)
             controller = value["controller"](model)
 
-            for view in controller.get_views():
-                view.name = name_screen
+            screen_names = name_screen.split(",")
+            for i, view in enumerate(controller.get_views()):
+                view.name = screen_names[i]
                 manager_screens.add_widget(view)
 
         return manager_screens
@@ -89,5 +90,6 @@ class Fitrex(MDApp):
 if __name__ == "__main__":
     # adjust this base on your screen
     Window.size = (360, 640)
+    Window.top = 50
     Window.left = 1160
     Fitrex().run()

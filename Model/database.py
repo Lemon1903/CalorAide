@@ -11,6 +11,9 @@ class DataBase:
         self._firebase = firebase.FirebaseApplication(
             "https://fitrex-bfc21-default-rtdb.asia-southeast1.firebasedatabase.app/"
         )
+        self.bmi = ""
+        self.bmi_value = 0.0
+        self.username = ""
 
     # TODO: can be removed
     def get_data_table(self):
@@ -28,6 +31,21 @@ class DataBase:
             data = {"Password": user_input[1]}
             self._firebase.put(
                 f"USERDATA/{user_input[2]}", "UserInfo", data, connection=None
+            )
+            return True
+        except requests.exceptions.ConnectionError:
+            return False
+
+    def update_user_data(self, new_data: dict, table_name: str):
+        """Updates user data of the selected collection in database.
+
+        Args:
+            new_data (dict): the new user data to be stored.
+            table_name (str): the table under user table to be accessed.
+        """
+        try:
+            self._firebase.patch(
+                f"USERDATA/{self.username}/{table_name}", new_data, connection=None
             )
             return True
         except requests.exceptions.ConnectionError:
