@@ -11,7 +11,6 @@ import importlib
 import os
 
 from kivy import Config
-from kivy.animation import Animation
 from kivy.core.text import LabelBase
 from kivy.core.window import Window
 from kivymd.tools.hotreload.app import MDApp
@@ -33,15 +32,17 @@ LabelBase.register(
     name="Poppins-Medium", fn_regular="assets/fonts/Poppins/Poppins-Medium.ttf"
 )
 LabelBase.register(
-    name="Poppins-MediumItalic",
-    fn_regular="assets/fonts/Poppins/Poppins-MediumItalic.ttf",
+    name="Poppins-Italic", fn_regular="assets/fonts/Poppins/Poppins-Italic.ttf",
+)
+LabelBase.register(
+    name="Poppins-MediumItalic", fn_regular="assets/fonts/Poppins/Poppins-MediumItalic.ttf",
 )
 LabelBase.register(
     name="Poppins-Bold", fn_regular="assets/fonts/Poppins/Poppins-Bold.ttf"
 )
 
 
-class Fitrex(MDApp):
+class CalorAide(MDApp):
     """_summary_
 
     Args:
@@ -85,25 +86,10 @@ class Fitrex(MDApp):
 
         return manager_screens
 
-    def switch_theme_style(self, background):
-        """Responsible for switching between `Dark` and `Light` mode."""
-
-        # TODO: Fix the switching of image for dark and light mode. The image only changes in this screen only.
-        background.opacity = 0.5
-        if self.theme_cls.theme_style == "Light":
-            background.source = "assets/images/DarkBG.png"
-        else:
-            background.source = "assets/images/LightBG.png"
-        Animation(opacity=1.0, duration=1.0).start(background)
-
-        self.theme_cls.theme_style = (
-            "Dark" if self.theme_cls.theme_style == "Light" else "Light"
-        )
-
 
 if __name__ == "__main__":
     # adjust this base on your screen
     Window.size = (360, 636)
     Window.top = 50
     Window.left = 1160
-    Fitrex().run()
+    CalorAide().run()

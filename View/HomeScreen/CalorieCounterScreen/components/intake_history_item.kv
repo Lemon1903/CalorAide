@@ -30,7 +30,8 @@
         pos_hint: {'center_y': 0.5}
 
     MDLabel:
-        text: f"{root.calorie_amount} kcal"
+        markup: True
+        text: f"{root.calorie_amount} [color=#F3BDB5]k/cal[/color]"
         font_name: "Poppins-Regular"
         halign: "center"
         size_hint_x: 0.5

@@ -24,43 +24,53 @@
 
         ProfileLabel:
             text: "Age:"
-            size_hint_x: 0.3
+            size_hint_x: 0.4
 
         ProfileLabel:
             text: str(root.age_info) if root.age_info else "--"
-            size_hint_x: 0.7
+            theme_text_color: "Custom"
+            text_color: "#F3BDB5"
+            size_hint_x: 0.6
 
         ProfileLabel:
             text: "Gender:"
-            size_hint_x: 0.3
+            size_hint_x: 0.4
 
         ProfileLabel:
             text: root.gender_info if root.gender_info else "--"
-            size_hint_x: 0.7
+            theme_text_color: "Custom"
+            text_color: "#F3BDB5"
+            size_hint_x: 0.6
 
         ProfileLabel:
-            text: "Height:"
-            size_hint_x: 0.3
+            text: "Height (cm):"
+            size_hint_x: 0.4
 
         ProfileLabel:
             text: str(root.height_info) if root.height_info else "--"
-            size_hint_x: 0.7
+            theme_text_color: "Custom"
+            text_color: "#F3BDB5"
+            size_hint_x: 0.6
 
         ProfileLabel:
-            text: "Weight:"
-            size_hint_x: 0.3
+            text: "Weight (kg):"
+            size_hint_x: 0.4
 
         ProfileLabel:
             text: str(root.weight_info) if root.weight_info else "--"
-            size_hint_x: 0.7
+            theme_text_color: "Custom"
+            text_color: "#F3BDB5"
+            size_hint_x: 0.6
 
         ProfileLabel:
             text: "BMI:"
-            size_hint_x: 0.3
+            size_hint_x: 0.4
 
         ProfileLabel:
             text: root.bmi_info if root.bmi_info else "--"
-            size_hint_x: 0.7
+            theme_text_color: "Custom"
+            text_color: "#F3BDB5"
+            size_hint_x: 0.6
 
     RectangleButton:
         text: "Edit Details"

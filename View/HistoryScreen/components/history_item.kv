@@ -4,12 +4,6 @@
     adaptive_height: True
     on_release: self._is_shorten = not self._is_shorten
 
-    # canvas.after:
-    #     Color:
-    #         rgba: [1, 1, 1, 0.5]
-    #     Line:
-    #         points: (self.x, self.y, self.x + self.width, self.y)
-
     MDLabel:
         text: root.food_name
         font_name: "Poppins-Regular"
@@ -20,7 +14,18 @@
         size_hint_y: None
 
     MDLabel:
-        text: f"{root.calorie_amount} k/cal"
+        markup: True
+        text: f"{root.calorie_amount} [color=#F3BDB5]k/cal[/color]"
         font_name: "Poppins-Regular"
         font_size: 18
         halign: "center"
+
+
+<Divider>:
+    height: dp(30)
+    size_hint_y: None
+    canvas.after:
+        Color:
+            rgba: [0.129, 0, 0.36, 0.6]
+        Line:
+            points: (self.x, self.y + self.height/2, self.x + self.width, self.y + self.height/2)

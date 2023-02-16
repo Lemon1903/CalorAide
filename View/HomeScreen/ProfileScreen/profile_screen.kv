@@ -12,18 +12,6 @@
             padding: dp(0), dp(5)
             spacing: dp(10)
 
-            # TODO: Fix the switching of image for dark and light mode.
-            #       The image only changes in this screen only.
-            # switch to dark/light mode
-            MDFloatLayout:
-                MDSwitch:
-                    active: True
-                    icon_active: "weather-night"
-                    icon_inactive: "weather-sunny"
-                    icon_inactive_color: "black"
-                    pos_hint: {'right': 0.92, 'top': 1.0}
-                    on_active: app.switch_theme_style(root.ids.background)
-
             # the upper part for image and username
             MDBoxLayout:
                 orientation: "vertical"

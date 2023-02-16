@@ -69,7 +69,7 @@ class HistoryScreenView(BaseScreenView):
                     )
                     self.ids.lists.add_widget(item)
 
-            self.ids.lists.add_widget(Widget(height="30dp", size_hint_y=None))
+            self.ids.lists.add_widget(Divider())
         self.loading_view.dismiss()
 
     def format_date(self, date_):
@@ -79,3 +79,7 @@ class HistoryScreenView(BaseScreenView):
         elif date_ == helpers.get_date_yesterday():
             date_ = "Yesterday"
         return date_
+
+
+class Divider(Widget):
+    """Just a divider between dates in history."""
