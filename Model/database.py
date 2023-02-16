@@ -13,7 +13,7 @@ class DataBase:
         )
         self.bmi = ""
         self.bmi_value = 0.0
-        self._username = "Daniel"
+        self.username = ""
 
     # TODO: can be removed
     def get_data_table(self):
@@ -45,7 +45,7 @@ class DataBase:
         """
         try:
             self._firebase.patch(
-                f"USERDATA/{self._username}/{table_name}", new_data, connection=None
+                f"USERDATA/{self.username}/{table_name}", new_data, connection=None
             )
             return True
         except requests.exceptions.ConnectionError:
