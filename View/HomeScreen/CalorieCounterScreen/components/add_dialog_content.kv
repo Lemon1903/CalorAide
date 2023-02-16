@@ -1,0 +1,24 @@
+#:import Validator Utils.Validator
+
+<AddDialogContent>:
+    orientation: 'vertical'
+    adaptive_height: True
+
+    ContentTextField:
+        hint_text: "Food"
+
+    ContentTextField:
+        hint_text: "Calorie Amount"
+        validator_type: "numeric"
+        error_message: "Enter a valid value for calorie amount"
+
+
+<ContentTextField@MDTextField>:
+    mode: "line"
+    text_color_focus: "white"
+    hint_text_color_focus: "white"
+    line_color_focus: "white"
+    helper_text: "This field is required"
+    helper_text_mode: "on_error"
+    on_text: Validator.check_text(*args)
+    on_focus: self.required = not self.text
