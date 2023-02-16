@@ -16,6 +16,7 @@ class LoginScreenModel(BaseScreenModel):
     def __init__(self, database):
         self._database = database
         self.is_account_exist = False
+        self.has_account = False
 
     def reset_is_account_exist(self):
         """Resets the `is_account_exist` after checking."""
@@ -29,5 +30,6 @@ class LoginScreenModel(BaseScreenModel):
             if key == username and value["UserInfo"]["Password"] == password:
                 self.is_account_exist = True
                 self._database.username = username
+                self.has_account = "Name" in value["UserInfo"]
                 break
         self.notify_observers("login screen")

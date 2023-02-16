@@ -17,14 +17,15 @@ class LoginScreenView(BaseScreenView):
         """
         self.loading_view.dismiss()
         if self.model.is_account_exist:
+            next_screen = "signup screen" if self.model.has_account else "register screen"
             self.reset_status()
-            self.change_screen("left", "register screen")
+            self.change_screen("left", next_screen)
         else:
             self.show_error_snackbar("Account does not exist!")
         self.controller.reset_is_account_exist()
 
     # TODO: can be moved to helpers
-    def get_user_input(self): 
+    def get_user_input(self):
         """A method that stores the user input from the text fields (username and password)."""
         return [self.ids.textfield_username.text, self.ids.textfield_password.text]
 
