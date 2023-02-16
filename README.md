@@ -1,16 +1,16 @@
 # Fitness App
 
-A mobile fitness app created using Kivy. 
+A mobile fitness app created using Kivy.
 
-Programming Team: 
+Programming Team:
  - Khent David Roscoe Alba      (@Lemon1903)
  - Rachell Ann Tapia            (@WaterGhost1)
  - Sebastian Audrey Temporal    (@pyto-p)
- - Xein Deniel Virgines         (@xeinden)
+ - Xein Deniel Virgines         (@xeindeniel)
 
-Design Team: 
+Design Team:
  - Luis Lumbres
  - Paolo Luigi Recio            (@reciopaolo)
 
-Research/Documentation Team: 
+Research/Documentation Team:
  - Claire Rotap
