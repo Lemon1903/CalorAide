@@ -19,7 +19,7 @@ class CalorieCounterScreenView(BaseScreenView):
     def __init__(self, **kw):
         super().__init__(**kw)
         self.add_intake_dialog = MDDialog(
-            title="Add caloric goal",
+            title="Add calorie goal",
             type="custom",
             content_cls=AddDialogContent(),
             elevation=2,
