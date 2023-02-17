@@ -10,7 +10,10 @@ from View import GoalScreenView, ModeScreenView, RegisterScreenView
 # We have to manually reload the view module in order to apply the
 # changes made to the code on a subsequent hot reload.
 # If you no longer need a hot reload, you can delete this instruction.
+importlib.reload(View.RegisterScreen.goal_screen)
+importlib.reload(View.RegisterScreen.mode_screen)
 importlib.reload(View.RegisterScreen.register_screen)
+
 
 class RegisterScreenController:
     """
@@ -20,28 +23,14 @@ class RegisterScreenController:
     the view to control its actions.
     """
 
-    name = None
-    gender = None
-    height = 0
-    weight = 0
-    age = 0
-    activity = None
-    calorie_goal = 0
-
-    user_bmi = None
-    user_mode = None
-    user_goal = None
-
-    user_bmi_amount = 0
-    user_bmr = 0
-
     def __init__(self, model):
         self.model = model  # Model.register_screen.RegisterScreenModel
         self.views = [
-            RegisterScreenView(controller = self, model = self.model),
-            ModeScreenView(controller = self, model = self.model),
-            GoalScreenView(controller = self, model = self.model)
-            ]
+            RegisterScreenView(controller=self, model=self.model),
+            ModeScreenView(controller=self, model=self.model),
+            GoalScreenView(controller=self, model=self.model)
+        ]
+        self.user_inputs = {}
 
     def get_views(self) -> list[RegisterScreenView]:
         """Gets the view connected to this controller.
@@ -51,76 +40,58 @@ class RegisterScreenController:
         """
         return self.views
 
-# =================Registration Screen 1============================================
+# =================Registration Screen=============================================
 
-    def confirm_registration(self):
+    def confirm_registration(self, user_inputs: dict):
         """This function initializes all the values collected from the registration.
         Then calculates all of the remaining data to show.
         We are using metric system in our application.
         """
-        user_info = self.views[0].store_details()
-        self.name = user_info[0]
-        self.gender = user_info[1]
-        self.height = user_info[2]
-        self.weight = user_info[3]
-        self.age = user_info[4]
-        self.activity = user_info[5]
-        self.user_bmi = helpers.get_bmi_classification(self.height, self.weight)
-        self.user_bmi_amount = self.get_bmi_amount(self.height, self.weight)
-        self.user_bmr = helpers.get_user_bmr(self.gender, self.weight, self.height, self.age)
+        user_bmi_value = helpers.get_bmi_value(user_inputs["Height"], user_inputs["Weight"])
+        self.user_inputs = user_inputs
+        self.user_inputs.update({
+            "BMI Value": user_bmi_value,
+            "BMI": helpers.get_bmi_classification(user_bmi_value)
+        })
+        self.model.set_bmi(self.user_inputs["BMI"])
+        self.model.set_bmi_value(self.user_inputs["BMI Value"])
 
-        self.model.push_bmi(self.user_bmi)
+# =================Mode Screen======================================================
 
-        self.views[1].change_screen("left", "mode screen")
+    def get_database_bmi(self):
+        """Gets the BMI from the `Database` class."""
+        return self.model.get_bmi()
 
-    def pull_database_bmi(self):
-        """Gets the BMI from the Database file"""
-        return self.model.pull_bmi()
+    def get_database_bmi_value(self):
+        """Gets the BMI value from the `Database` class."""
+        return self.model.get_bmi_value()
 
-    def get_user_bmr(self, gender, weight, height, age):
-        """This formula is based on Mifflin-St. Jeor Equation.
-        This returns the value of the Basal Metabolic Rate of a person.
-        That is the amount of calories they naturally burn with bodily functions.
-        """
-        if gender == "Male":
-            return float((10*weight)+(6.25*height)-(5*age)+5)
-        if gender == "Female":
-            return float((10*weight)+(6.25*height)-(5*age)-161)
-
-    def get_bmi_amount(self, height_cm, weight_kg):
-        """BMI formula that estimates a person's fat based on their height and weight.
-        This function will return user's BMI value.
-        """
-        height_m = height_cm / 100
-        return weight_kg/ (height_m**2)
-
-# =================Registration Screen 2============================================
-
-    def set_to_sedentary(self):
-        """This sets the intensity to default as sedentary.
-        Redirects the screen to the home screen.
-        """
-        self.user_goal = "sedentary"
-        self.compile_details()
-
-    def set_goal_screen(self):
+    def set_goal_screen(self, user_mode: str):
         """Setting the UI of the Goal screen based on the inputs from the past screen."""
-        self.views[2].ids.goal_label.text = self.views[2].show_goal_label(self.user_mode)
+        self.views[2].user_mode = user_mode
 
-# =================Registration Screen 3============================================
+# =================Goal Screen======================================================
 
-    def get_user_goal(self):
-        """Receives the goal of choice of the user from the second view."""
-        self.user_goal = self.views[2].chosen_button
-        self.compile_details()
-
-    def compile_details(self):
+    def compile_details(self, screen_from: str):
         """This compiles all the inputs from the Register Screen.
         All will be passed to the application's Database.
         """
-        self.calorie_goal = helpers.calculate_calorie_goal(
-                self.user_bmr, self.activity, self.user_mode, self.user_goal)
-        user_info = [self.name, self.age, self.height, self.weight, self.gender, self.activity,
-                    self.user_bmi, self.user_mode, self.user_goal, self.calorie_goal, self.user_bmr]
-        self.model.get_user_info(user_info)
-        # Move to the main screen
+        user_bmr = helpers.get_user_bmr(
+            self.user_inputs["Gender"],
+            self.user_inputs["Weight"],
+            self.user_inputs["Height"],
+            self.user_inputs["Age"],
+        )
+        calorie_goal = helpers.calculate_calorie_goal(
+            user_bmr,
+            self.user_inputs["Activity"],
+            self.views[1].user_mode,
+            self.views[2].user_goal,
+        )
+        self.user_inputs.update({
+            "Mode": self.views[1].user_mode,
+            "Intensity": self.views[2].user_goal,
+            "Calorie Goal": calorie_goal,
+            "BMR": user_bmr,
+        })
+        self.model.store_user_info(self.user_inputs, screen_from)

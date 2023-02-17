@@ -1,0 +1,59 @@
+<HistoryScreenView>:
+    MDBoxLayout:
+        orientation: 'vertical'
+        padding: dp(0), dp(15)
+        spacing: dp(10)
+        size_hint_x: 0.95
+        pos_hint: {'center_x': 0.5}
+
+        MDLabel:
+            text: "HISTORY"
+            font_name: 'Poppins-SemiBold'
+            font_size: 32
+            height: self.texture_size[1]
+            size_hint_y: None
+            halign: "center"
+
+        MDCard:
+            orientation: 'vertical'
+            radius: 10
+            padding: dp(15)
+            spacing: dp(5)
+            md_bg_color: app.theme_cls.primary_color
+
+            MDBoxLayout:
+                adaptive_height: True
+
+                MDLabel:
+                    markup: True
+                    text: "[color=#21005D]Item[/color]"
+                    font_name: "Poppins-SemiBold"
+                    font_size: 20
+                    # halign: "center"
+                    height: self.texture_size[1]
+                    size_hint_y: None
+
+                MDLabel:
+                    markup: True
+                    text: "[color=#21005D]Calories[/color]"
+                    font_name: "Poppins-SemiBold"
+                    font_size: 20
+                    halign: "center"
+                    height: self.texture_size[1]
+                    size_hint_y: None
+
+            MDScrollView:
+                MDList:
+                    id: lists
+                    padding: 0
+
+    MDAnchorLayout:
+        anchor_x: "left"
+        anchor_y: "top"
+
+        MDIconButton:
+            icon: "chevron-left-circle"
+            icon_size: sp(40)
+            theme_icon_color: "Custom"
+            icon_color: app.theme_cls.primary_color
+            on_press: root.change_screen("down", "home screen")
