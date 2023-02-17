@@ -67,23 +67,6 @@
                     id: visual
                     source:"assets/images/pie.png"
 
-                # FitImage:
-                #     id: visual2
-                #     source:"assets/images/pie2.png"
-
-                # MDSegmentedControl:
-                #     pos_hint: {"center_x": .5, "center_y": .5}
-                #     size_hint_x: 0.5
-
-                #     MDSegmentedControlItem:
-                #         text: "Male"
-
-                #     MDSegmentedControlItem:
-                #         text: "Female"
-
-                #     MDSegmentedControlItem:
-                #         text: "All"
-
             MDFillRoundFlatButton:
             # for last 7 days
                 text: "Last 7 Days"
@@ -111,7 +94,7 @@
                 on_release:
                     root.show_pie_chart_data(args[0])
                     visual.source = "assets/images/pie2.png"
-
+            
 # dynamic class
 <ChangeButton@MDRectangleFlatButton>:
     font_name: "Poppins-SemiBold"

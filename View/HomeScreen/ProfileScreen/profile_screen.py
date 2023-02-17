@@ -19,6 +19,10 @@ class ProfileScreenView(BaseScreenView):
         super().__init__(**kw)
         self.activity_dialog = ActivityDialog(self)
 
+        self.bar_days = 'Last 7 Days'
+        self.pie_days = 'Today'
+
+
     @mainthread
     def model_is_changed(self) -> None:
         """Called whenever any change has occurred in the data model.
@@ -42,6 +46,9 @@ class ProfileScreenView(BaseScreenView):
             self.controller.hide_connection_error()
         else:
             self.controller.show_connection_error()
+
+    def _close_activity_dialog(self):
+        self.activity_dialog.dismiss()
 
     def show_bar_graph_data(self, button):
         style.use("seaborn-v0_8")

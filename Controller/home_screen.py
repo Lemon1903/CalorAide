@@ -5,6 +5,7 @@ from datetime import datetime
 from decimal import Decimal
 
 import View.HomeScreen.home_screen
+import View.HomeScreen.ProfileScreen.profile_screen
 from Utils import helpers
 from View import HomeScreenView
 
