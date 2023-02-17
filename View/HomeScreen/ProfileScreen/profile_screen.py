@@ -105,16 +105,15 @@ class ProfileScreenView(BaseScreenView):
         if self.pie_days == 'Today':
             self.pie_days = 'Yesterday'
             merged_foods, merged_calories = self.controller.remove_food_duplicates(foods[-1], calories[-1])                                         
-            ax.set_xlabel("Today")
             number = 1
         elif self.pie_days == 'Yesterday':
             self.pie_days = 'Today'
             merged_foods, merged_calories = self.controller.remove_food_duplicates(foods[-2], calories[-2])
-            ax.set_xlabel("Yesterday")
             number = 2
     
         for food in merged_foods:
-            shortcut.append(food[:5])
+            food = food.split()[0]  
+            shortcut.append(food)
 
         ax.pie(merged_calories, labels=shortcut, textprops={'fontsize': 14}, wedgeprops={'width': 1, 'edgecolor': self.theme_cls.accent_color}, autopct='%1.1f%%', pctdistance=0.8, startangle=90)
         
