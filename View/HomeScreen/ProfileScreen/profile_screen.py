@@ -51,15 +51,17 @@ class ProfileScreenView(BaseScreenView):
         x = self.controller.get_dates()
 
         self.bar_days = button.text
-
+        number = 1
         if self.bar_days == 'Last 7 Days': 
             self.bar_days = 'Last 14 Days'
             x = x[-7::]
             y = y[-7::]
+            number = 1
         elif self.bar_days == 'Last 14 Days':
             self.bar_days = 'Last 7 Days'
             x = x[-14::]
             y = y[-14::]
+            number = 2
 
         bars = ax.bar(x, y, color=self.theme_cls.accent_color)
 
@@ -81,40 +83,35 @@ class ProfileScreenView(BaseScreenView):
 
         plt.tight_layout()
 
-        plt.savefig("assets/images/bar.png")
+        plt.savefig(f"assets/images/bar{number}.png")
 
     def show_pie_chart_data(self, button):
         style.use("seaborn-v0_8")
         fig, ax = plt.subplots(figsize=(6, 5))
         foods, calories = self.controller.get_food()   
-
+        shortcut = []
         merged_foods = []
         merged_calories = []                
 
         self.pie_days = button.text
-
+        number = 1
         if self.pie_days == 'Today':
             self.pie_days = 'Yesterday'
             merged_foods, merged_calories = self.controller.remove_food_duplicates(foods[-1], calories[-1])                                         
             ax.set_xlabel("Today")
+            number = 1
         elif self.pie_days == 'Yesterday':
             self.pie_days = 'Today'
             merged_foods, merged_calories = self.controller.remove_food_duplicates(foods[-2], calories[-2])
             ax.set_xlabel("Yesterday")
+            number = 2
     
-        # shortcut = []
+        for food in merged_foods:
+            shortcut.append(food[:5])
 
-        # for item in foods:
-            
-        #     shortcut.append(item[:5])
-
-        # print(shortcut)
-
-        ax.pie(merged_calories, labels=merged_foods, textprops={'fontsize': 14}, wedgeprops={'width': 1, 'edgecolor': self.theme_cls.accent_color}, autopct='%1.1f%%', pctdistance=0.8, startangle=90)
+        ax.pie(merged_calories, labels=shortcut, textprops={'fontsize': 14}, wedgeprops={'width': 1, 'edgecolor': self.theme_cls.accent_color}, autopct='%1.1f%%', pctdistance=0.8, startangle=90)
         
-        # ax.set_title("Food Log Chart")
         plt.axis('equal')
         plt.tight_layout()
-        plt.savefig("assets/images/pie.png")
-        
+        plt.savefig(f"assets/images/pie{number}.png")    
         plt.clf()

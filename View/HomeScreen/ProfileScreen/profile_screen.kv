@@ -54,6 +54,7 @@
                 controller: root.controller
             
             MDCard:
+                id: card
                 radius: 10
                 padding: dp(20), dp(15)
                 # height: self.current_layout.height + self.padding[1] * 2
@@ -63,7 +64,12 @@
                 orientation: 'vertical'
 
                 FitImage:
-                    source:"assets/images/bar.png"
+                    id: visual
+                    source:"assets/images/pie.png"
+
+                # FitImage:
+                #     id: visual2
+                #     source:"assets/images/pie2.png"
 
                 # MDSegmentedControl:
                 #     pos_hint: {"center_x": .5, "center_y": .5}
@@ -83,25 +89,28 @@
                 text: "Last 7 Days"
                 on_release: 
                     root.show_bar_graph_data(args[0])
+                    visual.source = "assets/images/bar1.png"
 
             MDFillRoundFlatButton:
             # for last 14 days
                 text: "Last 14 Days"
                 on_release:
                     root.show_bar_graph_data(args[0])
+                    visual.source = "assets/images/bar2.png"
 
             MDFillRoundFlatButton:
             # for last 14 days
                 text: "Today"
                 on_release:
                     root.show_pie_chart_data(args[0])
+                    visual.source = "assets/images/pie1.png"
 
             MDFillRoundFlatButton:
             # for last 14 days
                 text: "Yesterday"
                 on_release:
                     root.show_pie_chart_data(args[0])
-
+                    visual.source = "assets/images/pie2.png"
 
 # dynamic class
 <ChangeButton@MDRectangleFlatButton>:

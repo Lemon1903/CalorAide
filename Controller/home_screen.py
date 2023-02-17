@@ -185,19 +185,17 @@ class HomeScreenController:
         return foods, calories
 
     def remove_food_duplicates(self, foods, calories):
-        self.foods = foods
-        self.calories = calories 
-
         merged_foods = []
         merged_calories = []
 
-        for i in range(len(foods)):
-            if foods[i] not in merged_foods:
-                merged_foods.append(foods[i])
-                merged_calories.append(calories[i])
+        for food, calorie in zip(foods, calories):
+            food = food.capitalize()
+            if food not in merged_foods:
+                merged_foods.append(food)
+                merged_calories.append(calorie)
             else:
-                index = merged_foods.index(foods[i])
-                merged_calories[index] += calories[i]
+                index = merged_foods.index(food)
+                merged_calories[index] += calorie
         
         return merged_foods, merged_calories
 
