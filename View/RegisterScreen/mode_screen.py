@@ -1,6 +1,7 @@
 """_module summary_"""
 
 # pylint: disable=no-name-in-module
+from kivy.clock import mainthread
 from kivy.properties import NumericProperty, StringProperty
 from kivymd.uix.button import MDFlatButton, MDRaisedButton
 from kivymd.uix.dialog import MDDialog
@@ -38,6 +39,7 @@ class ModeScreenView(BaseScreenView):
             ],
         )
 
+    @mainthread
     def model_is_changed(self) -> None:
         """
         Called whenever any change has occurred in the data model.
@@ -45,7 +47,7 @@ class ModeScreenView(BaseScreenView):
         according to these changes.
         """
         self.loading_view.dismiss()
-        # self.change_screen("left", "home screen")
+        self.change_screen("left", "home screen")
 
     def on_enter(self, *_):
         self.user_bmi_amount = self.controller.get_database_bmi_value()

@@ -1,6 +1,7 @@
 """_module summary_"""
 
 # pylint: disable=no-name-in-module
+from kivy.clock import mainthread
 from kivy.properties import StringProperty
 from kivymd.uix.button import MDFlatButton, MDRaisedButton
 from kivymd.uix.dialog import MDDialog
@@ -37,13 +38,14 @@ class GoalScreenView(BaseScreenView):
             ],
         )
 
+    @mainthread
     def model_is_changed(self) -> None:
         """Called whenever any change has occurred in the data model.
         The view in this method tracks these changes and updates the UI
         according to these changes.
         """
         self.loading_view.dismiss()
-        # self.change_screen("left", "home screen")
+        self.change_screen("left", "home screen")
 
     def modify_goal_buttons(self, chosen_button, intensity: str):
         """This function stores the list for the goal choices."""

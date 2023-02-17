@@ -1,0 +1,31 @@
+<HistoryItem>:
+    _is_shorten: True
+    padding: 0, dp(5) # dp(8), dp(5), dp(0), dp(5)
+    adaptive_height: True
+    on_release: self._is_shorten = not self._is_shorten
+
+    MDLabel:
+        text: root.food_name
+        font_name: "Poppins-Regular"
+        font_size: 18
+        shorten: root._is_shorten
+        shorten_from: "right"
+        size: self.texture_size
+        size_hint_y: None
+
+    MDLabel:
+        markup: True
+        text: f"{root.calorie_amount} [color=#F3BDB5]k/cal[/color]"
+        font_name: "Poppins-Regular"
+        font_size: 18
+        halign: "center"
+
+
+<Divider>:
+    height: dp(30)
+    size_hint_y: None
+    canvas.after:
+        Color:
+            rgba: [0.129, 0, 0.36, 0.6]
+        Line:
+            points: (self.x, self.y + self.height/2, self.x + self.width, self.y + self.height/2)

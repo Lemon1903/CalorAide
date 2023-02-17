@@ -32,15 +32,17 @@ LabelBase.register(
     name="Poppins-Medium", fn_regular="assets/fonts/Poppins/Poppins-Medium.ttf"
 )
 LabelBase.register(
-    name="Poppins-MediumItalic",
-    fn_regular="assets/fonts/Poppins/Poppins-MediumItalic.ttf",
+    name="Poppins-Italic", fn_regular="assets/fonts/Poppins/Poppins-Italic.ttf",
+)
+LabelBase.register(
+    name="Poppins-MediumItalic", fn_regular="assets/fonts/Poppins/Poppins-MediumItalic.ttf",
 )
 LabelBase.register(
     name="Poppins-Bold", fn_regular="assets/fonts/Poppins/Poppins-Bold.ttf"
 )
 
 
-class Fitrex(MDApp):
+class CalorAide(MDApp):
     """_summary_
 
     Args:
@@ -52,16 +54,20 @@ class Fitrex(MDApp):
     KV_DIRS = [os.path.join(os.getcwd(), "View")]
 
     def build_app(self, *_) -> MDScreenManager:
-        # In this method, you don't need to change
-        # anything other than the application theme.
-
-        self.theme_cls.theme_style_switch_animation = True
-        self.theme_cls.theme_style_switch_animation_duration = 0.8
+        # theme style whether 'Dark' or 'Light'
         self.theme_cls.theme_style = "Dark"
+        self.theme_cls.theme_style_switch_animation = True
+        self.theme_cls.theme_style_switch_animation_duration = 0.5
+
+        # primary pallette for widgets
         self.theme_cls.primary_palette = "DeepPurple"
         self.theme_cls.primary_hue = "400"
+
+        # accent pallette for widgets
         self.theme_cls.accent_palette = "DeepPurple"
         self.theme_cls.accent_hue = "800"
+
+        # widgets material style
         self.theme_cls.material_style = "M3"
 
         database = DataBase()
@@ -81,15 +87,10 @@ class Fitrex(MDApp):
 
         return manager_screens
 
-    def switch_theme_style(self):
-        self.theme_cls.theme_style = (
-            "Dark" if self.theme_cls.theme_style == "Light" else "Light"
-        )
-      
 
 if __name__ == "__main__":
     # adjust this base on your screen
-    Window.size = (360, 640)
-    Window.top = 50
+    Window.size = (360, 636)
+    # Window.top = 50
     Window.left = 1160
-    Fitrex().run()
+    CalorAide().run()

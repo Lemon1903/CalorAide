@@ -17,7 +17,7 @@ class LoginScreenView(BaseScreenView):
         """
         self.loading_view.dismiss()
         if self.model.is_account_exist:
-            next_screen = "signup screen" if self.model.has_account else "register screen"
+            next_screen = "home screen" if self.model.has_account else "register screen"
             self.reset_status()
             self.change_screen("left", next_screen)
         else:

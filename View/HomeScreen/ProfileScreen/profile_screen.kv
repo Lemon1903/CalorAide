@@ -1,0 +1,105 @@
+#:import GeneralInformationCard View.HomeScreen.ProfileScreen.components
+
+<ProfileScreenView>:
+    # main layout that holds all widgets
+    MDScrollView:
+        bar_width: dp(0)
+        size_hint_x: 0.95
+        pos_hint: {'center_x': 0.5}
+
+        # scrollable content
+        MDList:
+            padding: dp(0), dp(5)
+            spacing: dp(10)
+
+            # the upper part for image and username
+            MDBoxLayout:
+                orientation: "vertical"
+                spacing: dp(10)
+                adaptive_height: True
+
+                FitImage:
+                    source: "assets/images/sample.png"
+                    radius: 50
+                    size: dp(120), dp(120)
+                    size_hint: None, None
+                    pos_hint: {"center_x": 0.5}
+
+                ProfileLabel:
+                    text:
+                        (
+                        general_info.profile_layout.name_info
+                        if general_info.profile_layout.name_info
+                        else "--"
+                        )
+                    font_name: "Poppins-Bold"
+                    halign: 'center'
+
+            # buttons
+            MDBoxLayout:
+                orientation: 'vertical'
+                spacing: dp(10)
+                adaptive_height: True
+
+                ChangeButton:
+                    text: "CHANGE MODE: [color=#f3aaa0]GAIN[/color]"
+
+                ChangeButton:
+                    text: f"CHANGE ACTIVITY: [color=#f3aaa0]{root.current_activity}[/color]"
+                    on_release: root.activity_dialog.open()
+
+            # general information of the user
+            GeneralInformationCard:
+                id: general_info
+                controller: root.controller
+            
+            MDCard:
+                id: card
+                radius: 10
+                padding: dp(20), dp(15)
+                # height: self.current_layout.height + self.padding[1] * 2
+                size_hint_y: None
+                height: dp(450)
+                md_bg_color: app.theme_cls.primary_color
+                orientation: 'vertical'
+
+                FitImage:
+                    id: visual
+                    source:"assets/images/pie.png"
+
+            MDFillRoundFlatButton:
+            # for last 7 days
+                text: "Last 7 Days"
+                on_release: 
+                    root.show_bar_graph_data(args[0])
+                    visual.source = "assets/images/bar1.png"
+
+            MDFillRoundFlatButton:
+            # for last 14 days
+                text: "Last 14 Days"
+                on_release:
+                    root.show_bar_graph_data(args[0])
+                    visual.source = "assets/images/bar2.png"
+
+            MDFillRoundFlatButton:
+            # for last 14 days
+                text: "Today"
+                on_release:
+                    root.show_pie_chart_data(args[0])
+                    visual.source = "assets/images/pie1.png"
+
+            MDFillRoundFlatButton:
+            # for last 14 days
+                text: "Yesterday"
+                on_release:
+                    root.show_pie_chart_data(args[0])
+                    visual.source = "assets/images/pie2.png"
+            
+# dynamic class
+<ChangeButton@MDRectangleFlatButton>:
+    font_name: "Poppins-SemiBold"
+    text_color: "white"
+    size_hint_x: 0.7
+    pos_hint: {'center_x': 0.5}
+    md_bg_color: app.theme_cls.primary_dark
+    line_color: app.theme_cls.primary_dark

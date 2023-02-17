@@ -1,6 +1,6 @@
 """helper functions"""
 
-from datetime import date
+from datetime import date, timedelta
 from decimal import Decimal
 
 
@@ -35,6 +35,18 @@ def get_bmi_classification(value: float):
     return "Morbidly Obese"
 
 
+def get_date_today():
+    """Get the date today in custom format."""
+    today = date.today()
+    return today.strftime("%d-%m-%Y")
+
+
+def get_date_yesterday():
+    """Get the date yesterday."""
+    yesterday = date.today() - timedelta(days=1)
+    return yesterday.strftime("%d-%m-%Y")
+
+
 def get_user_bmr(gender, weight, height, age):
     """This formula is based on Mifflin-St. Jeor Equation.
     This returns the value of the Basal Metabolic Rate of a person.
@@ -48,10 +60,10 @@ def calculate_calorie_goal(base_bmr, activity, mode, goal):
     """Function to calculate the calorie goal intake based on user's preferences.
 
     Args:
-        base_bmr: the initial bmr based on Mifflin St Jeor computation
-        activity: the user's activity based on their lifestyle in String form
-        mode: the user's mode of choice in String choice
-        goal: the user's activities' intensity
+        base_bmr (float): the initial bmr based on Mifflin St Jeor computation
+        activity (str): the user's activity based on their lifestyle in String form
+        mode (str): the user's mode of choice in String choice
+        goal (str): the user's activities' intensity
 
     Returns:
         float: the value of the calorie goal itself.
@@ -76,9 +88,3 @@ def calculate_calorie_goal(base_bmr, activity, mode, goal):
     if mode == "gain":
         return calorie_goal + goals_list[goal]
     return calorie_goal
-
-
-def get_date_today():
-    """Get the date today in custom format."""
-    today = date.today()
-    return today.strftime("%d-%m-%Y")
