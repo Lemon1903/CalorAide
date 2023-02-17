@@ -80,8 +80,9 @@ class CalorAide(MDApp):
             model = value["model"](database)
             controller = value["controller"](model)
 
-            for view in controller.get_views():
-                view.name = name_screen
+            screen_names = name_screen.split(",")
+            for i, view in enumerate(controller.get_views()):
+                view.name = screen_names[i]
                 manager_screens.add_widget(view)
 
         return manager_screens

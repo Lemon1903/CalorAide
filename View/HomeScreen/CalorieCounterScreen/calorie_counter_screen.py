@@ -95,7 +95,7 @@ class CalorieCounterScreenView(BaseScreenView):
             for intake_data in list(intake_history.items())[:-1]:
                 self._add_intake_to_history(intake_data)
             self.controller.hide_connection_error()
-        else:
+        elif intake_history is None:
             self.controller.show_connection_error()
 
     def _add_intake_to_history(self, added_intake: tuple):

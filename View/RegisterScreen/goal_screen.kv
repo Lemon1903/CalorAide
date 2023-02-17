@@ -1,0 +1,50 @@
+<GoalScreenView>:
+
+    MDBoxLayout:
+        orientation: "vertical"
+        pos_hint: {"center_x": 0.5, "center_y": 0.9}
+
+        MDLabel:
+            text: "GOAL"
+            font_name: "Poppins-Medium"
+            font_size: 40
+            theme_text_color: "Custom"
+            text_color: "white"
+            halign: "center"
+            valign: "top"
+
+    MDBoxLayout:
+        orientation: "vertical"
+        pos_hint: {"center_x": 0.5, "center_y": 0.82}
+
+        DisplayLabel:
+            id: goal_label
+            text: f"Your mode is to\n[color=#F3AAA0]{root.user_mode} WEIGHT[/color]"
+            font_size: 19
+
+    MDFloatLayout:
+        id: modes_list
+
+        Modes:
+            text: "MILD\n[size=14][color=#d0d0d0]0.25kg./ week[/color][/size]"
+            pos_hint: {"center_x": 0.5, "center_y": 0.66}
+            on_release: root.modify_goal_buttons(self, "Mild")
+
+        Modes:
+            text: "STANDARD\n[size=14][color=#d0d0d0]0.5kg./ week[/color][/size]"
+            pos_hint: {"center_x": 0.5, "center_y": 0.5}
+            on_release: root.modify_goal_buttons(self, "Standard")
+
+        Modes:
+            text: "EXTREME\n[size=14][color=#d0d0d0]1kg./ week[/color][/size]"
+            pos_hint: {"center_x": 0.5, "center_y": 0.34}
+            on_release: root.modify_goal_buttons(self, "Extreme")
+
+    MDFloatLayout:
+        MDFillRoundFlatButton:
+            text: "FINALIZE"
+            text_color: "white"
+            font_name: "Poppins-SemiBold"
+            md_bg_color: "#7B56BA"
+            pos_hint: {"center_x": 0.5, "center_y": 0.2}
+            on_release: root.show_finalize_dialog()

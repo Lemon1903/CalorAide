@@ -4,14 +4,15 @@
 from kivy.clock import Clock
 from kivy.properties import BooleanProperty, ObjectProperty
 from kivy.uix.modalview import ModalView
-from kivy.uix.screenmanager import Screen
 from kivymd.app import MDApp
 from kivymd.theming import ThemableBehavior
+from kivymd.uix.screen import MDScreen
 
+from Utils import Observer
 from Utils.observer import Observer
 
 
-class BaseScreenView(ThemableBehavior, Screen, Observer):
+class BaseScreenView(ThemableBehavior, MDScreen, Observer):
     """
     A base class that implements a visual representation of the model data.
     The view class must be inherited from this class. Follows the observer parttern.
@@ -46,10 +47,10 @@ class BaseScreenView(ThemableBehavior, Screen, Observer):
         Clock.schedule_once(lambda _: self.model.add_observer(self), 1)
 
     def change_screen(self, direction: str, next_screen: str):
-        """Go to the next screen.
+        """Function that changes the view to the next desired screen.
 
         Args:
-            direction (str): the transition direction
+            direction (str): the transition direction.
             next_screen (str): the next screen to go to.
         """
         self.manager.transition.direction = direction

@@ -14,33 +14,22 @@ class LoginScreenModel(BaseScreenModel):
     """
 
     def __init__(self, database):
-        # Just an example of the data. Use your own values.
-        self._is_valid = None
-        self.database = database
+        self._database = database
+        self.is_account_exist = False
+        self.has_account = False
 
-    @property
-    def is_valid(self):
-        """_data summary_
-
-        Returns:
-            _type_: _description_
-        """
-        return self._is_valid
-
-    @is_valid.setter
-    def is_valid(self, value):
-        # We notify the View -
-        # :class:`~View.ProfileScreen.profile_screen.ProfileScreenView` about the
-        # changes that have occurred in the data model.
-        self._is_valid = value
-        self.notify_observers("login screen")
+    def reset_is_account_exist(self):
+        """Resets the `is_account_exist` after checking."""
+        self.is_account_exist = False
 
     @multitasking.task
-    def check_data(self):
-        """Just an example of the method. Use your own code."""
-        # data = database
-        # if true:
-        #   is_valid = True
-        #   updatae_database()
-        # else:
-        #   is_valid = False
+    def is_account_taken(self, username: str, password: str):
+        """A method that checks if certain username and password exist in database."""
+        data = self._database.get_data_table()
+        for key, value in data.items():
+            if key == username and value["UserInfo"]["Password"] == password:
+                self.is_account_exist = True
+                self._database.username = username
+                self.has_account = "Name" in value["UserInfo"]
+                break
+        self.notify_observers("login screen")
