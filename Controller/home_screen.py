@@ -1,9 +1,11 @@
 """_module summary_"""
 
 import importlib
+from datetime import datetime
 from decimal import Decimal
 
 import View.HomeScreen.home_screen
+import View.HomeScreen.ProfileScreen.profile_screen
 from Utils import helpers
 from View import HomeScreenView
 
@@ -133,4 +135,70 @@ class HomeScreenController:
             if identifier != "Calorie Goal":
                 calorie_goal -= Decimal(str(item["Calorie Amount"]))
         self.model.update_calorie_goal(float(calorie_goal), f"History/{date_today}")
+    
+    def get_dates(self):
+        data = self.model.get_history_data_from_db()
+        date_format = '%d-%m-%Y'
+        dates = []
+        for date in data:
+            date_object = datetime.strptime(date, date_format)
+
+            readable_date = date_object.strftime('%b %d')
+
+            dates.append(readable_date)
+
+        return dates
+
+    def get_calories(self):
+        data = self.model.get_history_data_from_db()
+        total_calories = []
+        calorie_sum = 0
+        calorie_goal = []
+
+        for key, values in data.items():
+            for inner_key, inner_value in values.items():
+                if inner_key != "Calorie Goal": 
+                    calorie_sum += inner_value['Calorie Amount']
+                else:
+                    calorie_goal.append(inner_value)
+            total_calories.append(calorie_sum)
+            calorie_sum = 0
+        return total_calories, sum(calorie_goal)/len(calorie_goal)
+
+
+    def get_food(self):
+        data = self.model.get_history_data_from_db()
         
+        food = []
+        calorie = []
+        foods = []
+        calories = []
+
+        for key, values in data.items():
+            for inner_key, inner_values in values.items():
+                if inner_key != "Calorie Goal":
+                    food.append(inner_values['Food'])
+                    calorie.append(inner_values['Calorie Amount'])
+                else: 
+                    foods.append(food)
+                    calories.append(calorie)
+                    food = []
+                    calorie = []
+
+        return foods, calories
+
+    def remove_food_duplicates(self, foods, calories):
+        merged_foods = []
+        merged_calories = []
+
+        for food, calorie in zip(foods, calories):
+            food = food.capitalize()
+            if food not in merged_foods:
+                merged_foods.append(food)
+                merged_calories.append(calorie)
+            else:
+                index = merged_foods.index(food)
+                merged_calories[index] += calorie
+        
+        return merged_foods, merged_calories
+
