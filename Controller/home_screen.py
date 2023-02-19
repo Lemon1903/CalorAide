@@ -1,7 +1,6 @@
 """_module summary_"""
 
 import importlib
-from datetime import datetime
 from decimal import Decimal
 
 import View.HomeScreen.home_screen
@@ -25,6 +24,8 @@ class HomeScreenController:
     def __init__(self, model):
         self.model = model  # Model.home_screen.HomeScreenModel
         self.views = [HomeScreenView(controller=self, model=self.model)]
+        self.no_of_parts = 4
+        self.done_progress = 0.0
 
     def get_views(self) -> list[HomeScreenView]:
         """Gets the view connected to this controller.
@@ -45,14 +46,25 @@ class HomeScreenController:
 
     def load_user_data(self, do_reload=False):
         """Loads all user information."""
-        if do_reload:
-            self.model.has_loaded_profile = False
-            self.model.has_loaded_intake_history = False
+        self.done_progress = 0.0 if do_reload else self.done_progress
+        if self.done_progress <= 0:
+            self.views[0].loading_view.open()
+            self.model.load_user_profile_data("general information")
+            self.model.load_user_calorie_intake_history()
+            self.model.load_all_history_data()
+            self.model.load_specific_intake_data(helpers.get_date_today())
 
-        if not self.model.has_loaded_screens():
-            self.views[0].open_loading_view()
-            self.model.load_user_profile_data()
-            self.model.load_user_intake_history()
+    def load_all_history_data(self):
+        """Loads all the user history data in database."""
+        self.views[0].loading_view.open()
+        self.done_progress -= 1/self.no_of_parts
+        self.model.load_all_history_data()
+
+    def load_specific_intake_data(self, date_: str = helpers.get_date_today()):
+        """Loads the intake data of the user at specific date."""
+        self.views[0].loading_view.open()
+        self.done_progress -= 1/self.no_of_parts
+        self.model.load_specific_intake_data(date_)
 
     def show_connection_error(self):
         """Shows the connection error snackbar."""
@@ -62,13 +74,21 @@ class HomeScreenController:
         """Hides the connection error snackbar."""
         self.views[0].connection_error_snackbar.dismiss()
 
+    def done_loading(self, from_):
+        """Closes the loading view if finish loading parts."""
+        self.done_progress += 1/self.no_of_parts
+        print(from_, self.done_progress)
+        if self.done_progress >= 1.0:
+            self.views[0].loading_view.dismiss()
+
     def update_user_profile_data(self, textfields: list):
         """Updates user data in database.
 
         Args:
             textfields (list): the list of textfields to get the new data.
         """
-        self.views[0].open_loading_view()
+        self.views[0].loading_view.open()
+        self.done_progress -= 1/self.no_of_parts
         height = float(textfields[1].text)
         weight = float(textfields[0].text)
         bmi_value = helpers.get_bmi_value(height, weight)
@@ -89,7 +109,8 @@ class HomeScreenController:
             user_input (list): the list of user inputs to be stored.
             calorie_goal (float): the calorie goal to be updated.
         """
-        self.views[0].open_loading_view()
+        self.views[0].loading_view.open()
+        self.done_progress -= 1/self.no_of_parts
         date_today = helpers.get_date_today()
         user_input[0] = float(user_input[0])
         calorie_goal -= user_input[0]
@@ -103,7 +124,8 @@ class HomeScreenController:
             calorie_screen (CalorieCounterScreenView): the calorie counter screen view.
             calorie_goal (float): the calorie goal to be updated.
         """
-        self.views[0].open_loading_view()
+        self.views[0].loading_view.open()
+        self.done_progress -= 1/self.no_of_parts
         date_today = helpers.get_date_today()
         calorie_goal += sum(item.calorie_amount for item in checked_items)
         self.model.update_calorie_goal(round(calorie_goal, 1), f"History/{date_today}")
@@ -115,7 +137,8 @@ class HomeScreenController:
         Args:
             new_activity (str): the new activity selected by the user.
         """
-        self.views[0].open_loading_view()
+        self.views[0].loading_view.open()
+        self.done_progress -= 1/self.no_of_parts
         date_today = helpers.get_date_today()
         user_data = self.model.user_profile_data
 
@@ -130,73 +153,7 @@ class HomeScreenController:
         self.model.update_calorie_goal(float(calorie_goal), "UserInfo")
 
         # compute new calorie goal for the calorie counter screen
-        for identifier, item in self.model.user_intake_history_data.items():
+        for identifier, item in self.model.user_calorie_intake_data.items():
             if identifier != "Calorie Goal":
                 calorie_goal -= Decimal(str(item["Calorie Amount"]))
         self.model.update_calorie_goal(float(calorie_goal), f"History/{date_today}")
-    
-    def get_dates(self):
-        data = self.model.get_history_data_from_db()
-        date_format = '%d-%m-%Y'
-        dates = []
-        for date in data:
-            date_object = datetime.strptime(date, date_format)
-
-            readable_date = date_object.strftime('%b %d')
-
-            dates.append(readable_date)
-
-        return dates
-
-    def get_calories(self):
-        data = self.model.get_history_data_from_db()
-        total_calories = []
-        calorie_sum = 0
-        calorie_goal = []
-
-        for key, values in data.items():
-            for inner_key, inner_value in values.items():
-                if inner_key != "Calorie Goal": 
-                    calorie_sum += inner_value['Calorie Amount']
-                else:
-                    calorie_goal.append(inner_value)
-            total_calories.append(calorie_sum)
-            calorie_sum = 0
-        return total_calories, sum(calorie_goal)/len(calorie_goal)
-
-
-    def get_food(self):
-        data = self.model.get_history_data_from_db()
-        
-        food = []
-        calorie = []
-        foods = []
-        calories = []
-
-        for key, values in data.items():
-            for inner_key, inner_values in values.items():
-                if inner_key != "Calorie Goal":
-                    food.append(inner_values['Food'])
-                    calorie.append(inner_values['Calorie Amount'])
-                else: 
-                    foods.append(food)
-                    calories.append(calorie)
-                    food = []
-                    calorie = []
-
-        return foods, calories
-
-    def remove_food_duplicates(self, foods, calories):
-        merged_foods = []
-        merged_calories = []
-
-        for food, calorie in zip(foods, calories):
-            food = food.capitalize()
-            if food not in merged_foods:
-                merged_foods.append(food)
-                merged_calories.append(calorie)
-            else:
-                index = merged_foods.index(food)
-                merged_calories[index] += calorie
-        
-        return merged_foods, merged_calories

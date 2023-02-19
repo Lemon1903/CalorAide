@@ -1,4 +1,5 @@
 #:import GeneralInformationCard View.HomeScreen.ProfileScreen.components
+#:import MatplotFigure kivy_matplotlib_widget.uix.graph_widget
 
 <ProfileScreenView>:
     # main layout that holds all widgets
@@ -52,49 +53,66 @@
             GeneralInformationCard:
                 id: general_info
                 controller: root.controller
-            
+
             MDCard:
-                id: card
-                radius: 10
-                padding: dp(20), dp(15)
-                # height: self.current_layout.height + self.padding[1] * 2
-                size_hint_y: None
-                height: dp(450)
-                md_bg_color: app.theme_cls.primary_color
                 orientation: 'vertical'
+                radius: dp(10)
+                spacing: dp(10)
+                padding: dp(20), dp(15)
+                height: dp(450)
+                size_hint_y: None
+                md_bg_color: app.theme_cls.primary_color
 
-                FitImage:
-                    id: visual
-                    source:"assets/images/pie.png"
+                ProfileLabel:
+                    text: "Calorie Goal Progress"
+                    font_name: "Poppins-Bold"
 
-            MDFillRoundFlatButton:
-            # for last 7 days
-                text: "Last 7 Days"
-                on_release: 
-                    root.show_bar_graph_data(args[0])
-                    visual.source = "assets/images/bar1.png"
+                MDBoxLayout:
+                    orientation: "vertical"
 
-            MDFillRoundFlatButton:
-            # for last 14 days
-                text: "Last 14 Days"
-                on_release:
-                    root.show_bar_graph_data(args[0])
-                    visual.source = "assets/images/bar2.png"
+                    MatplotFigure:
+                        id: graph1
+                        touch_mode: "pan_x"
+                        do_zoom_x: False
+                        do_zoom_y: False
 
-            MDFillRoundFlatButton:
-            # for last 14 days
-                text: "Today"
-                on_release:
-                    root.show_pie_chart_data(args[0])
-                    visual.source = "assets/images/pie1.png"
+                    MDFlatButton:
+                        text: root.current_graph1_date
+                        font_name: "Poppins-Regular"
+                        font_size: dp(18)
+                        size_hint_x: 1
+                        on_release: root.graph1_date_dialog.open()
 
-            MDFillRoundFlatButton:
-            # for last 14 days
-                text: "Yesterday"
-                on_release:
-                    root.show_pie_chart_data(args[0])
-                    visual.source = "assets/images/pie2.png"
-            
+            MDCard:
+                orientation: 'vertical'
+                radius: dp(10)
+                spacing: dp(10)
+                padding: dp(20), dp(15)
+                height: dp(400)
+                size_hint_y: None
+                md_bg_color: app.theme_cls.primary_color
+
+                ProfileLabel:
+                    text: "Food Intake Breakdown"
+                    font_name: "Poppins-Bold"
+
+                MDBoxLayout:
+                    orientation: "vertical"
+
+                    MatplotFigure:
+                        id: graph2
+                        touch_mode: "pan"
+                        do_zoom_x: True
+                        do_zoom_y: True
+
+                    MDFlatButton:
+                        text: root.current_graph2_date
+                        font_name: "Poppins-Regular"
+                        font_size: dp(18)
+                        size_hint_x: 1
+                        on_release: root.graph2_date_dialog.open()
+
+
 # dynamic class
 <ChangeButton@MDRectangleFlatButton>:
     font_name: "Poppins-SemiBold"
