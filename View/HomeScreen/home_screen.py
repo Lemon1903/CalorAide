@@ -1,7 +1,5 @@
 """_module summary_"""
 
-# pylint: disable=no-name-in-module
-from kivy.clock import mainthread
 from kivymd.uix.button import MDFlatButton
 from kivymd.uix.snackbar import Snackbar
 
@@ -31,20 +29,3 @@ class HomeScreenView(BaseScreenView):
 
     def on_enter(self, *_):
         self.controller.load_user_data()
-
-    @mainthread
-    def model_is_changed(self) -> None:
-        """ Called whenever any change has occurred in the data model.
-        The view in this method tracks these changes and updates the UI
-        according to these changes.
-        """
-        if self.model.has_loaded_screens():
-            self.close_loading_view()
-
-    def open_loading_view(self):
-        """ Opens the loading view. """
-        self.loading_view.open()
-
-    def close_loading_view(self):
-        """ Closes the loading view. """
-        self.loading_view.dismiss()

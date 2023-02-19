@@ -53,13 +53,18 @@ class CalorieCounterScreenView(BaseScreenView):
         the intake history and calorie goal according to these changes.
         """
         if self.model.updated_calorie_part == "intake history":
-            self._load_intake_history(self.model.user_intake_history_data)
+            self._load_intake_history(self.model.user_calorie_intake_data)
         elif self.model.updated_calorie_part == "intake history add":
             self._add_intake_to_history(self.model.user_added_intake_data)
         elif self.model.updated_calorie_part == "intake history delete":
             self._delete_intake_in_history(self.model.user_deleted_intake_data)
+
         self.calorie_goal = self.model.new_calorie_goal
-        self.model.has_loaded_intake_history = True
+        self.controller.done_loading(self.model.updated_calorie_part)
+
+        if self.controller.done_progress >= 1.0:
+            self.controller.load_all_history_data()
+            self.controller.load_specific_intake_data()
 
     def on_check(self, *_):
         """Called when an intake history item is checked."""
