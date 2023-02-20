@@ -10,3 +10,6 @@ sseclient
 pycryptodome
 requests_toolbelt
 watchdog
+matplotlib
+datetime
+kivy_matplotlib_widget

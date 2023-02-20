@@ -92,18 +92,19 @@ class CalorAide(MDApp):
 
         return self.manager_screens
 
-    def on_start(self, *_):
-        with open("username.txt", "r", encoding="utf-8") as file:
+    def on_start(self, *args):
+        with open("Model/username.txt", "r") as file:
             lines = file.readlines()
             username = lines[0]
-
-        file_size = os.path.getsize("username.txt")
+            registered = lines[1]
+        
+        file_size = os.path.getsize("Model/username.txt")
 
         if self.database.username != username:
             self.manager_screens.current = "login screen"
             self.database.username = username
-
-        if file_size != 0 and username != ' ':
+        
+        if file_size != 0 and username != ' \n' and registered != ' ':
             self.manager_screens.current = "home screen"
 
 

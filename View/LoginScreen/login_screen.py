@@ -20,7 +20,13 @@ class LoginScreenView(BaseScreenView):
             if not self.model.is_password_correct:
                 self.show_error_snackbar("The password you have entered is incorrect.")
             else:
-                next_screen = "home screen" if self.model.has_account else "register screen"
+                if self.model.has_account: 
+                    self.create_registered()
+                    next_screen = "home screen"
+                else:
+                    self.clear_register()
+                    next_screen = "register screen"
+
                 self.reset_status()
                 self.change_screen("left", next_screen)
         else:
@@ -73,3 +79,14 @@ class LoginScreenView(BaseScreenView):
             self.controller.check_account_exist(username, password)
 
         self.clear_text_fields()
+
+    def clear_register(self):
+        with open("Model/username.txt", "r") as file:
+            lines = file.readlines()
+
+        lines[1] = ' '
+
+        with open("Model/username.txt", "w") as file:
+            file.writelines(lines)
+
+        file.close()

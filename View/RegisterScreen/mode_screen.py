@@ -92,6 +92,7 @@ class ModeScreenView(BaseScreenView):
         """
         self.loading_view.open()
         self.dismiss_dialog()
+        self.create_registered()
         self.controller.compile_details("mode screen")
 
     def reset_button_state(self):
