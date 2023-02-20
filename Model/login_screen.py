@@ -31,5 +31,23 @@ class LoginScreenModel(BaseScreenModel):
                 self.is_account_exist = True
                 self._database.username = username
                 self.has_account = "Name" in value["UserInfo"]
+
+                if value['UserInfo']['Password'] != password: 
+                    self.is_password_correct = False
+                else:
+                    self.is_password_correct = True
+                    self.create_text_file(username)
+                    
                 break
         self.notify_observers("login screen")
+
+    def create_text_file(self, username):
+        with open("Model/username.txt", "r") as file:
+            lines = file.readlines()
+
+        lines[0] = username + '\n'
+
+        with open("Model/username.txt", "w") as file:
+            file.writelines(lines)
+
+        file.close()

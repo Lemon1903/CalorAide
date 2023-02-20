@@ -7,6 +7,8 @@ from datetime import date
 import matplotlib.pyplot as plt
 from kivy.clock import mainthread
 from kivy.properties import StringProperty
+from kivymd.uix.button import MDFlatButton, MDRaisedButton
+from kivymd.uix.dialog import MDDialog
 from kivymd.uix.pickers import MDDatePicker
 from matplotlib import style
 
@@ -43,6 +45,23 @@ class ProfileScreenView(BaseScreenView):
         )
         self.graph1_date_dialog.bind(on_save=self.set_graph1_date)
         self.graph2_date_dialog.bind(on_save=self.set_graph2_date)
+        self.finalization_dialog = MDDialog(
+            text="Are you sure you want to log out?",
+            buttons=[
+                MDFlatButton(
+                    text="CANCEL",
+                    theme_text_color="Custom",
+                    text_color=self.theme_cls.primary_color,
+                    on_release=self.dismiss_dialog
+                ),
+                MDRaisedButton(
+                    text="YES",
+                    theme_text_color="Custom",
+                    text_color="white",
+                    on_release=self.go_log_out
+                ),
+            ],
+        )
 
     @mainthread
     def model_is_changed(self) -> None:
@@ -218,3 +237,26 @@ class ProfileScreenView(BaseScreenView):
         """Sets the shown date in graph2 card."""
         self.current_graph2_date = args[1].strftime("%B %d %Y")
         self.controller.load_specific_intake_data(args[1].strftime("%d-%m-%Y"))
+
+    def show_finalize_dialog(self):
+        """Pops-up the dialog box after clicking the FINALIZE button.
+        This initializes compiles and finalizes all the data input by the user.
+        """
+        self.finalization_dialog.open()
+
+    def dismiss_dialog(self, *_):
+        """This function closes the dialog box when the user clicks CANCEL."""
+        self.finalization_dialog.dismiss()
+
+    def go_log_out(self, *_):
+        with open("Model/username.txt", "r") as file:
+            lines = file.readlines()
+
+        lines[0] = ' ' + '\n'
+
+        with open("Model/username.txt", "w") as file:
+            file.writelines(lines)
+        file.close()
+        self.controller.done_progress = 0.0
+        self.dismiss_dialog()
+        self.controller.change_screen("right", "login screen")

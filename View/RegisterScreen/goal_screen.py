@@ -33,7 +33,7 @@ class GoalScreenView(BaseScreenView):
                     text="YES",
                     theme_text_color="Custom",
                     text_color="white",
-                    on_release=self.determine_goal
+                    on_release=self.determine_goal 
                 ),
             ],
         )
@@ -68,7 +68,9 @@ class GoalScreenView(BaseScreenView):
         """
         self.loading_view.open()
         self.dismiss_dialog()
+        self.create_registered()
         self.controller.compile_details("goal screen")
+
 
     def dismiss_dialog(self, *_):
         """This function closes the dialog box when the user clicks CANCEL."""
@@ -77,3 +79,5 @@ class GoalScreenView(BaseScreenView):
     def error_prompt(self, error_text: str, color="#7B56BA"):
         """Error prompt whenever there are no inputs."""
         Snackbar(text=error_text, bg_color=color).open()
+
+    

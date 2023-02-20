@@ -53,6 +53,11 @@ class CalorAide(MDApp):
     DEBUG = False
     KV_DIRS = [os.path.join(os.getcwd(), "View")]
 
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        self.database = DataBase()
+        self.manager_screens = MDScreenManager()
+
     def build_app(self, *_) -> MDScreenManager:
         # theme style whether 'Dark' or 'Light'
         self.theme_cls.theme_style = "Dark"
@@ -70,22 +75,39 @@ class CalorAide(MDApp):
         # widgets material style
         self.theme_cls.material_style = "M3"
 
-        database = DataBase()
-        manager_screens = MDScreenManager()
+        self.database = DataBase()
+        self.manager_screens = MDScreenManager()
 
         importlib.reload(View.screens)
         screens = View.screens.screens
 
         for name_screen, value in screens.items():
-            model = value["model"](database)
+            model = value["model"](self.database)
             controller = value["controller"](model)
 
             screen_names = name_screen.split(",")
             for i, view in enumerate(controller.get_views()):
                 view.name = screen_names[i]
-                manager_screens.add_widget(view)
+                self.manager_screens.add_widget(view)
 
-        return manager_screens
+        return self.manager_screens
+
+    def on_start(self, *args):
+        with open("Model/username.txt", "r") as file:
+            lines = file.readlines()
+            username = lines[0]
+            registered = lines[1]
+        
+        file_size = os.path.getsize("Model/username.txt")
+
+        if self.database.username != username:
+            self.manager_screens.current = "login screen"
+            self.database.username = username
+        
+        if file_size != 0 and username != ' \n' and registered != ' ':
+            self.manager_screens.current = "home screen"
+        
+        return super().on_start()
 
 
 if __name__ == "__main__":
