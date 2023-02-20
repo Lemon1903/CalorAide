@@ -68,6 +68,7 @@ class ProfileInformationLayout(MDBoxLayout):
     height_info = NumericProperty(0)
     weight_info = NumericProperty(0)
     bmi_info = StringProperty("")
+    intensity_info = StringProperty("")
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -90,6 +91,7 @@ class ProfileInformationLayout(MDBoxLayout):
         self.height_info = new_info["Height"]
         self.weight_info = new_info["Weight"]
         self.bmi_info = new_info["BMI"]
+        self.intensity_info = new_info["Intensity"]
         self._profile_info = new_info
 
     def reset_profile_information(self):
@@ -100,6 +102,7 @@ class ProfileInformationLayout(MDBoxLayout):
         self.height_info = 0
         self.weight_info = 0
         self.bmi_info = ""
+        self.intensity_info = ""
 
     def on_edit_profile_info(self):
         """Callback function when editing the profile information."""

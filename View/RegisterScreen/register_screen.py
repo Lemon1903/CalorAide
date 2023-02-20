@@ -74,7 +74,7 @@ class RegisterScreenView(BaseScreenView):
         were valid. If all were valid, this function moves the screen to the next.
         """
         if self._has_errors():
-            self.error_prompt()
+            self.error_prompt("Please check if there are invalid inputs.")
         else:
             self.controller.confirm_registration(self.get_user_inputs())
             self._clear_textfields()
@@ -103,12 +103,11 @@ class RegisterScreenView(BaseScreenView):
         return any(tf.error or not tf.text for tf in self.ids.basic_info.children)
 
     # TODO: can be moved to helpers
-    def error_prompt(self, color="#7B56BA"):
+    def error_prompt(self, error_text: str, color="#7B56BA"):
         """Prompt that pops-up whenever there is an error before proceeding."""
         Snackbar(
-            text="Please check if there are invalid inputs.",
+            text=error_text,
             bg_color=color,
-            elevation=0,
             snackbar_x=30,
             snackbar_y=20,
             size_hint_x=0.95,

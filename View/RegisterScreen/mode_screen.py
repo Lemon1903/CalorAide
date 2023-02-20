@@ -109,4 +109,11 @@ class ModeScreenView(BaseScreenView):
     # TODO: can be moved to helpers
     def error_prompt(self, error_text: str, color="#7B56BA"):
         """Error prompt whenever there are no inputs."""
-        Snackbar(text=error_text, bg_color=color).open()
+        Snackbar(
+            text=error_text,
+            bg_color=color,
+            snackbar_x=30,
+            snackbar_y=20,
+            size_hint_x=0.95,
+            pos_hint={"center_x": 0.5},
+        ).open()
