@@ -72,6 +72,16 @@
             text_color: "#F3BDB5"
             size_hint_x: 0.6
 
+        ProfileLabel:
+            text: "Intensity:"
+            size_hint_x: 0.4
+
+        ProfileLabel:
+            text: root.intensity_info if root.intensity_info else "--"
+            theme_text_color: "Custom"
+            text_color: "#F3BDB5"
+            size_hint_x: 0.6
+
     RectangleButton:
         text: "Edit Details"
         size_hint_x: 1

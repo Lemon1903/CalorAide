@@ -124,6 +124,7 @@
                         size_hint_x: 1
                         on_release: root.graph2_date_dialog.open()
 
+
 # dynamic class
 <ChangeButton@MDRectangleFlatButton>:
     font_name: "Poppins-SemiBold"
@@ -132,3 +133,25 @@
     pos_hint: {'center_x': 0.5}
     md_bg_color: app.theme_cls.primary_dark
     line_color: app.theme_cls.primary_dark
+
+
+<WarningSnackbar>:
+    spacing: 0
+    elevation: 0
+    radius: [10, 10, 10, 10]
+
+    MDIconButton:
+        icon: root.icon
+        theme_text_color: "Custom"
+        icon_color: [1, 0.2, 0.2, 1]
+        pos_hint: {'center_y': .5}
+
+    MDLabel:
+        id: text_bar
+        text: root.text
+        font_size: root.font_size
+        theme_text_color: 'Custom'
+        text_color: [1, 0.2, 0.2, 1]
+        height: self.texture_size[1]
+        size_hint_y: None
+        pos_hint: {'center_y': .5}
