@@ -6,10 +6,11 @@ from datetime import date
 
 import matplotlib.pyplot as plt
 from kivy.clock import Clock, mainthread
-from kivy.properties import StringProperty
+from kivy.properties import NumericProperty, StringProperty
 from kivymd.uix.button import MDFlatButton, MDRaisedButton
 from kivymd.uix.dialog import MDDialog
 from kivymd.uix.pickers import MDDatePicker
+from kivymd.uix.snackbar import BaseSnackbar
 from matplotlib import style
 
 from Utils import helpers
@@ -69,6 +70,12 @@ class ProfileScreenView(BaseScreenView):
             ],
         )
 
+    def on_logout(self):
+        """Deletes the username in the text file"""
+        self.current_activity = ""
+        self.ids.general_info.profile_layout.reset_profile_information()
+        self.dismiss_dialog()
+
     @mainthread
     def model_is_changed(self) -> None:
         """Called whenever any change has occurred in the data model.
@@ -98,18 +105,13 @@ class ProfileScreenView(BaseScreenView):
 
         self.controller.done_loading("profile")
 
-    def on_logout(self):
-        """Deletes the username in the text file"""
-        self.current_activity = ""
-        self.ids.general_info.profile_layout.reset_profile_information()
-        self.dismiss_dialog()
-
     def update_mode(self, profile_data, update_calorie=True):
         """Updates anything related to mode about the changes in data."""
         if update_calorie:
             self.controller.update_all_calorie_goal(profile_data["Calorie Goal"])
 
         self.current_mode = profile_data["Mode"].upper()
+        self.ids.general_info.profile_layout.intensity_info = profile_data["Intensity"]
         self.controller.set_calorie_screen_mode(profile_data["Mode"])
 
     def update_activity(self, profile_data: dict):
@@ -128,11 +130,18 @@ class ProfileScreenView(BaseScreenView):
             self.controller.show_connection_error()
             return
 
-        # TODO: change this checking to another
         if self.current_activity:
             self.ids.general_info.change_layout()
 
         # TODO: show snackbar error if there is warning. Include here the checking for bmi and mode
+        if profile_data["Mode"] == 'Lose' and profile_data['BMI'] in (
+            "Severely Underweight", "Underweight"
+        ):
+            self.show_error_snackbar("Your BMI and Mode are incompatible")
+        elif profile_data["Mode"] == 'Gain' and profile_data['BMI'] in (
+            "Overweight", "Obese", "Severely Obese", "Morbidly Obese"
+        ):
+            self.show_error_snackbar("Your BMI and Mode are incompatible")
 
         self.update_activity(profile_data)
         self.update_mode(profile_data, False)
@@ -183,7 +192,6 @@ class ProfileScreenView(BaseScreenView):
         figure, axes = plt.subplots(figsize=(3, 1))
         merged_foods, merged_calories = self._get_merged_intake_data(specific_intake_data)
 
-        # TODO: change font size base in zoom or fixed size (8/9)
         shortcut = [food.split()[0] for food in merged_foods]
         axes.pie(
             merged_calories,
@@ -275,3 +283,22 @@ class ProfileScreenView(BaseScreenView):
     def dismiss_dialog(self, *_):
         """This function closes the dialog box when the user clicks CANCEL."""
         self.finalization_dialog.dismiss()
+
+    def show_error_snackbar(self, error_text: str):
+        """A method that show snackbar with a message that comes from its parameter."""
+        WarningSnackbar(
+            icon="alert-outline",
+            text=error_text,
+            font_size=14,
+            snackbar_x=30,
+            snackbar_y=100,
+            size_hint_x=0.90,
+            pos_hint={"center_x": 0.5},
+        ).open()
+
+
+class WarningSnackbar(BaseSnackbar):
+    """Custom warning snackbar for incompatible bmi and mode."""
+    text = StringProperty(None)
+    icon = StringProperty(None)
+    font_size = NumericProperty("15sp")
