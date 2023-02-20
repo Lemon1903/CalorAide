@@ -97,13 +97,13 @@ class CalorAide(MDApp):
             lines = file.readlines()
             username = lines[0]
             registered = lines[1]
-        
+
         file_size = os.path.getsize("Model/username.txt")
 
         if self.database.username != username:
             self.manager_screens.current = "login screen"
             self.database.username = username
-        
+
         if file_size != 0 and username != ' \n' and registered != ' ':
             self.manager_screens.current = "home screen"
 
@@ -111,6 +111,6 @@ class CalorAide(MDApp):
 if __name__ == "__main__":
     # adjust this base on your screen
     Window.size = (360, 640)
-    # Window.top = 50
-    Window.left = 1160
+    Window.top = 36
+    Window.left = -360
     CalorAide().run()
