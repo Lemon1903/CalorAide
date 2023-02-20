@@ -101,12 +101,15 @@ class CalorieCounterScreenView(BaseScreenView):
             self.add_intake_dialog.content_cls.clear_textfields()
 
     def _load_intake_history(self, intake_history: dict | None):
+        if intake_history is None:
+            self.controller.show_connection_error()
+            return
+
         if intake_history:
             for intake_data in list(intake_history.items())[:-1]:
                 self._add_intake_to_history(intake_data)
-            self.controller.hide_connection_error()
-        elif intake_history is None:
-            self.controller.show_connection_error()
+
+        self.controller.hide_connection_error()
 
     def _add_intake_to_history(self, added_intake: tuple):
         if added_intake:

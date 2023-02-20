@@ -1,16 +1,9 @@
 """_module summary_"""
 
-import importlib
 from decimal import Decimal
 
-import View.HomeScreen.home_screen
 from Utils import helpers
 from View import HomeScreenView
-
-# We have to manually reload the view module in order to apply the
-# changes made to the code on a subsequent hot reload.
-# If you no longer need a hot reload, you can delete this instruction.
-importlib.reload(View.HomeScreen.home_screen)
 
 
 class HomeScreenController:

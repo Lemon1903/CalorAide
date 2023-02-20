@@ -7,17 +7,18 @@ https://kivymd.readthedocs.io/en/latest/api/kivymd/tools/patterns/create_project
 To turn off the hot reload, just change the value of DEBUG to False
 """
 
-import importlib
 import os
 
 from kivy import Config
+# from kivy.clock import Clock
 from kivy.core.text import LabelBase
 from kivy.core.window import Window
-from kivymd.tools.hotreload.app import MDApp
+from kivymd.app import MDApp
 from kivymd.uix.screenmanager import MDScreenManager
 
-import View.screens
 from Model.database import DataBase
+from View.screens import screens
+from View.SplashScreen.splash_screen import SplashScreenView
 
 Config.set("graphics", "multisamples", 0)
 os.environ["KIVY_GL_BACKEND"] = "angle_sdl2"
@@ -43,22 +44,16 @@ LabelBase.register(
 
 
 class CalorAide(MDApp):
-    """_summary_
-
-    Args:
-        DEBUG (bool): The switch indicator for hot reloading.
-        KV_DIRS (list[str]): The directory path to the kivy files.
-    """
-
-    DEBUG = False
-    KV_DIRS = [os.path.join(os.getcwd(), "View")]
+    """_summary_"""
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
+        self.load_all_kv_files(self.directory)
         self.database = DataBase()
         self.manager_screens = MDScreenManager()
+        self.splash_screen = SplashScreenView()
 
-    def build_app(self, *_) -> MDScreenManager:
+    def build(self, *_) -> MDScreenManager:
         # theme style whether 'Dark' or 'Light'
         self.theme_cls.theme_style = "Dark"
         self.theme_cls.theme_style_switch_animation = True
@@ -75,12 +70,6 @@ class CalorAide(MDApp):
         # widgets material style
         self.theme_cls.material_style = "M3"
 
-        self.database = DataBase()
-        self.manager_screens = MDScreenManager()
-
-        importlib.reload(View.screens)
-        screens = View.screens.screens
-
         for name_screen, value in screens.items():
             model = value["model"](self.database)
             controller = value["controller"](model)
@@ -90,10 +79,16 @@ class CalorAide(MDApp):
                 view.name = screen_names[i]
                 self.manager_screens.add_widget(view)
 
+        # self.manager_screens.add_widget(self.splash_screen)
+        # self.manager_screens.current = "splash_screen"
         return self.manager_screens
 
-    def on_start(self, *args):
-        with open("Model/username.txt", "r") as file:
+    def on_start(self, *_):
+    #     Clock.schedule_once(self.change_splash_screen, 10)
+
+    # def change_splash_screen(self, _):
+        """Change to the next screen after splash screen."""
+        with open("Model/username.txt", "r", encoding="utf-8") as file:
             lines = file.readlines()
             username = lines[0]
             registered = lines[1]

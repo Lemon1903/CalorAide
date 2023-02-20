@@ -1,18 +1,7 @@
 """_module summary_"""
-import importlib
 
-import View.RegisterScreen.goal_screen
-import View.RegisterScreen.mode_screen
-import View.RegisterScreen.register_screen
 from Utils import helpers
 from View import GoalScreenView, ModeScreenView, RegisterScreenView
-
-# We have to manually reload the view module in order to apply the
-# changes made to the code on a subsequent hot reload.
-# If you no longer need a hot reload, you can delete this instruction.
-importlib.reload(View.RegisterScreen.goal_screen)
-importlib.reload(View.RegisterScreen.mode_screen)
-importlib.reload(View.RegisterScreen.register_screen)
 
 
 class RegisterScreenController:
