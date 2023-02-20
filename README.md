@@ -43,13 +43,13 @@
   <li>Xein Virgines</li>
 </ul>
 
-<h4>Designer</h4>
+<h4>Designers</h4>
 <ul>
   <li>Luis Lumbres</li>
+  <li>Paolo Recio</li>
 </ul>
 
-<h4>Technical Writer and Researcherer</h4>
+<h4>Technical Writer and Researcher</h4>
 <ul>
-  <li>Paolo Recio</li>
   <li>Lilliane Claire Rotap</li>
 </ul>
