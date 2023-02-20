@@ -6,10 +6,11 @@ from datetime import date
 
 import matplotlib.pyplot as plt
 from kivy.clock import Clock, mainthread
-from kivy.properties import StringProperty
+from kivy.properties import NumericProperty, StringProperty
 from kivymd.uix.button import MDFlatButton, MDRaisedButton
 from kivymd.uix.dialog import MDDialog
 from kivymd.uix.pickers import MDDatePicker
+from kivymd.uix.snackbar import BaseSnackbar
 from matplotlib import style
 
 from Utils import helpers
@@ -128,11 +129,15 @@ class ProfileScreenView(BaseScreenView):
             self.controller.show_connection_error()
             return
 
-        # TODO: change this checking to another
         if self.current_activity:
             self.ids.general_info.change_layout()
 
         # TODO: show snackbar error if there is warning. Include here the checking for bmi and mode
+
+        if profile_data["Mode"] == 'Lose' and profile_data['BMI'] in ("Severely Underweight", "Underweight"):
+            self.show_error_snackbar("Your BMI and Mode Are Incompatible")
+        elif profile_data["Mode"] == 'Gain' and profile_data['BMI'] in ("Overweight", "Obese", "Severely Obese", "Morbidly Obese"):
+            self.show_error_snackbar("Your BMI and Mode Are Incompatible")
 
         self.update_activity(profile_data)
         self.update_mode(profile_data, False)
@@ -274,4 +279,22 @@ class ProfileScreenView(BaseScreenView):
 
     def dismiss_dialog(self, *_):
         """This function closes the dialog box when the user clicks CANCEL."""
-        self.finalization_dialog.dismiss()
+        self.finalization_dialog.dismiss()      
+
+    def show_error_snackbar(self, error_text: str, color="#7B56BA"):
+        """A method that show snackbar with a message that comes from its parameter."""
+        WarningSnackbar(
+            icon="alert-outline",
+            text=error_text,
+            font_size=14,
+            snackbar_x=30,
+            snackbar_y=100,
+            size_hint_x=0.90,
+            pos_hint={"center_x": 0.5},
+        ).open()
+
+
+class WarningSnackbar(BaseSnackbar):
+    text = StringProperty(None)
+    icon = StringProperty(None)
+    font_size = NumericProperty("15sp")

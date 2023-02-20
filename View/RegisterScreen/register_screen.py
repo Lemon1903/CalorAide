@@ -105,4 +105,12 @@ class RegisterScreenView(BaseScreenView):
     # TODO: can be moved to helpers
     def error_prompt(self, color="#7B56BA"):
         """Prompt that pops-up whenever there is an error before proceeding."""
-        Snackbar(text="Please check if there are invalid inputs.", bg_color=color).open()
+        Snackbar(
+            text="Please check if there are invalid inputs.",
+            bg_color=color,
+            elevation=0,
+            snackbar_x=30,
+            snackbar_y=20,
+            size_hint_x=0.95,
+            pos_hint={"center_x": 0.5},
+        ).open()
