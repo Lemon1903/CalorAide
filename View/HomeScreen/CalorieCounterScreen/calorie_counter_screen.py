@@ -2,7 +2,7 @@
 
 # pylint: disable=no-name-in-module
 from kivy.clock import mainthread
-from kivy.properties import NumericProperty
+from kivy.properties import NumericProperty, StringProperty
 from kivymd.uix.button import MDFillRoundFlatButton, MDFlatButton
 from kivymd.uix.dialog import MDDialog
 
@@ -15,6 +15,7 @@ class CalorieCounterScreenView(BaseScreenView):
     """The view that handles UI for calorie counter screen."""
 
     calorie_goal = NumericProperty(1900.0)
+    user_mode = StringProperty()
 
     def __init__(self, **kw):
         super().__init__(**kw)
@@ -65,6 +66,10 @@ class CalorieCounterScreenView(BaseScreenView):
         if self.controller.done_progress >= 1.0:
             self.controller.load_all_history_data()
             self.controller.load_specific_intake_data()
+
+    def on_logout(self):
+        """When user logs out."""
+        self.ids.intake_history.clear_widgets()
 
     def on_check(self, *_):
         """Called when an intake history item is checked."""

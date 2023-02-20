@@ -82,9 +82,18 @@ def calculate_calorie_goal(base_bmr, activity, mode, goal):
         "Extreme": Decimal("1102.311311"),
     }
 
-    calorie_goal = round(Decimal(str(base_bmr)) * activity_multipliers[activity], 1)
-    if mode == "lose":
-        return calorie_goal - goals_list[goal]
-    if mode == "gain":
-        return calorie_goal + goals_list[goal]
-    return calorie_goal
+    calorie_goal = Decimal(str(base_bmr)) * activity_multipliers[activity]
+    if mode == "Lose":
+        return round(calorie_goal - goals_list[goal], 1)
+    if mode == "Gain":
+        return round(calorie_goal + goals_list[goal], 1)
+    return round(calorie_goal, 1)
+
+# TODO: check bmi and current mode and give warning if both is incompatible
+# def get_new_mode(bmi: str):
+#     """Returns the new mode of the user base on their bmi classification."""
+#     if bmi in ("Overweight", "Obese", "Severely Obese", "Morbidly Obese"):
+#         return "Lose"
+#     if bmi in ("Underweight", "Severely Underweight"):
+#         return "Gain"
+#     return ""

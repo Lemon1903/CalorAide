@@ -10,6 +10,7 @@ from kivy.properties import StringProperty
 from kivymd.uix.pickers import MDDatePicker
 from matplotlib import style
 
+from Utils import helpers
 from View.base_screen import BaseScreenView
 
 from .components import ActivityDialog
@@ -19,12 +20,14 @@ class ProfileScreenView(BaseScreenView):
     """The view that handles UI for profile screen."""
 
     current_activity = StringProperty()
+    current_mode = StringProperty()
     current_graph1_date = StringProperty(date.today().strftime("%B %Y"))
     current_graph2_date = StringProperty(date.today().strftime("%B %d %Y"))
 
     def __init__(self, **kw):
         super().__init__(**kw)
         self.graph1_date = {"Month": date.today().month, "Year": date.today().year}
+        self.database_date = helpers.get_date_today()
 
         self.activity_dialog = ActivityDialog(self)
         self.graph1_date_dialog = MDDatePicker(
@@ -50,7 +53,12 @@ class ProfileScreenView(BaseScreenView):
         The view in this method tracks these changes and updates the UI
         according to these changes.
         """
-        if self.model.loaded_activity:
+        if self.model.loaded_mode:
+            self.model.loaded_mode = False
+            self.model.update_local_profile_data()
+            self.update_mode(self.model.user_profile_data)
+
+        elif self.model.loaded_activity:
             self.model.loaded_activity = False
             self.update_activity(self.model.user_profile_data)
 
@@ -68,6 +76,19 @@ class ProfileScreenView(BaseScreenView):
 
         self.controller.done_loading("profile")
 
+    def on_logout(self):
+        """Deletes the username in the text file"""
+        self.current_activity = ""
+        self.ids.general_info.profile_layout.reset_profile_information()
+
+    def update_mode(self, profile_data, update_calorie=True):
+        """Updates anything related to mode about the changes in data."""
+        if update_calorie:
+            self.controller.update_all_calorie_goal(profile_data["Calorie Goal"])
+
+        self.current_mode = profile_data["Mode"].upper()
+        self.controller.set_calorie_screen_mode(profile_data["Mode"])
+
     def update_activity(self, profile_data: dict):
         """Updates the activity label about the changes in data."""
         if profile_data is None:
@@ -84,10 +105,14 @@ class ProfileScreenView(BaseScreenView):
             self.controller.show_connection_error()
             return
 
+        # TODO: change this checking to another
         if self.current_activity:
             self.ids.general_info.change_layout()
 
+        # TODO: show snackbar error if there is warning. Include here the checking for bmi and mode
+
         self.update_activity(profile_data)
+        self.update_mode(profile_data, False)
         self.ids.general_info.profile_layout.update_profile_information(profile_data)
         self.controller.hide_connection_error()
 
@@ -116,8 +141,6 @@ class ProfileScreenView(BaseScreenView):
                 va='bottom',
             )
 
-        # figure.patch.set_alpha(0.5)
-        # axes.tick_params(axis="x", colors="white")
         axes.get_yaxis().set_visible(False)
         axes.set_xlim(0, 7)
         axes.set_ylim(0, max(y_axis) + 300)
@@ -142,7 +165,7 @@ class ProfileScreenView(BaseScreenView):
         axes.pie(
             merged_calories,
             labels=shortcut,
-            textprops={'fontsize': 14},
+            textprops={'fontsize': 10},
             wedgeprops={'width': 1, 'edgecolor': self.theme_cls.accent_color},
             autopct='%1.1f%%',
             pctdistance=0.8,
@@ -217,4 +240,5 @@ class ProfileScreenView(BaseScreenView):
     def set_graph2_date(self, *args):
         """Sets the shown date in graph2 card."""
         self.current_graph2_date = args[1].strftime("%B %d %Y")
-        self.controller.load_specific_intake_data(args[1].strftime("%d-%m-%Y"))
+        self.database_date = args[1].strftime("%d-%m-%Y")
+        self.controller.load_specific_intake_data()

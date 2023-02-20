@@ -53,18 +53,9 @@ class RegisterScreenController:
             "BMI Value": user_bmi_value,
             "BMI": helpers.get_bmi_classification(user_bmi_value)
         })
-        self.model.set_bmi(self.user_inputs["BMI"])
-        self.model.set_bmi_value(self.user_inputs["BMI Value"])
+        self.model.set_general_info(self.user_inputs)
 
 # =================Mode Screen======================================================
-
-    def get_database_bmi(self):
-        """Gets the BMI from the `Database` class."""
-        return self.model.get_bmi()
-
-    def get_database_bmi_value(self):
-        """Gets the BMI value from the `Database` class."""
-        return self.model.get_bmi_value()
 
     def set_goal_screen(self, user_mode: str):
         """Setting the UI of the Goal screen based on the inputs from the past screen."""
@@ -76,22 +67,27 @@ class RegisterScreenController:
         """This compiles all the inputs from the Register Screen.
         All will be passed to the application's Database.
         """
+        general_info = self.model.get_general_info()
+        intensity = "Sedentary" if screen_from == "mode screen" else self.views[2].user_goal
         user_bmr = helpers.get_user_bmr(
-            self.user_inputs["Gender"],
-            self.user_inputs["Weight"],
-            self.user_inputs["Height"],
-            self.user_inputs["Age"],
+            general_info["Gender"],
+            general_info["Weight"],
+            general_info["Height"],
+            general_info["Age"],
         )
         calorie_goal = helpers.calculate_calorie_goal(
             user_bmr,
-            self.user_inputs["Activity"],
+            general_info["Activity"],
             self.views[1].user_mode,
-            self.views[2].user_goal,
+            intensity,
         )
         self.user_inputs.update({
             "Mode": self.views[1].user_mode,
-            "Intensity": self.views[2].user_goal,
+            "Intensity": intensity,
             "Calorie Goal": calorie_goal,
             "BMR": user_bmr,
         })
-        self.model.store_user_info(self.user_inputs, screen_from)
+        from_profile = "Name" not in self.user_inputs
+        self.views[1].reset_button_state()
+        self.views[2].reset_button_state()
+        self.model.store_user_info(self.user_inputs, screen_from, from_profile)

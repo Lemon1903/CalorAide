@@ -1,4 +1,15 @@
 <SignupScreenView>:
+    MDAnchorLayout:
+        anchor_x: "left"
+        anchor_y: "top"
+
+        MDIconButton:
+            icon: "chevron-left-circle"
+            icon_size: sp(40)
+            theme_icon_color: "Custom"
+            icon_color: app.theme_cls.primary_color
+            on_release: root.change_screen("right", "login screen")
+
     MDFloatLayout:
         MDLabel:
             text: "SIGN-UP"
@@ -46,7 +57,7 @@
     mode: "rectangle"
     font_name: "Poppins-Regular"
     size_hint_x: 0.65
-    line_color_normal: "white"
+    line_color_normal: "red" if self.error else "white"
     hint_text_color_normal: "white"
     hint_text_color_focus: "white"
     text_color_normal: "white"

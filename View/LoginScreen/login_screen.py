@@ -17,9 +17,12 @@ class LoginScreenView(BaseScreenView):
         """
         self.loading_view.dismiss()
         if self.model.is_account_exist:
-            next_screen = "home screen" if self.model.has_account else "register screen"
-            self.reset_status()
-            self.change_screen("left", next_screen)
+            if not self.model.is_password_correct:
+                self.show_error_snackbar("The password you have entered is incorrect.")
+            else:
+                next_screen = "home screen" if self.model.has_account else "register screen"
+                self.reset_status()
+                self.change_screen("left", next_screen)
         else:
             self.show_error_snackbar("Account does not exist!")
         self.controller.reset_is_account_exist()

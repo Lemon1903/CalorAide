@@ -77,6 +77,7 @@ class RegisterScreenView(BaseScreenView):
             self.error_prompt()
         else:
             self.controller.confirm_registration(self.get_user_inputs())
+            self._clear_textfields()
             self.change_screen("left", "mode screen")
 
     def get_user_inputs(self):
@@ -89,6 +90,12 @@ class RegisterScreenView(BaseScreenView):
             "Age": self.user_age,
             "Activity": self.ids.activity.text,
         }
+
+    def _clear_textfields(self):
+        for textfield in self.ids.basic_info.children:
+            textfield.text = ""
+            textfield.error = False
+            textfield.required = False
 
     # TODO: can be moved to helpers
     def _has_errors(self):

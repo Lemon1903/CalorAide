@@ -1,10 +1,8 @@
-# #:import SlideTransition kivy.uix.screenmanager.SlideTransition
 #:import ProfileScreenView View.HomeScreen.ProfileScreen
 #:import CalorieCounterScreenView View.HomeScreen.CalorieCounterScreen
 
 <HomeScreenView>:
     MDBottomNavigation:
-        # transition: SlideTransition
         transition_duration: 0
         font_name: "Poppins-Regular"
 
@@ -15,6 +13,7 @@
             icon: "account"
 
             ProfileScreenView:
+                id: profile_screen
                 name: self.parent.name
                 model: root.model
                 controller: root.controller
@@ -26,6 +25,7 @@
             icon: "nutrition"
 
             CalorieCounterScreenView:
+                id: calorie_screen
                 name: self.parent.name
                 model: root.model
                 controller: root.controller

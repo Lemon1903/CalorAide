@@ -35,15 +35,6 @@ class HomeScreenController:
         """
         return self.views
 
-    def change_screen(self, direction: str, next_screen: str):
-        """Go to the next screen.
-
-        Args:
-            direction (str): the transition direction
-            next_screen (str): the next screen to go to.
-        """
-        self.views[0].change_screen(direction, next_screen)
-
     def load_user_data(self, do_reload=False):
         """Loads all user information."""
         self.done_progress = 0.0 if do_reload else self.done_progress
@@ -60,11 +51,31 @@ class HomeScreenController:
         self.done_progress -= 1/self.no_of_parts
         self.model.load_all_history_data()
 
-    def load_specific_intake_data(self, date_: str = helpers.get_date_today()):
+    def load_specific_intake_data(self):
         """Loads the intake data of the user at specific date."""
         self.views[0].loading_view.open()
+        date_ = self.views[0].get_graph2_date()
         self.done_progress -= 1/self.no_of_parts
         self.model.load_specific_intake_data(date_)
+
+    def on_logout(self):
+        """When user logs out."""
+        self.done_progress = 0.0
+        self.model.reset_all_local_data()
+        self.views[0].on_logout()
+
+    def change_screen(self, direction: str, next_screen: str):
+        """Go to the next screen.
+
+        Args:
+            direction (str): the transition direction
+            next_screen (str): the next screen to go to.
+            from_screen (str): the screen it comes from.
+        """
+        if next_screen == "mode screen":
+            self.model.loaded_mode = True
+            self.done_progress -= 1/self.no_of_parts
+        self.views[0].change_screen(direction, next_screen)
 
     def show_connection_error(self):
         """Shows the connection error snackbar."""
@@ -102,6 +113,10 @@ class HomeScreenController:
         }
         self.model.update_user_profile_data(user_input)
 
+    def set_calorie_screen_mode(self, mode: str):
+        """Sets the calorie counter screen mode."""
+        self.views[0].set_user_mode(mode)
+
     def add_intake_to_database(self, user_input: list, calorie_goal: float):
         """Adds the food intake to the users history in database.
 
@@ -110,7 +125,7 @@ class HomeScreenController:
             calorie_goal (float): the calorie goal to be updated.
         """
         self.views[0].loading_view.open()
-        self.done_progress -= 1/self.no_of_parts
+        self.done_progress -= 1/self.no_of_parts * 2
         date_today = helpers.get_date_today()
         user_input[0] = float(user_input[0])
         calorie_goal -= user_input[0]
@@ -125,24 +140,23 @@ class HomeScreenController:
             calorie_goal (float): the calorie goal to be updated.
         """
         self.views[0].loading_view.open()
-        self.done_progress -= 1/self.no_of_parts
+        self.done_progress -= 1/self.no_of_parts * 2
         date_today = helpers.get_date_today()
         calorie_goal += sum(item.calorie_amount for item in checked_items)
         self.model.update_calorie_goal(round(calorie_goal, 1), f"History/{date_today}")
         self.model.delete_intake_to_database(checked_items)
 
-    def update_all_calorie_goal(self, new_activity: str):
-        """Updates the base calorie goal and current calorie goal of the user.
+    def update_user_activity(self, new_activity: str):
+        """Updates the activity of the user in database.
 
         Args:
             new_activity (str): the new activity selected by the user.
         """
         self.views[0].loading_view.open()
         self.done_progress -= 1/self.no_of_parts
-        date_today = helpers.get_date_today()
         user_data = self.model.user_profile_data
 
-        # compute new calorie goal for the user information.
+        # compute new calorie goal for the user information
         bmr = helpers.get_user_bmr(
             user_data["Gender"], user_data["Weight"], user_data["Height"], user_data["Age"]
         )
@@ -151,9 +165,21 @@ class HomeScreenController:
         )
         self.model.update_user_profile_data({"Activity": new_activity})
         self.model.update_calorie_goal(float(calorie_goal), "UserInfo")
+        self.update_all_calorie_goal(float(calorie_goal))
+
+    def update_all_calorie_goal(self, calorie_goal: float):
+        """Updates the base calorie goal and current calorie goal of the user.
+
+        Args:
+            calorie_goal (Decimal): the calorie goal to be updated.
+        """
+        self.views[0].loading_view.open()
+        self.done_progress -= 1/self.no_of_parts
+        date_today = helpers.get_date_today()
 
         # compute new calorie goal for the calorie counter screen
+        calorie_goal_ = Decimal(str(calorie_goal))
         for identifier, item in self.model.user_calorie_intake_data.items():
             if identifier != "Calorie Goal":
-                calorie_goal -= Decimal(str(item["Calorie Amount"]))
-        self.model.update_calorie_goal(float(calorie_goal), f"History/{date_today}")
+                calorie_goal_ -= Decimal(str(item["Calorie Amount"]))
+        self.model.update_calorie_goal(float(calorie_goal_), f"History/{date_today}")
