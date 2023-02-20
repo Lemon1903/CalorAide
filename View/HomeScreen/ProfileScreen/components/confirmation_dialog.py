@@ -3,21 +3,24 @@
 # pylint: disable=no-name-in-module
 from kivy.core.window import Window
 from kivy.metrics import dp
-from kivy.properties import StringProperty
+from kivy.properties import ListProperty, ObjectProperty, StringProperty
 from kivymd.material_resources import DEVICE_TYPE
 from kivymd.uix.boxlayout import MDBoxLayout
 from kivymd.uix.dialog import BaseDialog
 
 
-class ActivityDialog(BaseDialog):
+class ConfirmationDialog(BaseDialog):
     """Custom Dialog for picking a new activity."""
 
-    current_activity = StringProperty("Sedentary")
+    title = StringProperty()
+    current_item = StringProperty()
+    items = ListProperty()
+    callback = ObjectProperty()
 
-    def __init__(self, view, **kwargs):
+    def __init__(self, **kwargs):
         super().__init__(**kwargs)
-        self.view = view
-        self.selected_activity = self.current_activity
+        self.current_item = self.items[0].type
+        self.selected_item = self.current_item
         self.radius = [dp(10), dp(10), dp(10), dp(10)]
         self.size_hint = (None, None)
 
@@ -27,24 +30,24 @@ class ActivityDialog(BaseDialog):
         elif DEVICE_TYPE == "mobile":
             self.width = min(dp(280), Window.width - dp(50))
 
+        for item in self.items:
+            self.ids.confirmation_items.add_widget(item, 1)
+            item.parent = self
+
     def on_pre_open(self):
         """Called before opening the dialog."""
-        for activity_item in self.ids.activity_items.children:
+        for confirm_item in self.ids.confirmation_items.children:
             if (
-                isinstance(activity_item, ActivityItem)
-                and activity_item.activity_type == self.current_activity
+                isinstance(confirm_item, ConfirmationItem)
+                and confirm_item.type == self.current_item
             ):
-                activity_item.ids.checkbox.active = True
-
-    def _on_confirm_selection(self):
-        self.dismiss()
-        self.view.controller.update_user_activity(self.selected_activity)
+                confirm_item.ids.checkbox.active = True
 
 
-class ActivityItem(MDBoxLayout):
+class ConfirmationItem(MDBoxLayout):
     """Activity Dialog checkbox items."""
 
-    activity_type = StringProperty()
+    type = StringProperty()
     description = StringProperty()
 
     def _on_active(self, instance_checkbox, value: bool):
@@ -52,7 +55,7 @@ class ActivityItem(MDBoxLayout):
         if value:
             self.ids.description.opacity = 1.0
             self.ids.description.height = self.ids.description.texture_size[1]
-            self.parent.selected_activity = self.activity_type
+            self.parent.selected_item = self.type
         else:
             self.ids.description.opacity = 0.0
             self.ids.description.height = 0

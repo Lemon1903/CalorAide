@@ -1,4 +1,4 @@
-"Import necessary classes"
+"""Import necessary classes"""
 
-from .activity_dialog import ActivityDialog
+from .confirmation_dialog import ConfirmationDialog, ConfirmationItem
 from .general_info_card import GeneralInformationCard

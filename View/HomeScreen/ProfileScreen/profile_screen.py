@@ -16,7 +16,7 @@ from matplotlib import style
 from Utils import helpers
 from View.base_screen import BaseScreenView
 
-from .components import ActivityDialog
+from .components import ConfirmationDialog, ConfirmationItem
 
 
 class ProfileScreenView(BaseScreenView):
@@ -32,7 +32,17 @@ class ProfileScreenView(BaseScreenView):
         self.graph1_date = {"Month": date.today().month, "Year": date.today().year}
         self.database_date = helpers.get_date_today()
 
-        self.activity_dialog = ActivityDialog(self)
+        self.activity_dialog = ConfirmationDialog(
+            title="Set New Activity",
+            callback=self._on_confirm_selection,
+            items=[
+                ConfirmationItem(type="Sedentary", description="Little to no exercise"),
+                ConfirmationItem(type="Light", description="Exercise 1-3 times/week"),
+                ConfirmationItem(type="Moderate", description="Exercise 4-5 times/week"),
+                ConfirmationItem(type="Active", description="Daily exercise or intense exercise 3-4 times/week"),
+                ConfirmationItem(type="Very Active", description="Intense exercise 6-7 times/week"),
+            ]
+        )
         self.graph1_date_dialog = MDDatePicker(
             min_year = 2000,
             max_year = date.today().year,
@@ -52,6 +62,7 @@ class ProfileScreenView(BaseScreenView):
         Clock.schedule_once(lambda *_:self.create_finalization_dialog())
 
     def create_finalization_dialog(self):
+        """Creates a finalization dialog."""
         self.finalization_dialog = MDDialog(
             text="Are you sure you want to log out?",
             buttons=[
@@ -121,19 +132,21 @@ class ProfileScreenView(BaseScreenView):
             return
 
         self.current_activity = profile_data["Activity"].upper()
-        self.activity_dialog.current_activity = profile_data["Activity"]
+        self.activity_dialog.current_item = profile_data["Activity"]
         self.controller.hide_connection_error()
 
     def update_general_information_card(self, profile_data: dict):
         """Updates the general information card UI about the changes in data."""
+        # connection error
         if profile_data is None:
             self.controller.show_connection_error()
             return
 
+        # change the layout of the general info card only in updating general info
         if self.current_activity:
             self.ids.general_info.change_layout()
 
-        # TODO: show snackbar error if there is warning. Include here the checking for bmi and mode
+        # show warning message if both bmi and mode is incompatible
         if profile_data["Mode"] == 'Lose' and profile_data['BMI'] in (
             "Severely Underweight", "Underweight"
         ):
@@ -207,6 +220,9 @@ class ProfileScreenView(BaseScreenView):
         self.ids.graph2.figure = figure
         self.ids.graph2.axes = axes
         self.controller.hide_connection_error()
+
+    def _on_confirm_selection(self, selected_item):
+        self.controller.update_user_activity(selected_item)
 
     def _get_calorie_progress_per_day(self, all_history_data, month, year):
         """Get all the calorie progress per day of the user in a month.
