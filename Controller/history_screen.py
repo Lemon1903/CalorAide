@@ -1,13 +1,6 @@
 """_module summary_"""
-import importlib
 
-import View.HistoryScreen.history_screen
 from View import HistoryScreenView
-
-# We have to manually reload the view module in order to apply the
-# changes made to the code on a subsequent hot reload.
-# If you no longer need a hot reload, you can delete this instruction.
-importlib.reload(View.HistoryScreen.history_screen)
 
 
 class HistoryScreenController:

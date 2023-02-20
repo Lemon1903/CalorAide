@@ -137,11 +137,11 @@ class ProfileScreenView(BaseScreenView):
         if profile_data["Mode"] == 'Lose' and profile_data['BMI'] in (
             "Severely Underweight", "Underweight"
         ):
-            self.show_error_snackbar("Your BMI and Mode Are Incompatible")
+            self.show_error_snackbar("Your BMI and Mode are incompatible")
         elif profile_data["Mode"] == 'Gain' and profile_data['BMI'] in (
             "Overweight", "Obese", "Severely Obese", "Morbidly Obese"
         ):
-            self.show_error_snackbar("Your BMI and Mode Are Incompatible")
+            self.show_error_snackbar("Your BMI and Mode are incompatible")
 
         self.update_activity(profile_data)
         self.update_mode(profile_data, False)
