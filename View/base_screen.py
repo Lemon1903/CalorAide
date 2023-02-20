@@ -56,6 +56,16 @@ class BaseScreenView(ThemableBehavior, MDScreen, Observer):
         self.manager.transition.direction = direction
         self.manager.current = next_screen
 
+    def create_registered(self):
+        with open("Model/username.txt", "r") as file:
+            lines = file.readlines()
+
+        lines[1] = 'Registered'
+
+        with open("Model/username.txt", "w") as file:
+            file.writelines(lines)
+
+        file.close()
 
 class LoadingView(ModalView):
     """The ModalView with the Spinner which represents loading state."""

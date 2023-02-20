@@ -38,11 +38,15 @@ class LoginScreenModel(BaseScreenModel):
                 else:
                     self.is_password_correct = True
                     self.create_text_file(username)
+
                 break
         self.notify_observers("login screen")
 
     def create_text_file(self, username):
-        """Create a text file with the username inside."""
-        with open("username.txt", "w", encoding="utf-8") as file:
-            # Write some text to the file
-            file.write(username)
+        with open("Model/username.txt", "r", encoding="utf-8") as file:
+            lines = file.readlines()
+
+        lines[0] = username + '\n'
+
+        with open("Model/username.txt", "w", encoding="utf-8") as file:
+            file.writelines(lines)

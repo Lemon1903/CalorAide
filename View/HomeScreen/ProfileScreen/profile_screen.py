@@ -5,8 +5,10 @@ import calendar
 from datetime import date
 
 import matplotlib.pyplot as plt
-from kivy.clock import mainthread
+from kivy.clock import Clock, mainthread
 from kivy.properties import StringProperty
+from kivymd.uix.button import MDFlatButton, MDRaisedButton
+from kivymd.uix.dialog import MDDialog
 from kivymd.uix.pickers import MDDatePicker
 from matplotlib import style
 
@@ -46,6 +48,26 @@ class ProfileScreenView(BaseScreenView):
         )
         self.graph1_date_dialog.bind(on_save=self.set_graph1_date)
         self.graph2_date_dialog.bind(on_save=self.set_graph2_date)
+        Clock.schedule_once(lambda *_:self.create_finalization_dialog())
+
+    def create_finalization_dialog(self):
+        self.finalization_dialog = MDDialog(
+            text="Are you sure you want to log out?",
+            buttons=[
+                MDFlatButton(
+                    text="CANCEL",
+                    theme_text_color="Custom",
+                    text_color=self.theme_cls.primary_color,
+                    on_release=self.dismiss_dialog
+                ),
+                MDRaisedButton(
+                    text="YES",
+                    theme_text_color="Custom",
+                    text_color="white",
+                    on_release=self.controller.on_logout
+                ),
+            ],
+        )
 
     @mainthread
     def model_is_changed(self) -> None:
@@ -80,6 +102,7 @@ class ProfileScreenView(BaseScreenView):
         """Deletes the username in the text file"""
         self.current_activity = ""
         self.ids.general_info.profile_layout.reset_profile_information()
+        self.dismiss_dialog()
 
     def update_mode(self, profile_data, update_calorie=True):
         """Updates anything related to mode about the changes in data."""
@@ -242,3 +265,13 @@ class ProfileScreenView(BaseScreenView):
         self.current_graph2_date = args[1].strftime("%B %d %Y")
         self.database_date = args[1].strftime("%d-%m-%Y")
         self.controller.load_specific_intake_data()
+
+    def show_finalize_dialog(self):
+        """Pops-up the dialog box after clicking the FINALIZE button.
+        This initializes compiles and finalizes all the data input by the user.
+        """
+        self.finalization_dialog.open()
+
+    def dismiss_dialog(self, *_):
+        """This function closes the dialog box when the user clicks CANCEL."""
+        self.finalization_dialog.dismiss()

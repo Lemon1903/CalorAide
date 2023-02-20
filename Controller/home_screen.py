@@ -58,7 +58,7 @@ class HomeScreenController:
         self.done_progress -= 1/self.no_of_parts
         self.model.load_specific_intake_data(date_)
 
-    def on_logout(self):
+    def on_logout(self, *_):
         """When user logs out."""
         self.done_progress = 0.0
         self.model.reset_all_local_data()

@@ -36,8 +36,13 @@ class HomeScreenView(BaseScreenView):
     def on_logout(self):
         """When user logs out."""
         # clears the username in the local txt file
-        with open("username.txt", "w", encoding="utf-8") as file:
-            file.write(" ")
+        with open("Model/username.txt", "r", encoding="utf-8") as file:
+            lines = file.readlines()
+
+        lines[0] = ' ' + '\n'
+
+        with open("Model/username.txt", "w", encoding="utf-8") as file:
+            file.writelines(lines)
         self.ids.profile_screen.on_logout()
         self.ids.calorie_screen.on_logout()
         self.change_screen("right", "login screen")
