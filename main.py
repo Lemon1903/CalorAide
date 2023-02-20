@@ -18,7 +18,8 @@ from kivymd.uix.screenmanager import MDScreenManager
 
 from Model.database import DataBase
 from View.screens import screens
-from View.SplashScreen.splash_screen import SplashScreenView
+
+# from View.SplashScreen.splash_screen import SplashScreenView
 
 Config.set("graphics", "multisamples", 0)
 os.environ["KIVY_GL_BACKEND"] = "angle_sdl2"
@@ -51,7 +52,7 @@ class CalorAide(MDApp):
         self.load_all_kv_files(self.directory)
         self.database = DataBase()
         self.manager_screens = MDScreenManager()
-        self.splash_screen = SplashScreenView()
+        # self.splash_screen = SplashScreenView()
 
     def build(self, *_) -> MDScreenManager:
         # theme style whether 'Dark' or 'Light'
@@ -106,6 +107,6 @@ class CalorAide(MDApp):
 if __name__ == "__main__":
     # adjust this base on your screen
     Window.size = (360, 640)
-    Window.top = 50
+    # Window.top = 50
     Window.left = 1160
     CalorAide().run()
