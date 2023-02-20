@@ -18,28 +18,24 @@ class RegisterScreenModel(BaseScreenModel):
     def __init__(self, database):
         self._database = database
 
-    def get_bmi(self):
-        """Returns the temporary bmi in `Database`."""
-        return self._database.bmi
+    def get_general_info(self):
+        """Get the general info from the database."""
+        return self._database.general_info
 
-    def set_bmi(self, bmi):
-        """Sets a new temporary bmi in `Database`."""
-        self._database.bmi = bmi
-
-    def get_bmi_value(self):
-        """Returns the temporary bmi value in `Database`."""
-        return self._database.bmi_value
-
-    def set_bmi_value(self, bmi_value):
-        """Sets a new temporary bmi value in `Database`."""
-        self._database.bmi_value = bmi_value
+    def set_general_info(self, data: dict):
+        """Get the general info from the database."""
+        self._database.general_info.update(data)
 
     @multitasking.task
-    def store_user_info(self, user_data, screen_from):
+    def store_user_info(self, user_data, screen_from, from_profile):
         """This function receives the user's information list from the Controller.
         It will then store each value into a dictionary and call a model function
         to pass it to the Firebase Database.
         """
         # TODO: add connection error
         if self._database.update_user_data(user_data, "UserInfo"):
+            self._database.general_info.update(user_data)
             self.notify_observers(screen_from)
+
+        if from_profile:
+            self.notify_observers("profile screen")

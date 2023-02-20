@@ -3,12 +3,8 @@
 # pylint: disable=no-name-in-module
 from kivy.animation import Animation, AnimationTransition
 from kivy.clock import Clock
-from kivy.properties import (
-    DictProperty,
-    NumericProperty,
-    ObjectProperty,
-    StringProperty,
-)
+from kivy.properties import (DictProperty, NumericProperty, ObjectProperty,
+                             StringProperty)
 from kivymd.uix.boxlayout import MDBoxLayout
 from kivymd.uix.card import MDCard
 from kivymd.uix.textfield import MDTextField
@@ -95,6 +91,15 @@ class ProfileInformationLayout(MDBoxLayout):
         self.weight_info = new_info["Weight"]
         self.bmi_info = new_info["BMI"]
         self._profile_info = new_info
+
+    def reset_profile_information(self):
+        """Resets the profile information."""
+        self.name_info = ""
+        self.age_info = 0
+        self.gender_info = ""
+        self.height_info = 0
+        self.weight_info = 0
+        self.bmi_info = ""
 
     def on_edit_profile_info(self):
         """Callback function when editing the profile information."""

@@ -38,7 +38,7 @@ class ActivityDialog(BaseDialog):
 
     def _on_confirm_selection(self):
         self.dismiss()
-        self.view.controller.update_all_calorie_goal(self.current_activity)
+        self.view.controller.update_user_activity(self.selected_activity)
 
 
 class ActivityItem(MDBoxLayout):
