@@ -19,7 +19,7 @@
             MDLabel:
                 _cg_color: "#F3AAA0" if root.calorie_goal < 0 else "#ffffff"
                 markup: True
-                text: f"[size=62][color={self._cg_color}]{root.calorie_goal}[/color][size=34]k/cal[/size]"
+                text: f"[size=55][color={self._cg_color}]{root.calorie_goal}[/color][size=32]k/cal[/size]"
                 font_name: "Poppins-SemiBold"
                 halign: "center"
                 height: dp(55)
@@ -27,7 +27,7 @@
 
             MDLabel:
                 markup: True
-                text: "[size=16]WEIGHT GAIN[/size]"
+                text: f"[size=16]WEIGHT {root.user_mode}[/size]"
                 font_name: "Poppins-Regular"
                 halign: "center"
                 height: self.texture_size[1]

@@ -1,5 +1,6 @@
 """_module summary_"""
 
+# pylint: disable=attribute-defined-outside-init
 import multitasking
 
 from Model.base_model import BaseScreenModel
@@ -16,10 +17,10 @@ class HomeScreenModel(BaseScreenModel):
 
     def __init__(self, database):
         self._database = database
+        self.reset_all_local_data()
 
-        # cache data if screens have been loaded
-        self._has_loaded_intake_history = False
-
+    def reset_all_local_data(self):
+        """Resets all the data being monitored when user logs out."""
         # the data that the profile screen monitors
         self.user_profile_data = None
         self.user_all_history_data = None
@@ -32,11 +33,17 @@ class HomeScreenModel(BaseScreenModel):
         self.user_deleted_intake_data = None
 
         # indicates which part of the UI needs to change
+        self.loaded_mode = False
         self.loaded_activity = False
         self.loaded_general_info = False
         self.loaded_calorie_progress = False
         self.loaded_intake_breakdown = False
         self.updated_calorie_part = None
+
+    def update_local_profile_data(self):
+        """Updates the user profile data stored."""
+        if self.user_profile_data:
+            self.user_profile_data.update(self._database.general_info)
 
     @multitasking.task
     def load_user_profile_data(self, part: str):
@@ -48,6 +55,8 @@ class HomeScreenModel(BaseScreenModel):
         self.user_profile_data = self._database.get_user_data("UserInfo")
         if part == "general information":
             self.loaded_general_info = True
+            if self.user_profile_data:
+                self._database.general_info.update(self.user_profile_data)
         else:
             self.loaded_activity = True
         self.notify_observers("profile screen")
@@ -98,8 +107,7 @@ class HomeScreenModel(BaseScreenModel):
         if "Activity" in user_input:
             self.load_user_profile_data("activity")
         else:
-            self._database.bmi = user_input["BMI"]
-            self._database.bmi_value = user_input["BMI Value"]
+            self._database.general_info.update(user_input)
             self.load_user_profile_data("general information")
 
     @multitasking.task
@@ -114,6 +122,8 @@ class HomeScreenModel(BaseScreenModel):
         if self._database.update_user_data(new_data, table_name):
             if table_name.startswith("History"):
                 self.new_calorie_goal = new_calorie_goal
+                self.updated_calorie_part = "calorie goal"
+                self.notify_observers("calorie counter screen")
         else:
             self.new_calorie_goal = 0.0
 

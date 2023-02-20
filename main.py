@@ -106,8 +106,6 @@ class CalorAide(MDApp):
         
         if file_size != 0 and username != ' \n' and registered != ' ':
             self.manager_screens.current = "home screen"
-        
-        return super().on_start()
 
 
 if __name__ == "__main__":

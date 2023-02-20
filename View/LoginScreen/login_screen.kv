@@ -29,6 +29,7 @@
             mode: "rectangle"
             font_name: "Poppins-Medium"
             hint_text: "Username"
+            line_color_normal: "red" if self.error else "white"
             helper_text: "This is a required text field"
             pos_hint: {"center_x": 0.5, "center_y": 0.5}
             on_focus: self.required = not self.text
@@ -39,6 +40,7 @@
                 mode: "rectangle"
                 password: True
                 font_name: "Poppins-Medium"
+                line_color_normal: "red" if self.error else "white"
                 hint_text: "Password"
                 helper_text: "This is a required text field"
                 pos_hint: {"center_x": 0.5, "center_y": 0.5}

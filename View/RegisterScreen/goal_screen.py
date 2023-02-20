@@ -45,6 +45,7 @@ class GoalScreenView(BaseScreenView):
         according to these changes.
         """
         self.loading_view.dismiss()
+        self.controller.user_inputs.clear()
         self.change_screen("left", "home screen")
 
     def modify_goal_buttons(self, chosen_button, intensity: str):
@@ -71,6 +72,12 @@ class GoalScreenView(BaseScreenView):
         self.create_registered()
         self.controller.compile_details("goal screen")
 
+    def reset_button_state(self):
+        """Reset button states."""
+        self.user_goal = "Sedentary"
+        for button in self.ids.modes_list.children:
+            button.disabled = False
+            button.md_bg_color = self.theme_cls.primary_color
 
     def dismiss_dialog(self, *_):
         """This function closes the dialog box when the user clicks CANCEL."""

@@ -11,8 +11,15 @@ class DataBase:
         self._firebase = firebase.FirebaseApplication(
             "https://fitrex-bfc21-default-rtdb.asia-southeast1.firebasedatabase.app/"
         )
-        self.bmi = ""
-        self.bmi_value = 0.0
+        self.general_info = {
+            "Height": 0.0,
+            "Weight": 0.0,
+            "Gender": "",
+            "Age": 0,
+            "Activity": "",
+            "BMI": "",
+            "BMI Value": 0.0,
+        }
         self.username = ""
 
     # TODO: can be removed or stay

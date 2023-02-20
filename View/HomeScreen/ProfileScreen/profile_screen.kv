@@ -4,6 +4,7 @@
 <ProfileScreenView>:
     # main layout that holds all widgets
     MDScrollView:
+        id: scroll_view
         bar_width: dp(0)
         size_hint_x: 0.95
         pos_hint: {'center_x': 0.5}
@@ -53,7 +54,8 @@
                 adaptive_height: True
 
                 ChangeButton:
-                    text: "CHANGE MODE: [color=#f3aaa0]GAIN[/color]"
+                    text: f"CHANGE MODE: [color=#f3aaa0]{root.current_mode}[/color]"
+                    on_release: root.controller.change_screen("left", "mode screen")
 
                 ChangeButton:
                     text: f"CHANGE ACTIVITY: [color=#f3aaa0]{root.current_activity}[/color]"
@@ -121,8 +123,6 @@
                         font_size: dp(18)
                         size_hint_x: 1
                         on_release: root.graph2_date_dialog.open()
-
-        
 
 # dynamic class
 <ChangeButton@MDRectangleFlatButton>:

@@ -47,11 +47,13 @@ class ModeScreenView(BaseScreenView):
         according to these changes.
         """
         self.loading_view.dismiss()
+        self.controller.user_inputs.clear()
         self.change_screen("left", "home screen")
 
     def on_enter(self, *_):
-        self.user_bmi_amount = self.controller.get_database_bmi_value()
-        self.user_bmi = self.controller.get_database_bmi().upper()
+        general_info = self.model.get_general_info()
+        self.user_bmi_amount = general_info["BMI Value"]
+        self.user_bmi = general_info["BMI"].upper()
         self.disable_modes(self.user_bmi)
 
     def modify_mode_buttons(self, chosen_button):
@@ -92,6 +94,13 @@ class ModeScreenView(BaseScreenView):
         self.dismiss_dialog()
         self.create_registered()
         self.controller.compile_details("mode screen")
+
+    def reset_button_state(self):
+        """Reset button states."""
+        self.user_mode = ""
+        for button in self.ids.modes_list.children:
+            button.disabled = False
+            button.md_bg_color = self.theme_cls.primary_color
 
     def dismiss_dialog(self, *_):
         """This function closes the dialog box when the user clicks CANCEL."""

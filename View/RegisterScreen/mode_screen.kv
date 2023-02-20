@@ -60,15 +60,16 @@
             pos_hint: {"center_x": 0.5, "center_y": 0.2}
             on_press: root.get_user_mode()
 
-
-<Modes@MDRaisedButton>:
+<Modes@MDRectangleFlatButton>:
     disabled: False
     disabled_color: "#0E0E0E"
     font_name: "Poppins-Bold"
     font_size: 20
+    text_color: "white"
     halign: "center"
     valign: "center"
     size_hint: 0.6, 0.12
+    md_bg_color: app.theme_cls.primary_color
 
 <DisplayLabel@MDLabel>:
     markup: True
