@@ -10,7 +10,14 @@
 <p>The software application contains the most basic requirements to track daily calorie intake; for keeping the user’s interest and consistency by lessening the time it takes to wait and think about the complexity of the features found in other apps; all to ultimately assist in attaining weight and health goals. It includes a calorie goal calculator, lose/maintain/gain weight modes, calorie tracker, and progress tracker through history and data visualization charts.</p>
 
 ### Features ###
-<p></p>
+- Calorie Counter
+- Food Intake Log
+- Different Modes
+- Data Visualization
+  - Food Intake Breakdown (Pie Chart)
+  - Calorie Progress Tracker (Bar Graph)
+- Automatic Login System
+- Online Database (FireBase)
 
 ### Aims & Objectives 
 <p>The main aims and objectives of CalorAide are to help users track and manage their calorie intake and achieve their weight and health goals by providing a convenient and accessible tool without too many overwhelming features.</p>
@@ -19,9 +26,8 @@
   <li>Uses the <em>Mifflin-St Jeor</em> equation in estimating your daily calorie needs.</li>
   <ul> 
     <li>This returns the value of the Basal Metabolic Rate of a person.
-    That is the amount of calories they naturally burn with bodily functions.</li>
-    <li>This returns the value of the Basal Metabolic Rate of a person.
-    That is the amount of calories they naturally burn with bodily functions.</li>
+    That is the amount of calories they naturally burn with bodily functions.
+    </li>
   </ul>
   <li>Track your fitness progress and calorie intake!</li>
 </ol>
@@ -45,15 +51,8 @@ OR open it with the directory/folder you want this app to install.
 ### Screenshots/Snippets
 <p align="center">
   <img src="assets/images/screenshots/1 - login.png" width="300">
-  <img src="assets/images/screenshots/1_1 - login.png" width="300">
-  <img src="assets/images/screenshots/1_2 - login.png" width="300">
-</p>
-<p align="center">
   <img src="assets/images/screenshots/2 - signup.png" width="300">
-</p>
-<p align="center">
   <img src="assets/images/screenshots/3 - registration.png" width="300">
-  <img src="assets/images/screenshots/3_4 - registration.png" width="300">
 </p>
 <p align="center">
   <img src="assets/images/screenshots/3_1 - registration.png" width="300">
