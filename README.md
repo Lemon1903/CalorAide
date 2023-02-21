@@ -2,6 +2,9 @@
 
 <p><strong><em>Your one-stop app to reach your calorie goals!</strong></em></p>
 
+<h3> About App </h3>
+<p>The software application contains the most basic requirements to track daily calorie intake; for keeping the user’s interest and consistency by lessening the time it takes to wait and think about the complexity of the features found in other apps; all to ultimately assist in attaining weight and health goals. It includes a calorie goal calculator, lose/maintain/gain weight modes, calorie tracker, and progress tracker through history and data visualization charts.</p>
+
 <h3> Aims & Objectives </h3>
 <p>The main aims and objectives of CalorAide are to help users track and manage their calorie intake and achieve their weight and health goals by providing a convenient and accessible tool without too many overwhelming features.</p>
 <ol> 
@@ -15,8 +18,6 @@
   </ul>
   <li>Track your fitness progress and calorie intake!</li>
 </ol>
-
-<p>The software application contains the most basic requirements to track daily calorie intake; for keeping the user’s interest and consistency by lessening the time it takes to wait and think about the complexity of the features found in other apps; all to ultimately assist in attaining weight and health goals. It includes a calorie goal calculator, lose/maintain/gain weight modes, calorie tracker, and progress tracker through history and data visualization charts.</p>
 
 <h3> Team Roles & Responsibilities </h3>
 
