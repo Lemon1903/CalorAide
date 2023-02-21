@@ -42,8 +42,33 @@ OR open it with the directory/folder you want this app to install.
 ```sh
   pip install -r requirements.txt
 ```
-<h3> Screenshots/Snippets </h3>
-<p></p>
+### Screenshots/Snippets
+<p align="center">
+  <img src="assets/images/screenshots/1 - login.png" width="300">
+  <img src="assets/images/screenshots/1_1 - login.png" width="300">
+  <img src="assets/images/screenshots/1_2 - login.png" width="300">
+</p>
+<p align="center">
+  <img src="assets/images/screenshots/2 - signup.png" width="300">
+</p>
+<p align="center">
+  <img src="assets/images/screenshots/3 - registration.png" width="300">
+  <img src="assets/images/screenshots/3_4 - registration.png" width="300">
+</p>
+<p align="center">
+  <img src="assets/images/screenshots/3_1 - registration.png" width="300">
+  <img src="assets/images/screenshots/3_2 - registration.png" width="300">
+  <img src="assets/images/screenshots/3_3 - registration.png" width="300">
+</p>
+<p align="center">
+  <img src="assets/images/screenshots/4 - profile.png" width="300">
+  <img src="assets/images/screenshots/5_1 - datavis.png" width="300">
+  <img src="assets/images/screenshots/5_2 - datavis.png" width="300">
+</p>
+<p align="center">
+  <img src="assets/images/screenshots/6 - calorie.png" width="300">
+  <img src="assets/images/screenshots/7 - history.png" width="300">
+</p>
 
 <h3> Team Roles & Responsibilities </h3>
 
