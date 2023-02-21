@@ -25,12 +25,12 @@
   <li>Khent Alba</li>
 </ul>
 
-<h4>Business Analsyt</h4>
+<h4>Business Analyst</h4>
 <ul>
   <li>Paolo Recio</li>
 </ul>
 
-<h4>System Analsyt</h4>
+<h4>System Analyst</h4>
 <ul>
   <li>Rachell Tapia</li>
 </ul>
