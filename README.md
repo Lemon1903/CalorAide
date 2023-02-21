@@ -52,15 +52,12 @@ OR open it with the directory/folder you want this app to install.
 <p align="center">
   <img src="assets/images/screenshots/1 - login.png" width="300">
   <img src="assets/images/screenshots/2 - signup.png" width="300">
-  <img src="assets/images/screenshots/3 - registration.png" width="300">
 </p>
 <p align="center">
-  <img src="assets/images/screenshots/3_1 - registration.png" width="300">
-  <img src="assets/images/screenshots/3_2 - registration.png" width="300">
   <img src="assets/images/screenshots/3_3 - registration.png" width="300">
+  <img src="assets/images/screenshots/4 - profile.png" width="300">
 </p>
 <p align="center">
-  <img src="assets/images/screenshots/4 - profile.png" width="300">
   <img src="assets/images/screenshots/5_1 - datavis.png" width="300">
   <img src="assets/images/screenshots/5_2 - datavis.png" width="300">
 </p>
