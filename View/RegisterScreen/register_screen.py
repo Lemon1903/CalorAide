@@ -2,11 +2,12 @@
 
 from datetime import date
 
-from kivymd.uix.menu import MDDropdownMenu
 from kivymd.uix.pickers import MDDatePicker
 from kivymd.uix.snackbar import Snackbar
 
 from View.base_screen import BaseScreenView
+from View.HomeScreen.ProfileScreen.components import (ConfirmationDialog,
+                                                      ConfirmationItem)
 
 
 class RegisterScreenView(BaseScreenView):
@@ -17,35 +18,24 @@ class RegisterScreenView(BaseScreenView):
     def __init__(self, **kw):
         super().__init__(**kw)
         self.user_age = 0
-        gender_menu_list = [
-            {
-                "viewclass": "OneLineListItem",
-                "text": gender,
-                "on_release": lambda x=gender: self.set_gender(x),
-            } for gender in ("Male", "Female")
-        ]
-        activity_menu_list = [
-            {
-                "viewclass": "OneLineListItem",
-                "text": activity,
-                "on_release": lambda x=activity: self.set_activity(x),
-            } for activity in ("Sedentary", "Light", "Moderate", "Active", "Very Active")
-        ]
-        self.gender_menu = MDDropdownMenu(
-            background_color=self.theme_cls.primary_dark,
-            caller=self.ids.gender,
-            items=gender_menu_list,
-            position="bottom",
-            max_height="100dp",
-            width_mult=2,
+        self.activity_dialog = ConfirmationDialog(
+            title="What's your Activity?",
+            callback=self.set_activity,
+            items=[
+                ConfirmationItem(type="Sedentary", description="Little to no exercise"),
+                ConfirmationItem(type="Light", description="Exercise 1-3 times/week"),
+                ConfirmationItem(type="Moderate", description="Exercise 4-5 times/week"),
+                ConfirmationItem(type="Active", description="Daily exercise or intense exercise 3-4 times/week"),
+                ConfirmationItem(type="Very Active", description="Intense exercise 6-7 times/week"),
+            ]
         )
-        self.activity_menu = MDDropdownMenu(
-            background_color=self.theme_cls.primary_dark,
-            caller=self.ids.activity,
-            items=activity_menu_list,
-            position="bottom",
-            max_height="150dp",
-            width_mult=2,
+        self.gender_dialog = ConfirmationDialog(
+            title="What's your gender?",
+            callback=self.set_gender,
+            items=[
+                ConfirmationItem(type="Male"),
+                ConfirmationItem(type="Female"),
+            ]
         )
         self.date_dialog = MDDatePicker(
             min_year = 1980, max_year = 2015, year=2003, month=1, day=1
@@ -62,12 +52,12 @@ class RegisterScreenView(BaseScreenView):
     def set_gender(self, chosen_gender):
         """Sets the gender textfield to the chose gender."""
         self.ids.gender.text = chosen_gender
-        self.gender_menu.dismiss()
+        self.gender_dialog.current_item = chosen_gender
 
     def set_activity(self, chosen_activity):
         """Sets the activity textfield to the chose activity."""
         self.ids.activity.text = chosen_activity
-        self.activity_menu.dismiss()
+        self.activity_dialog.current_item = chosen_activity
 
     def validate_user_input(self):
         """Gets the values of all the text fields while validating if all the inputs
