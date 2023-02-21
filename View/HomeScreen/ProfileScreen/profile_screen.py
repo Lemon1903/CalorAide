@@ -134,15 +134,6 @@ class ProfileScreenView(BaseScreenView):
             self.ids.general_info.change_layout()
 
         # TODO: show snackbar error if there is warning. Include here the checking for bmi and mode
-        if profile_data["Mode"] == 'Lose' and profile_data['BMI'] in (
-            "Severely Underweight", "Underweight"
-        ):
-            self.show_error_snackbar("Your BMI and Mode are incompatible")
-        elif profile_data["Mode"] == 'Gain' and profile_data['BMI'] in (
-            "Overweight", "Obese", "Severely Obese", "Morbidly Obese"
-        ):
-            self.show_error_snackbar("Your BMI and Mode are incompatible")
-
         if profile_data["Mode"] == 'Lose' and profile_data['BMI'] in ("Severely Underweight", "Underweight"):
             self.show_error_snackbar("Your BMI and Mode Are Incompatible")
         elif profile_data["Mode"] == 'Gain' and profile_data['BMI'] in ("Overweight", "Obese", "Severely Obese", "Morbidly Obese"):
