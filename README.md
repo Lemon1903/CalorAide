@@ -22,34 +22,34 @@
 
 <h4>Project Leader</h4>
 <ul>
-  <li>Khent Alba</li>
+  <li>Khent David Roscoe Alba</li>
 </ul>
 
 <h4>Business Analyst</h4>
 <ul>
-  <li>Paolo Recio</li>
+  <li>Paolo Luigi Recio</li>
 </ul>
 
 <h4>System Analyst</h4>
 <ul>
-  <li>Rachell Tapia</li>
+  <li>Rachell Ann Tapia</li>
 </ul>
 
 <h4>Developers</h4>
 <ul>
-  <li>Khent Alba</li>
-  <li>Rachell Tapia</li>
-  <li>Sebastian Temporal</li>
-  <li>Xein Virgines</li>
+  <li>Khent David Roscoe Alba</li>
+  <li>Rachell Ann Tapia</li>
+  <li>Sebastian Audrey Temporal</li>
+  <li>Xein Deniel Virgines</li>
 </ul>
 
 <h4>Designers</h4>
 <ul>
-  <li>Luis Lumbres</li>
-  <li>Paolo Recio</li>
+  <li>Luis Miguel Lumbres</li>
+  <li>Paolo Luigi Recio</li>
 </ul>
 
 <h4>Technical Writer and Researcher</h4>
 <ul>
-  <li>Lilliane Claire Rotap</li>
+  <li>Lilianne Claire Rotap</li>
 </ul>
