@@ -6,12 +6,11 @@ from datetime import date
 
 import matplotlib.pyplot as plt
 from kivy.clock import Clock, mainthread
-from kivy.properties import NumericProperty, StringProperty
+from kivy.properties import StringProperty
 from kivymd.uix.button import MDFlatButton, MDRaisedButton
 from kivymd.uix.dialog import MDDialog
 from kivymd.uix.pickers import MDDatePicker
 from kivymd.uix.snackbar import BaseSnackbar
-from matplotlib import style
 
 from Utils import helpers
 from View.base_screen import BaseScreenView
@@ -59,7 +58,7 @@ class ProfileScreenView(BaseScreenView):
         )
         self.graph1_date_dialog.bind(on_save=self.set_graph1_date)
         self.graph2_date_dialog.bind(on_save=self.set_graph2_date)
-        Clock.schedule_once(lambda *_:self.create_finalization_dialog())
+        Clock.schedule_once(lambda *_: self.create_finalization_dialog())
 
     def create_finalization_dialog(self):
         """Creates a finalization dialog."""
@@ -83,7 +82,6 @@ class ProfileScreenView(BaseScreenView):
 
     def on_logout(self):
         """Deletes the username in the text file"""
-        self.current_activity = ""
         self.ids.general_info.profile_layout.reset_profile_information()
         self.dismiss_dialog()
 
@@ -142,17 +140,14 @@ class ProfileScreenView(BaseScreenView):
             self.controller.show_connection_error()
             return
 
-        # change the layout of the general info card only in updating general info
-        if self.current_activity:
+        # change the layout of the general info card only after updating general info
+        if self.controller.done_progress + 1/self.controller.no_of_parts >= 1.0:
             self.ids.general_info.change_layout()
 
         # show warning message if both bmi and mode is incompatible
-        if profile_data["Mode"] == 'Lose' and profile_data['BMI'] in (
-            "Severely Underweight", "Underweight"
-        ):
-            self.show_error_snackbar("Your BMI and Mode are incompatible")
-        elif profile_data["Mode"] == 'Gain' and profile_data['BMI'] in (
-            "Overweight", "Obese", "Severely Obese", "Morbidly Obese"
+        if (
+            (profile_data["Mode"] == 'Lose' and "U" in profile_data['BMI'])
+            or (profile_data["Mode"] == 'Gain' and "O" in profile_data['BMI'])
         ):
             self.show_error_snackbar("Your BMI and Mode are incompatible")
 
@@ -167,7 +162,6 @@ class ProfileScreenView(BaseScreenView):
             self.controller.show_connection_error()
             return
 
-        style.use("seaborn-v0_8")
         figure, axes = plt.subplots(figsize=(3.8, 5))
         x_axis, y_axis = self._get_calorie_progress_per_day(
             all_history_data, self.graph1_date["Month"], self.graph1_date["Year"]
@@ -201,7 +195,6 @@ class ProfileScreenView(BaseScreenView):
             self.controller.show_connection_error()
             return
 
-        style.use("seaborn-v0_8")
         figure, axes = plt.subplots(figsize=(3, 1))
         merged_foods, merged_calories = self._get_merged_intake_data(specific_intake_data)
 
@@ -290,12 +283,6 @@ class ProfileScreenView(BaseScreenView):
         self.database_date = args[1].strftime("%d-%m-%Y")
         self.controller.load_specific_intake_data()
 
-    def show_finalize_dialog(self):
-        """Pops-up the dialog box after clicking the FINALIZE button.
-        This initializes compiles and finalizes all the data input by the user.
-        """
-        self.finalization_dialog.open()
-
     def dismiss_dialog(self, *_):
         """This function closes the dialog box when the user clicks CANCEL."""
         self.finalization_dialog.dismiss()
@@ -305,7 +292,6 @@ class ProfileScreenView(BaseScreenView):
         WarningSnackbar(
             icon="alert-outline",
             text=error_text,
-            font_size=14,
             snackbar_x=30,
             snackbar_y=100,
             size_hint_x=0.90,
@@ -317,4 +303,3 @@ class WarningSnackbar(BaseSnackbar):
     """Custom warning snackbar for incompatible bmi and mode."""
     text = StringProperty(None)
     icon = StringProperty(None)
-    font_size = NumericProperty("15sp")

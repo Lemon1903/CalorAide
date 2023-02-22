@@ -6,7 +6,7 @@
         MDLabel:
             text: "MODE"
             font_name: "Poppins-Medium"
-            font_size: 40
+            font_size: sp(40)
             theme_text_color: "Custom"
             text_color: "white"
             halign: "center"
@@ -27,7 +27,7 @@
         DisplayLabel:
             id: bmi
             text: f"You are categorized as\n[color=#F3AAA0]{root.user_bmi}[/color]"
-            font_size: 19
+            font_size: sp(19)
 
     MDFloatLayout:
         id: modes_list
@@ -56,26 +56,29 @@
             text: "CONFIRM"
             text_color: "white"
             font_name: "Poppins-SemiBold"
-            md_bg_color: "#7B56BA"
+            size_hint_x: 0.3
+            md_bg_color: app.theme_cls.primary_color
             pos_hint: {"center_x": 0.5, "center_y": 0.2}
             on_press: root.get_user_mode()
+
 
 <Modes@MDRectangleFlatButton>:
     disabled: False
     disabled_color: "#0E0E0E"
     font_name: "Poppins-Bold"
-    font_size: 20
+    font_size: sp(20)
     text_color: "white"
     halign: "center"
     valign: "center"
     size_hint: 0.6, 0.12
     md_bg_color: app.theme_cls.primary_color
 
+
 <DisplayLabel@MDLabel>:
     markup: True
     bold: True
     font_name: "Poppins-SemiBold"
-    font_size: 16
+    font_size: sp(16)
     text_color: "white"
     halign: "center"
     valign: "center"

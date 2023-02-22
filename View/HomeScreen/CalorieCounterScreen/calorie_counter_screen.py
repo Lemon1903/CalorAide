@@ -100,7 +100,7 @@ class CalorieCounterScreenView(BaseScreenView):
             self.add_intake_dialog.dismiss()
             self.add_intake_dialog.content_cls.clear_textfields()
 
-    def _load_intake_history(self, intake_history: dict | None):
+    def _load_intake_history(self, intake_history):
         if intake_history is None:
             self.controller.show_connection_error()
             return
