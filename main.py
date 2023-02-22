@@ -98,6 +98,6 @@ class CalorAide(MDApp):
 if __name__ == "__main__":
     # adjust this base on your screen
     Window.size = (360, 640)
-    Window.top = 50
+    # Window.top = 50
     Window.left = 1160
     CalorAide().run()
