@@ -48,6 +48,10 @@ OR open it with the directory/folder you want this app to install.
 ```sh
   pip install -r requirements.txt
 ```
+4. Run the main python file. 
+```sh
+  python main.py
+```
 ### Screenshots/Snippets
 <p align="center">
   <img src="assets/images/screenshots/1 - login.png" width="300">
