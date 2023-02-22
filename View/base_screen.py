@@ -1,6 +1,8 @@
 """_module summary_"""
 
 # pylint: disable=no-name-in-module
+import os
+
 from kivy.clock import Clock
 from kivy.properties import BooleanProperty, ObjectProperty
 from kivy.uix.modalview import ModalView
@@ -9,7 +11,6 @@ from kivymd.theming import ThemableBehavior
 from kivymd.uix.screen import MDScreen
 
 from Utils import Observer
-from Utils.observer import Observer
 
 
 class BaseScreenView(ThemableBehavior, MDScreen, Observer):
@@ -57,12 +58,13 @@ class BaseScreenView(ThemableBehavior, MDScreen, Observer):
         self.manager.current = next_screen
 
     def create_registered(self):
-        with open("Model/username.txt", "r") as file:
+        """Add a registered in txt file for checking."""
+        with open(os.path.join("Model", "username.txt"), "r", encoding="utf-8") as file:
             lines = file.readlines()
 
         lines[1] = 'Registered'
 
-        with open("Model/username.txt", "w") as file:
+        with open(os.path.join("Model", "username.txt"), "w", encoding="utf-8") as file:
             file.writelines(lines)
 
         file.close()

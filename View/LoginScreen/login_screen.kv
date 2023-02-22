@@ -21,8 +21,10 @@
 
     MDBoxLayout:
         orientation: 'vertical'
-        size_hint: 0.65, 0.4
-        pos_hint: {"center_x": 0.5, "center_y": 0.35}
+        spacing: dp(7)
+        adaptive_height: True
+        size_hint_x: 0.65
+        pos_hint: {"center_x": 0.5, "center_y": 0.43}
 
         MDTextField:
             id: textfield_username
@@ -31,10 +33,11 @@
             hint_text: "Username"
             line_color_normal: "red" if self.error else "white"
             helper_text: "This is a required text field"
-            pos_hint: {"center_x": 0.5, "center_y": 0.5}
             on_focus: self.required = not self.text
 
         MDRelativeLayout:
+            adaptive_height: True
+
             MDTextField:
                 id: textfield_password
                 mode: "rectangle"
@@ -43,7 +46,7 @@
                 line_color_normal: "red" if self.error else "white"
                 hint_text: "Password"
                 helper_text: "This is a required text field"
-                pos_hint: {"center_x": 0.5, "center_y": 0.5}
+                pos_hint: {"center_y": 0.5}
                 on_focus: self.required = not self.text
 
             MDIconButton:
@@ -55,20 +58,22 @@
                     self.icon = "eye" if self.icon == "eye-off" else "eye-off"
                     textfield_password.password = not textfield_password.password
 
-        MDFloatLayout:
-            size_hint: 1, 0.9
-            pos_hint: {"center_x": 0.5, "center_y": 0.7}
+    MDBoxLayout:
+        spacing: dp(25)
+        size_hint_x: 0.6
+        adaptive_height: True
+        pos_hint: {"center_x": 0.5, "center_y": 0.22}
 
-            MDFillRoundFlatButton:
-                text: "LOG-IN"
-                font_name: "Poppins-SemiBold"
-                custom_color: self.theme_text_color
-                pos_hint: {"center_x": 0.24, "center_y": 0.5}
-                on_release: root.validate_user_input()
+        MDFillRoundFlatButton:
+            text: "LOG-IN"
+            font_name: "Poppins-SemiBold"
+            custom_color: self.theme_text_color
+            size_hint_x: 1
+            on_release: root.validate_user_input()
 
-            MDFillRoundFlatButton:
-                text: "SIGN-UP"
-                font_name: "Poppins-SemiBold"
-                custom_color: self.theme_text_color
-                pos_hint: {"center_x": 0.75, "center_y": 0.5}
-                on_release: root.change_screen("left", "signup screen")
+        MDFillRoundFlatButton:
+            text: "SIGN-UP"
+            font_name: "Poppins-SemiBold"
+            custom_color: self.theme_text_color
+            size_hint_x: 1
+            on_release: root.change_screen("left", "signup screen")

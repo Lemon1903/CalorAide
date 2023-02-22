@@ -1,5 +1,7 @@
 """_module summary_"""
 
+import os
+
 import multitasking
 
 from Model.base_model import BaseScreenModel
@@ -15,8 +17,8 @@ class LoginScreenModel(BaseScreenModel):
 
     def __init__(self, database):
         self._database = database
-        self.is_account_exist = False
         self.has_account = False
+        self.is_account_exist = False
         self.is_password_correct = False
 
     def reset_is_account_exist(self):
@@ -38,15 +40,16 @@ class LoginScreenModel(BaseScreenModel):
                 else:
                     self.is_password_correct = True
                     self.create_text_file(username)
-
                 break
+
         self.notify_observers("login screen")
 
     def create_text_file(self, username):
-        with open("Model/username.txt", "r", encoding="utf-8") as file:
+        """Creates a new text file with the username for checking."""
+        with open(os.path.join("Model", "username.txt"), "r", encoding="utf-8") as file:
             lines = file.readlines()
 
         lines[0] = username + '\n'
 
-        with open("Model/username.txt", "w", encoding="utf-8") as file:
+        with open(os.path.join("Model", "username.txt"), "w", encoding="utf-8") as file:
             file.writelines(lines)

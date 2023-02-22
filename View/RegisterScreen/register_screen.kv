@@ -1,99 +1,97 @@
 #:import Validator Utils.Validator
+
 <RegisterScreenView>:
     MDBoxLayout:
-        size_hint_y: None
-        pos_hint: {"center_x": 0.5, "center_y": 0.85}
+        orientation: "vertical"
+        spacing: dp(15)
+        size_hint_y: 0.75
+        pos_hint: {"center_x": 0.5, "center_y": 0.5}
 
         MDLabel:
             text: "REGISTRATION"
             font_name: "Poppins-Medium"
-            font_size: 40
-            theme_text_color: "Custom"
-            text_color: "white"
+            font_size: sp(40)
+            height: self.texture_size[1]
+            size_hint_y: None
             halign: "center"
-            valign: "top"
 
-    MDScrollView:
-        always_overscroll: True
-        do_scroll_y: True
-        do_scroll_x: False
-        size: 400, 343
-        size_hint: None, None
-        pos_hint: {"center_x": 0.5, "center_y": 0.53}
+        MDScrollView:
+            bar_width: dp(0)
 
-        MDBoxLayout:
-            id: basic_info
-            orientation: "vertical"
-            spacing: dp(30)
-            adaptive_height: True
+            MDBoxLayout:
+                id: basic_info
+                orientation: "vertical"
+                spacing: dp(30)
+                adaptive_height: True
 
-            BasicInfoTextField:
-                id: name
-                hint_text: "Name"
-                helper_text: "Enter your name properly"
-                validator_type: "name"
-                pos_hint: {"center_x": 0.5}
-                error_message: "Enter your name properly"
-                on_text: Validator.check_text(*args)
+                BasicInfoTextField:
+                    id: name
+                    hint_text: "Name"
+                    helper_text: "Enter your name properly"
+                    validator_type: "name"
+                    pos_hint: {"center_x": 0.5}
+                    error_message: "Enter your name properly"
+                    on_text: Validator.check_text(*args)
 
-            BasicInfoTextField:
-                id: height
-                hint_text: "Height (in cm.)"
-                helper_text: "Enter your height in centimeters"
-                validator_type: "numeric"
-                error_message: "Enter your height properly"
-                pos_hint: {"center_x": 0.5}
-                on_text: Validator.check_text(*args)
+                BasicInfoTextField:
+                    id: height
+                    hint_text: "Height (in cm.)"
+                    helper_text: "Enter your height in centimeters"
+                    validator_type: "numeric"
+                    error_message: "Enter your height properly"
+                    pos_hint: {"center_x": 0.5}
+                    on_text: Validator.check_text(*args)
 
-            BasicInfoTextField:
-                id: weight
-                hint_text: "Weight (in kgs.)"
-                helper_text: "Enter your weight in kilograms"
-                validator_type: "numeric"
-                error_message: "Enter your weight properly"
-                pos_hint: {"center_x": 0.5}
-                on_text: Validator.check_text(*args)
+                BasicInfoTextField:
+                    id: weight
+                    hint_text: "Weight (in kgs.)"
+                    helper_text: "Enter your weight in kilograms"
+                    validator_type: "numeric"
+                    error_message: "Enter your weight properly"
+                    pos_hint: {"center_x": 0.5}
+                    on_text: Validator.check_text(*args)
 
-            BasicInfoTextField:
-                id: gender
-                readonly: True
-                hint_text: "Gender"
-                helper_text: "Choose your gender."
-                helper_text_mode: "on_error"
-                pos_hint: {"center_x": 0.5}
-                on_focus: if self.focus: root.gender_dialog.open()
+                BasicInfoTextField:
+                    id: gender
+                    readonly: True
+                    hint_text: "Gender"
+                    helper_text: "Choose your gender."
+                    helper_text_mode: "on_error"
+                    pos_hint: {"center_x": 0.5}
+                    on_focus: if self.focus: root.gender_dialog.open()
 
-            BasicInfoTextField:
-                id: birthdate
-                readonly: True
-                hint_text: "Birthdate"
-                helper_text: "Select your real birthday."
-                helper_text_mode: "on_error"
-                pos_hint: {"center_x": 0.5}
-                on_focus: if self.focus: root.date_dialog.open()
+                BasicInfoTextField:
+                    id: birthdate
+                    readonly: True
+                    hint_text: "Birthdate"
+                    helper_text: "Select your real birthday."
+                    helper_text_mode: "on_error"
+                    pos_hint: {"center_x": 0.5}
+                    on_focus: if self.focus: root.date_dialog.open()
 
-            BasicInfoTextField:
-                id: activity
-                readonly: True
-                hint_text: "Activity"
-                helper_text: "Choose at least one."
-                helper_text_mode: "on_error"
-                pos_hint: {"center_x": 0.5}
-                on_focus: if self.focus: root.activity_dialog.open()
+                BasicInfoTextField:
+                    id: activity
+                    readonly: True
+                    hint_text: "Activity"
+                    helper_text: "Choose at least one."
+                    helper_text_mode: "on_error"
+                    pos_hint: {"center_x": 0.5}
+                    on_focus: if self.focus: root.activity_dialog.open()
 
-    MDFillRoundFlatButton:
-        id: btn
-        text: "NEXT"
-        text_color: "white"
-        font_name: "Poppins-SemiBold"
-        md_bg_color: "#7B56BA"
-        pos_hint: {"center_x": 0.5, "y": 0.15}
-        on_press: root.validate_user_input()
+        MDFillRoundFlatButton:
+            id: btn
+            text: "NEXT"
+            text_color: "white"
+            font_name: "Poppins-SemiBold"
+            md_bg_color: app.theme_cls.primary_color
+            size_hint_x: 0.3
+            pos_hint: {"center_x": 0.5}
+            on_press: root.validate_user_input()
 
 
 <BasicInfoTextField@MDTextField>:
     mode: "rectangle"
-    padding: (20, 20)
+    padding: dp(20), dp(20)
     font_name: "Poppins-Regular"
     line_color_normal: "red" if self.error else "white"
     hint_text_color_normal: "white"

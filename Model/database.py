@@ -43,7 +43,7 @@ class DataBase:
         except requests.exceptions.ConnectionError:
             return None
 
-    def get_user_data(self, table_name: str) -> dict | None:
+    def get_user_data(self, table_name: str):
         """Returns data of the selected collection from the database.
 
         Args:

@@ -17,11 +17,11 @@
             MDFloatLayout:
                 size_hint_y: None
                 height: dp(0)
+
                 MDIconButton:
                     icon: "logout"
                     pos_hint: {'right': 1,'top': 1}
-                    on_release:
-                        root.show_finalize_dialog()
+                    on_release: root.finalization_dialog.open()
 
             # the upper part for image and username
             MDBoxLayout:
@@ -29,10 +29,8 @@
                 spacing: dp(10)
                 adaptive_height: True
 
-
                 FitImage:
                     source: "assets/images/PROFILE-ICON.png"
-                    radius: 50
                     size: dp(120), dp(120)
                     size_hint: None, None
                     pos_hint: {"center_x": 0.5}
@@ -54,11 +52,11 @@
                 adaptive_height: True
 
                 ChangeButton:
-                    text: f"CHANGE MODE: [color=#f3aaa0]{root.current_mode}[/color]"
+                    text: f"CHANGE MODE: [color=#F3AAA0]{root.current_mode}[/color]"
                     on_release: root.controller.change_screen("left", "mode screen")
 
                 ChangeButton:
-                    text: f"CHANGE ACTIVITY: [color=#f3aaa0]{root.current_activity}[/color]"
+                    text: f"CHANGE ACTIVITY: [color=#F3AAA0]{root.current_activity}[/color]"
                     on_release: root.activity_dialog.open()
 
             # general information of the user
@@ -136,22 +134,22 @@
 
 
 <WarningSnackbar>:
-    spacing: 0
-    elevation: 0
-    radius: [10, 10, 10, 10]
+    spacing: dp(0)
+    elevation: dp(0)
+    radius: [dp(10), dp(10), dp(10), dp(10)]
 
     MDIconButton:
         icon: root.icon
         theme_text_color: "Custom"
         icon_color: [1, 0.2, 0.2, 1]
-        pos_hint: {'center_y': .5}
+        pos_hint: {'center_y': 0.5}
 
     MDLabel:
         id: text_bar
         text: root.text
-        font_size: root.font_size
+        font_size: sp(15)
         theme_text_color: 'Custom'
         text_color: [1, 0.2, 0.2, 1]
         height: self.texture_size[1]
         size_hint_y: None
-        pos_hint: {'center_y': .5}
+        pos_hint: {'center_y': 0.5}
