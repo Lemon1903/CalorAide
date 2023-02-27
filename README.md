@@ -19,12 +19,12 @@
 - Automatic Login System
 - Online Database (FireBase)
 
-### Aims & Objectives 
+### Aims & Objectives
 <p>The main aims and objectives of CalorAide are to help users track and manage their calorie intake and achieve their weight and health goals by providing a convenient and accessible tool without too many overwhelming features.</p>
-<ol> 
+<ol>
   <li>Simple and Direct</li>
   <li>Uses the <em>Mifflin-St Jeor</em> equation in estimating your daily calorie needs.</li>
-  <ul> 
+  <ul>
     <li>This returns the value of the Basal Metabolic Rate of a person.
     That is the amount of calories they naturally burn with bodily functions.
     </li>
@@ -38,17 +38,17 @@
 - Python Environment
 
 #### Command Line Execution
-1. Simply open your terminal then change the directory you want this project to install; 
+1. Simply open your terminal then change the directory you want this project to install;
 OR open it with the directory/folder you want this app to install.
 2. Clone this GitHub project using the HTTPS link of this repository.
-``` sh 
+``` sh
   git clone https://github.com/Lemon1903/DS2-Finals-Fitness-App.git
 ```
-3. Run the `pip` command with the requirements.txt to install all of the required modules. 
+3. Run the `pip` command with the requirements.txt to install all of the required modules.
 ```sh
   pip install -r requirements.txt
 ```
-4. Run the main python file. 
+4. Run the main python file.
 ```sh
   python main.py
 ```
